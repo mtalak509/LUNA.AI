@@ -1,7 +1,9 @@
 """
-FastAPI-сервер контейнера MainAgent — только сборка приложения.
+FastAPI-сервер контейнера MainAgent — сборка приложения + запуск.
 
-Точка входа uvicorn — `core.app.server:create_app`.
+Точка входа uvicorn — `core.app.server:create_app` (factory). Console-команда `luna-web`
+(`[project.scripts]`) зовёт `run()`, который поднимает uvicorn из конфига — параллель к
+CLI-команде `luna`.
 """
 
 from __future__ import annotations
@@ -96,3 +98,23 @@ def create_app() -> FastAPI:
         _logger.warning("devfront static dir not found, UI not mounted: %s", static_dir)
 
     return app
+
+
+def run() -> None:
+    """Console-script entry point (`luna-web`): start the server from config.
+
+    The quick-launch twin of the CLI's `luna`. Reads host/port/reload from `ServerSettings`
+    (env / `.env`), so it honors the same config as a manual `uvicorn ... --factory` call. The
+    app is passed as an import string with `factory=True` so `--reload` keeps working. `root_path`
+    is applied inside `create_app`, so it is not passed here to avoid doubling it.
+    """
+    import uvicorn
+
+    config = get_config()
+    uvicorn.run(
+        "core.app.server:create_app",
+        factory=True,
+        host=config.server.host,
+        port=config.server.port,
+        reload=config.server.reload,
+    )
