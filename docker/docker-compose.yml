@@ -1,0 +1,19 @@
+name: luna-agent
+
+services:
+  agent:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: luna-agent:local
+    container_name: luna-agent
+    command: ["uvicorn", "core.app.server:create_app", "--factory",
+              "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8000:8000"
+    # Конфиг в образ не запекается — подаём рабочий .env файлом (gitignored).
+    env_file:
+      - ../.env
+    # Sessions live inside the container (~/.luna/sessions, under appuser home) and die
+    # with it — as in prod. The root is fixed in code, not env-configurable.
+    # Inspect session files via the dev-front file viewer (host bind mount removed).

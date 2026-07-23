@@ -1,0 +1,43 @@
+# Virtual environment
+.venv/
+
+# env
+.env
+
+# devfront (перерабатывается — пока вне области видимости)
+devfront/
+
+# Python packaging / build artifacts
+*.egg-info/
+dist/
+build/
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+
+#CLAUDE
+.claude/
+CLAUDE.md
+
+#cursor
+.cursor/
+
+# Plans
+plans/
+
+# test
+spike_tests/
+
+# дайджесты релизов родительского проекта (локальный разведматериал, не для репо)
+digests/
+
+# рабочий реестр техдолга (локальные заметки, не для репо)
+docs/tech-debt.md
+
+# Local session working zones (dev / ad-hoc)
+.devsession/
+.session/

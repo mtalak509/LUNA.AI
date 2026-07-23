@@ -1,0 +1,43 @@
+# Контекст сборки — корень репозитория; нужны pyproject.toml, README.md, core/
+# и scripts/ (banner + служебные entrypoint-утилиты).
+# Всё лишнее исключаем, чтобы контекст был лёгким и не инвалидировал кэш слоёв.
+
+# Окружение и кэши Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# VCS и IDE
+.git/
+.gitignore
+.idea/
+.vscode/
+
+# Документация, планы и тесты — в образ не нужны.
+# NB: markdown процедурной памяти (core/procedures/**/*.md) НЕ исключаем — он запекается
+# в образ агента, поэтому никакого широкого `*.md`; режем только корневые доки поимённо.
+docs/
+plans/
+tests/
+/CLAUDE.md
+/OLD_ARCHITECTURE.md
+
+# Зависимостный freeze (ставим из pyproject)
+requirements.txt
+
+# Локальные конфиги. В образ НЕ запекаются (Р-14.1): на стенде конфиг из ConfigMap/Secret,
+# локально — env_file в compose.
+.env
+.env.*
+
+# Сами docker-артефакты
+docker/
+
+# Дев-фронт: в образ нужна только статика (devfront/static/), python-обвязка dev-сессии — нет.
+devfront/
+!devfront/static/
