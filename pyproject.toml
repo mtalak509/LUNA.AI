@@ -17,6 +17,7 @@ dependencies = [
 
     # Web layer (MainAgent /message,/events,/hitl,/health)
     "fastapi>=0.136.3",
+    "python-multipart>=0.0.20",
     "uvicorn[standard]>=0.48.0",
     "httpx>=0.28.1",                 
     "tenacity>=9.1.4",           

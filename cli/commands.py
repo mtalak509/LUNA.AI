@@ -13,6 +13,8 @@ from pathlib import Path
 from cli.config import SESSION_DIR, state
 from cli.session import new_session
 from core.agent.checkpoint import CheckpointManager
+from core.agent.tools.fs_paths import FileAccessError
+from core.agent.workspace import WorkspaceError, WorkspaceManager
 
 
 def _manager() -> CheckpointManager:
@@ -20,6 +22,35 @@ def _manager() -> CheckpointManager:
         workspace_path=SESSION_DIR / "workspace",
         checkpoints_root=SESSION_DIR / "checkpoints",
     )
+
+
+def _workspace() -> WorkspaceManager:
+    return WorkspaceManager(
+        workspace_path=SESSION_DIR / "workspace",
+        checkpoints_root=SESSION_DIR / "checkpoints",
+    )
+
+
+def _attach(arg: str) -> None:
+    """`/attach <путь> [--overwrite]` — копировать файл с хоста в рабочую зону.
+
+    Идёт через `WorkspaceManager`, а не своей записью в ФС: политика путей, кап размера и
+    снимок после записи обязаны совпадать с HTTP-загрузкой, иначе обкатка undo в REPL
+    перестанет говорить что-либо о сервере.
+    """
+    tokens = arg.split()
+    overwrite = "--overwrite" in tokens
+    # Путь берём остатком строки, а не первым токеном: пути на Windows содержат пробелы.
+    source = " ".join(t for t in tokens if t != "--overwrite").strip().strip("\"'")
+    if not source:
+        print("использование: /attach <путь> [--overwrite]")
+        return
+    try:
+        saved = _workspace().copy_from_host(Path(source), overwrite=overwrite)
+    except (WorkspaceError, FileAccessError, OSError) as e:
+        print(f"ошибка: {e}")
+        return
+    print(f"загружено: {saved.path} ({saved.size} байт); чекпоинт {saved.checkpoint or '(нет)'}")
 
 
 def _print_tree(root: Path, prefix: str = "") -> None:
@@ -71,6 +102,8 @@ def handle_command(line: str) -> bool:
         # эмуляция фронта, который передаёт открытый раздел с каждым turn.
         state["ptr"] = arg or None
         print(f"pointer: {state['ptr'] or '(сброшен)'}")
+    elif cmd == "/attach":
+        _attach(arg)
     elif cmd == "/fs":
         _print_tree(SESSION_DIR / "workspace" / arg if arg else SESSION_DIR / "workspace")
     elif cmd == "/cp":
@@ -93,8 +126,8 @@ def handle_command(line: str) -> bool:
         print("сессия пересоздана")
     elif cmd in ("/help", "/?"):
         print(
-            "команды: /plan /act  /confirm /accept  /ptr [pointer]  /fs [path]  "
-            "/cp  /undo <id>  /reset  /quit"
+            "команды: /plan /act  /confirm /accept  /ptr [pointer]  "
+            "/attach <path> [--overwrite]  /fs [path]  /cp  /undo <id>  /reset  /quit"
         )
     elif cmd == "/quit":
         return False
