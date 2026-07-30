@@ -29,13 +29,19 @@ CLAUDE.md
 # Plans
 plans/
 
+# Local notes (not for the repo)
+notes/
+
 # test
 spike_tests/
 
 # дайджесты релизов родительского проекта (локальный разведматериал, не для репо)
 digests/
 
-# рабочий реестр техдолга (локальные заметки, не для репо)
+# техдолг LUNA: один файл — один пункт (локальные заметки, не для репо)
+tech-debt/
+
+# реестр техдолга родительского проекта (унаследован)
 docs/tech-debt.md
 
 # Local session working zones (dev / ad-hoc)
