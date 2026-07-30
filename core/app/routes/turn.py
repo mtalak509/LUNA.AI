@@ -19,7 +19,7 @@ router = APIRouter()
 async def turn(body: TurnRequest, session: AgentSession = Depends(get_session)) -> dict:
     """Запустить ход агента в фоне; вывод — через GET /events. 409 если сессия занята."""
     try:
-        turn_id = session.run_turn(body.text, body.pointer)
+        turn_id = session.run_turn(body.text)
     except RuntimeError as e:
         raise HTTPException(status_code=409, detail=str(e)) from e
     return {"turn_id": turn_id}

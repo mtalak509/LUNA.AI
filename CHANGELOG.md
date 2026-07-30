@@ -5,6 +5,14 @@ All notable changes to LUNA are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Removed
+- **Рудимент `pointer`:** вырезан сквозной тракт «указателя на раздел документа», унаследованный
+  от родительского проекта — поле `pointer` в `TurnRequest`, параметры `run_turn` / `run_stream`,
+  `AgentRuntimeContext.pointer` и команда REPL `/ptr`. Значение доезжало до контекста хода, но его
+  никто не читал: ни middleware, ни тулы, а web UI его вовсе не отправлял.
+
 ## [0.1.0] — 2026-07-23
 
 First public release of LUNA — a personal work assistant for reading and editing documents and

@@ -1,6 +1,6 @@
 """Слэш-команды CLI (хендлеры).
 
-Диспетчер `handle_command` мутирует общий `state` (режимы, ptr, текущая сессия) и
+Диспетчер `handle_command` мутирует общий `state` (режимы, текущая сессия) и
 возвращает флаг «продолжать цикл». Текущий раннер живёт в `state["session"]`, поэтому
 /reset и /undo работают с ним напрямую, не гоняя сессию через сигнатуры.
 """
@@ -103,11 +103,6 @@ def handle_command(line: str) -> bool:
         state["dec"] = "confirm"
     elif cmd == "/accept":
         state["dec"] = "accept_all"
-    elif cmd == "/ptr":
-        # Липкий, как режимы: шлётся с КАЖДЫМ следующим ходом до смены/сброса —
-        # эмуляция фронта, который передаёт открытый раздел с каждым turn.
-        state["ptr"] = arg or None
-        print(f"pointer: {state['ptr'] or '(сброшен)'}")
     elif cmd == "/attach":
         _attach(arg)
     elif cmd == "/fs":
@@ -132,7 +127,7 @@ def handle_command(line: str) -> bool:
         print("сессия пересоздана")
     elif cmd in ("/help", "/?"):
         print(
-            "команды: /plan /act  /confirm /accept  /ptr [pointer]  "
+            "команды: /plan /act  /confirm /accept  "
             "/attach <path> [--overwrite]  /fs [path]  /cp  /undo <id>  /reset  /quit"
         )
     elif cmd == "/quit":

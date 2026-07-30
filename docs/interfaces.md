@@ -44,7 +44,6 @@ control the session. When the agent asks you a question, answer at the follow-up
 |---|---|
 | `/plan` / `/act` | Switch Permission mode (Plan hides write tools; Act allows them). |
 | `/confirm` / `/accept` | Switch Decision mode (Confirm asks before writes; Accept-all doesn't). |
-| `/ptr [pointer]` | Emulate "the section open in the UI" — sticks to every following turn; no argument clears it. |
 | `/attach <path> [--overwrite]` | Copy a file from your machine into `workspace/attachments/`, where the agent will see it. Refuses to clobber an existing file unless you pass the flag. |
 | `/fs [path]` | Print the `workspace/` tree (or a subfolder); `.runtime/` is hidden. |
 | `/cp` | List checkpoints (id + time). |
@@ -104,7 +103,7 @@ surface:
 
 | Method & path | Purpose |
 |---|---|
-| `POST /sessions/{id}/turn` | Start a turn in the background (optionally with a `pointer`). Returns a turn id; `409` if the session is already busy. |
+| `POST /sessions/{id}/turn` | Start a turn in the background. Returns a turn id; `409` if the session is already busy. |
 | `GET /sessions/{id}/events` | The Server-Sent Events stream — one long-lived stream that carries every turn's events. |
 | `POST /sessions/{id}/hitl/respond` | Answer a question the agent is waiting on. |
 | `POST /sessions/{id}/stop` | Cancel the active turn (subagent included). |

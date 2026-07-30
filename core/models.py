@@ -37,7 +37,6 @@ class Attachment(BaseModel):
 
 class TurnRequest(BaseModel):
     text: str
-    pointer: str | None = None  # JSON Pointer раздела документа
     attachments: List[Attachment] | None = None     # TODO: Проводка на будущее
 
 

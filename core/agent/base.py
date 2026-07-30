@@ -68,7 +68,6 @@ class AgentRuntimeContext:
     session_id: str     # скоуп HITL-записей; субагент наследует от хода main
     checkpoints_root: Path | None = None  # читается @with_checkpoint через get_runtime()
     subagent_path: Path | None = None
-    pointer: str | None = None      # JSON Pointer раздела документа, приходит с UI
 
 
 # Патч конвертера langchain-openai (reasoning-дельты vLLM) обязан встать ДО первой
@@ -305,7 +304,6 @@ class BaseAgent:
         permission_mode: str,
         decision_mode: str,
         session_id: str,
-        pointer: str | None = None,
         recursion_limit: int = DEFAULT_RECURSION_LIMIT,
         ) -> AsyncIterator[StreamEvent]:
         """Один ход агента стримом. Async-генератор событий своего namespace.
@@ -328,7 +326,6 @@ class BaseAgent:
             session_id=session_id,
             checkpoints_root=self.agent_config.checkpoints_root,
             subagent_path=self.agent_config.subagent_path,
-            pointer=pointer,
         )
 
         # 2. Входное сообщение + рабочая копия + запись в журнал

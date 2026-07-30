@@ -60,7 +60,7 @@ class AgentSession:
     def _update_last_activity(self) -> None:
         self._last_activity = datetime.now(timezone.utc)
 
-    def run_turn(self, text: str, pointer: str | None = None) -> str:
+    def run_turn(self, text: str) -> str:
         """Запустить ход как фоновый Task; НЕ блокирует. Возвращает turn_id.
 
         Один активный ход на сессию (история агента — общая мутируемая копия, конкурентные
@@ -71,10 +71,10 @@ class AgentSession:
             raise RuntimeError("Another turn is already running")
         self._turn_counter += 1
         turn_id = f"turn-{self._turn_counter}"
-        self._turn_task = asyncio.create_task(self._pump(turn_id, text, pointer))
+        self._turn_task = asyncio.create_task(self._pump(turn_id, text))
         return turn_id
 
-    async def _pump(self, turn_id: str, text: str, pointer: str | None = None) -> None:
+    async def _pump(self, turn_id: str, text: str) -> None:
         """Внутренний ход MainAgent: парсит вход, запускает LLM, эмитит события."""
         try:
             async for event in self._agent.run_stream(
@@ -82,7 +82,6 @@ class AgentSession:
                 permission_mode=self.permission_mode,
                 decision_mode=self.decision_mode,
                 session_id=self.session_id,
-                pointer=pointer,
             ):
                 self._queue.put_nowait(event)
                 self._update_last_activity()

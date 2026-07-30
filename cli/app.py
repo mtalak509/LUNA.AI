@@ -6,11 +6,9 @@
 припаркованный ход продолжается. Без HTTP/оркестратора; нужен поднятый LLM-провайдер (.env).
 
 Запуск:  python -m cli   (или консольная команда `luna`)
-Команды: /plan /act  /confirm /accept  /ptr [pointer]  /fs [path]  /cp  /undo <id>
+Команды: /plan /act  /confirm /accept  /fs [path]  /cp  /undo <id>
          /reset  /help  /quit
 HITL:    на вопрос агента отвечай в приглашении `ответ >` / `выбор >`.
-/ptr:    эмуляция «раздела, открытого в UI» — липнет ко всем следующим ходам;
-         `/ptr` без аргумента сбрасывает.
 """
 
 from __future__ import annotations
@@ -41,9 +39,8 @@ async def main() -> None:
 
     while True:
         try:
-            ptr_mark = f" ptr={state['ptr']}" if state["ptr"] else ""
             line = (
-                await asyncio.to_thread(input, f"\n[{state['perm']}/{state['dec']}{ptr_mark}] > ")
+                await asyncio.to_thread(input, f"\n[{state['perm']}/{state['dec']}] > ")
             ).strip()
         except (EOFError, KeyboardInterrupt, asyncio.CancelledError):
             print()

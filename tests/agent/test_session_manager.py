@@ -18,7 +18,7 @@ class FakeAgent:
     def __init__(self, gen_factory):
         self._gen_factory = gen_factory
 
-    def run_stream(self, text, *, permission_mode, decision_mode, session_id, pointer=None):
+    def run_stream(self, text, *, permission_mode, decision_mode, session_id):
         return self._gen_factory(text)
 
 

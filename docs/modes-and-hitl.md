@@ -69,15 +69,6 @@ sees who answered — a real user answer is tagged `source: "user"`. (There's a 
 path for the main agent to answer a subagent's question itself when it can infer the answer; today
 subagent questions are always forwarded to you. See TD-11 in [tech-debt.md](tech-debt.md).)
 
-## The "pointer" hint
-
-There's one more small piece of context the front end can send: a **pointer** to the part of a
-document the user currently has open in the UI (a JSON Pointer). It rides along with each turn and
-is surfaced to the agent as a hint about what you're looking at. In the web UI the front end sends
-it automatically; in the CLI you can emulate it with `/ptr <pointer>`, and it sticks to every
-following turn until you change or clear it. It's a hint, not a command — the agent isn't forced
-to act on it.
-
 ## Next
 
 - The two tools in the context of the whole tool set: [tools.md](tools.md)

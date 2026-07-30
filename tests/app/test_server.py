@@ -41,7 +41,6 @@ class FakeSession:
 
     def __init__(self, profile: str = "standalone") -> None:
         self.runs: list[str] = []
-        self.pointers: list[str | None] = []
         self.resolved: list[tuple] = []
         self.cancel_result = True
         self.raise_on_run: Exception | None = None
@@ -53,11 +52,10 @@ class FakeSession:
         self.decision_mode = "confirm"
         self._agent = FakeReloadAgent()
 
-    def run_turn(self, text: str, pointer: str | None = None) -> str:
+    def run_turn(self, text: str) -> str:
         if self.raise_on_run:
             raise self.raise_on_run
         self.runs.append(text)
-        self.pointers.append(pointer)
         return "turn-1"
 
     def resolve_hitl(self, hitl_id, value) -> None:
@@ -229,18 +227,6 @@ async def test_turn_conflict_when_busy(client_and_session):
     async with client:
         r = await client.post("/sessions/s1/turn", json={"text": "x"})
     assert r.status_code == 409
-
-
-async def test_turn_passes_pointer(client_and_session):
-    """pointer из тела доезжает до run_turn; без него — None (standalone)."""
-    client, session = client_and_session
-    async with client:
-        r1 = await client.post(
-            "/sessions/s1/turn", json={"text": "что в разделе?", "pointer": "/children/2"}
-        )
-        r2 = await client.post("/sessions/s1/turn", json={"text": "привет"})
-    assert r1.status_code == 202 and r2.status_code == 202
-    assert session.pointers == ["/children/2", None]
 
 
 async def test_turn_attachments_typed(client_and_session):
@@ -489,7 +475,7 @@ class FakeAgent:
     def __init__(self, gen_factory):
         self._gen_factory = gen_factory
 
-    def run_stream(self, text, *, permission_mode, decision_mode, session_id, pointer=None):
+    def run_stream(self, text, *, permission_mode, decision_mode, session_id):
         return self._gen_factory(text)
 
 

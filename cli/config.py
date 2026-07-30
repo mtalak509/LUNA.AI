@@ -21,14 +21,11 @@ SESSION_DIR = SESSION_ROOT / SESSION_ID
 # из одного модуля видны во всех остальных (один и тот же объект по ссылке).
 #   perm: plan|act — Plan прячет write-тулы (PermissionMiddleware).
 #   dec:  confirm|accept_all — confirm гейтит любой write-тул на подтверждение (DecisionMiddleware).
-#   ptr:  JSON Pointer «раздела, открытого в UI»; в проде шлёт фронт, тут — команда /ptr;
-#         None = не слать.
 #   procedures_root: procedures_root процесса; ставится один раз в app.main() через init_process.
 #   session: текущий раннер AgentSession; пересоздаётся на /reset.
 state: dict = {
     "perm": "act",
     "dec": "accept_all",
-    "ptr": None,
     "procedures_root": None,
     "session": None,
 }
