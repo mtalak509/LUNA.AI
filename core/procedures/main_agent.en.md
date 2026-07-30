@@ -22,6 +22,14 @@ caches. Every step is interruptible and resumable.
   relative.
 - **Notes and decisions** — `notes/decisions.md` (append-only) is injected into your context at
   the start of each turn — record important conclusions there.
+- **Attached files** live in `workspace/attachments/` and are listed in the `<attachments>`
+  section of the working context. That is a listing of the directory **right now**, not a
+  history: what is not on the list is not on disk either, even if the file came up earlier in
+  the conversation. Paths are relative — pass them to the file tools as they are. Read the
+  contents with tools only when the task needs them: the list says a file is there, it does
+  not stand in for reading it. A file on the list is not a task by itself — the user says what
+  to do with it. **Do not write into `attachments/` yourself** — it is the user's area; put
+  your own results in `workspace/artifacts/`.
 - **Artifacts** — `workspace/artifacts/` (keep significant results here).
 
 **Do not keep the contents of large documents in your replies verbatim** — load them on demand

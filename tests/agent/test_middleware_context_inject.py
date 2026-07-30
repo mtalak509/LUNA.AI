@@ -1,8 +1,8 @@
 """
-Unit-тесты `ContextInjectMiddleware` и `FileContextProvider` в изоляции.
+Unit-тесты `ContextInjectMiddleware` и его провайдеров в изоляции.
 
 Делим на два пласта:
-- провайдер — читает notes/decisions.md с ФС (на temp-каталоге);
+- провайдеры — читают ФС на temp-каталоге: `notes/decisions.md` и журнал загрузок;
 - middleware — сборка хвостового блока `<working_context>` (динамика идёт эфемерным
   HumanMessage последним в списке, system_message НЕ трогается — ради prefix-кэша vLLM) +
   гейт субагента, на ФЕЙКОВЫХ провайдерах (без ФС), чтобы проверять именно сборку.
@@ -16,10 +16,10 @@ from pathlib import Path
 from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 
 from core.agent.middleware.context_inject import (
+    AttachmentsContextProvider,
     ContextInjectMiddleware,
     FileContextProvider,
 )
-
 
 # --- фейки общего назначения --------------------------------------------------------
 
@@ -98,9 +98,102 @@ async def test_file_provider_empty_file_returns_none(tmp_path) -> None:
     assert text is None
 
 
-def test_default_providers_are_file_context_only() -> None:
+def test_default_providers() -> None:
+    """Синхронизатор дефолтного стека провайдеров."""
     mw = ContextInjectMiddleware()
-    assert [type(p) for p in mw.providers] == [FileContextProvider]
+    assert [type(p) for p in mw.providers] == [FileContextProvider, AttachmentsContextProvider]
+
+
+# --- AttachmentsContextProvider: листинг каталога ------------------------------------
+
+
+def _attach(workspace: Path, rel: str, content: bytes = b"{}") -> None:
+    target = workspace / "attachments" / rel
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(content)
+
+
+async def test_attachments_provider_lists_relative_paths(tmp_path) -> None:
+    """Пути относительные — агент копирует их прямо в файловые тулы."""
+    _attach(tmp_path, "inputs/report.json")
+
+    text = await AttachmentsContextProvider().block(_FakeCtx(workspace_path=tmp_path))
+
+    assert "`attachments/inputs/report.json`" in text
+    assert str(tmp_path) not in text
+
+
+async def test_attachments_provider_no_directory_returns_none(tmp_path) -> None:
+    """Каталога нет — пользователь ничего не прикреплял, секции быть не должно."""
+    assert await AttachmentsContextProvider().block(_FakeCtx(workspace_path=tmp_path)) is None
+
+
+async def test_attachments_provider_reflects_a_deletion(tmp_path) -> None:
+    """Никакого протухания: блок — состояние каталога, а не история загрузок."""
+    _attach(tmp_path, "report.json")
+    ctx = _FakeCtx(workspace_path=tmp_path)
+    assert "report.json" in await AttachmentsContextProvider().block(ctx)
+
+    (tmp_path / "attachments" / "report.json").unlink()
+    text = await AttachmentsContextProvider().block(ctx)
+
+    assert "report.json" not in text
+    assert "пуст" in text  # пустой каталог говорит об этом прямо, а не молчит
+
+
+async def test_attachments_provider_ignores_the_rest_of_the_zone(tmp_path) -> None:
+    """Файл, созданный самим агентом, не должен вернуться к нему как «прикреплённый»."""
+    _attach(tmp_path, "attached.json")
+    (tmp_path / "artifacts").mkdir()
+    (tmp_path / "artifacts" / "agent-made.json").write_bytes(b"{}")
+
+    text = await AttachmentsContextProvider().block(_FakeCtx(workspace_path=tmp_path))
+
+    assert "attached.json" in text
+    assert "agent-made.json" not in text
+
+
+async def test_attachments_section_appears_in_the_envelope(tmp_path) -> None:
+    _attach(tmp_path, "report.json")
+    mw = ContextInjectMiddleware(providers=[AttachmentsContextProvider()])
+    handler, captured = _make_handler()
+    request = _FakeModelRequest(
+        SystemMessage(content="BASE"), _FakeCtx(workspace_path=tmp_path), messages=[]
+    )
+
+    await mw.awrap_model_call(request, handler)
+
+    tail = captured["request"].messages[-1].content
+    assert "<attachments>" in tail
+    assert "report.json" in tail
+
+
+async def test_empty_directory_still_injects_the_section(tmp_path) -> None:
+    """Пустой каталог — явная строка в контексте: она опровергает прошлые реплики модели."""
+    (tmp_path / "attachments").mkdir()
+    mw = ContextInjectMiddleware(providers=[AttachmentsContextProvider()])
+    handler, captured = _make_handler()
+    request = _FakeModelRequest(
+        SystemMessage(content="BASE"), _FakeCtx(workspace_path=tmp_path), messages=[]
+    )
+
+    await mw.awrap_model_call(request, handler)
+
+    tail = captured["request"].messages[-1].content
+    assert "<attachments>" in tail
+    assert "пуст" in tail
+
+
+async def test_no_attachments_directory_injects_no_section(tmp_path) -> None:
+    mw = ContextInjectMiddleware(providers=[AttachmentsContextProvider()])
+    handler, captured = _make_handler()
+    request = _FakeModelRequest(
+        SystemMessage(content="BASE"), _FakeCtx(workspace_path=tmp_path), messages=[]
+    )
+
+    await mw.awrap_model_call(request, handler)
+
+    assert captured["request"] is request
 
 
 # --- ContextInjectMiddleware: сборка хвостового блока ------------------------
@@ -120,7 +213,7 @@ async def test_main_appends_working_context_as_last_human_message() -> None:
     await mw.awrap_model_call(request, handler)
 
     sent = captured["request"]
-    assert sent.messages[:-1] == history           # история нетронута, блок строго последним
+    assert sent.messages[:-1] == history  # история нетронута, блок строго последним
     tail = sent.messages[-1]
     assert isinstance(tail, HumanMessage)
     assert tail.content.startswith("<working_context>")
@@ -151,13 +244,14 @@ async def test_subagent_passes_through_untouched() -> None:
     mw = ContextInjectMiddleware(providers=[_FakeProvider("X", "data")])
     handler, captured = _make_handler()
     request = _FakeModelRequest(
-        SystemMessage(content="BASE"), _FakeCtx(agent_scope="subagent"),
+        SystemMessage(content="BASE"),
+        _FakeCtx(agent_scope="subagent"),
         messages=[HumanMessage(content="задача")],
     )
 
     await mw.awrap_model_call(request, handler)
 
-    assert captured["request"] is request          # override не вызывался
+    assert captured["request"] is request  # override не вызывался
     assert len(captured["request"].messages) == 1
 
 
@@ -166,7 +260,8 @@ async def test_no_blocks_leaves_request_untouched() -> None:
     mw = ContextInjectMiddleware(providers=[_FakeProvider("X", None)])
     handler, captured = _make_handler()
     request = _FakeModelRequest(
-        SystemMessage(content="BASE"), _FakeCtx(agent_scope="main"),
+        SystemMessage(content="BASE"),
+        _FakeCtx(agent_scope="main"),
         messages=[HumanMessage(content="привет")],
     )
 
@@ -190,6 +285,6 @@ async def test_injection_does_not_mutate_original_messages() -> None:
 
     await mw.awrap_model_call(request, handler)
 
-    assert len(original) == 1                      # исходный список не мутирован
+    assert len(original) == 1  # исходный список не мутирован
     assert len(captured["request"].messages) == 2
     assert captured["request"].messages[0] is original[0]

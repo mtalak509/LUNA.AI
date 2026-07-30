@@ -45,6 +45,7 @@ control the session. When the agent asks you a question, answer at the follow-up
 | `/plan` / `/act` | Switch Permission mode (Plan hides write tools; Act allows them). |
 | `/confirm` / `/accept` | Switch Decision mode (Confirm asks before writes; Accept-all doesn't). |
 | `/ptr [pointer]` | Emulate "the section open in the UI" — sticks to every following turn; no argument clears it. |
+| `/attach <path> [--overwrite]` | Copy a file from your machine into `workspace/attachments/`, where the agent will see it. Refuses to clobber an existing file unless you pass the flag. |
 | `/fs [path]` | Print the `workspace/` tree (or a subfolder); `.runtime/` is hidden. |
 | `/cp` | List checkpoints (id + time). |
 | `/undo <id>` | Roll `workspace/` back to a checkpoint and reload history. |
@@ -109,6 +110,34 @@ surface:
 | `POST /sessions/{id}/stop` | Cancel the active turn (subagent included). |
 | `GET/POST /sessions/{id}/mode` | Read or change the Permission / Decision modes. |
 | `GET /sessions/{id}/history` | The conversation so far, for rendering the chat. |
+
+**Attachments — the files you give the agent**
+
+| Method & path | Purpose |
+|---|---|
+| `POST /sessions/{id}/attachments?path=...&overwrite=` | Attach a file (multipart). `201` with the stored path, size, and the checkpoint it left behind. |
+| `GET /sessions/{id}/attachments` | Flat listing — path, size, modification time. |
+| `GET /sessions/{id}/attachments/{path}` | Download one attachment as-is. |
+| `DELETE /sessions/{id}/attachments/{path}` | Delete one attachment, leaving a checkpoint. |
+
+Everything you attach lands in one directory, `workspace/attachments/`, and `path` is relative to
+it (optional — it defaults to the uploaded file's own name). Missing folders along the way are
+created. That single directory is what the agent watches: on every model call it gets a listing of
+it, so a file you delete simply stops being there for the agent, with no stale notification to
+correct. See [runtime.md](runtime.md).
+
+Refusals to expect: `422` for a path that tries to leave `attachments/`, is absolute, names a
+drive, or starts with a dot; `409` for a file that already exists (retry with `overwrite=true`);
+`413` for anything over 20 MB. Uploading and deleting also return `409` while a turn is running,
+since a write mid-turn races the agent's own writes — reading and listing are always allowed, so
+the UI's file picker keeps working while the agent thinks.
+
+The CLI's `/attach` is the same operation over a different transport: both go through one
+`WorkspaceManager` ([core/agent/workspace.py](../core/agent/workspace.py)), which resolves the path
+with the same gatekeeper the agent's file tools use and takes the checkpoint. So an undo scenario
+you try in the REPL tells you how the server behaves too. That class also carries the general
+zone-level operations — write, read, delete, list anywhere inside `workspace/` — and attachments
+are the narrow facet of them that the HTTP and CLI surfaces expose today.
 
 **Files and checkpoints** (used by the web UI's side panel)
 

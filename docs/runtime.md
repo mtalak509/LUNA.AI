@@ -57,7 +57,17 @@ a gate on *execution*, not a tool the model has to remember to call — so the s
 skipped by a forgetful model.
 
 **Context injection.** Right before each model call, this quietly appends a small block of live
-context to the message list — currently your running notes from `notes/decisions.md`. It's added
+context to the message list. Two things go in there today: your running notes from
+`notes/decisions.md`, and a listing of `workspace/attachments/` — the files you attached — so the
+agent knows they're there without going looking for them. The listing carries paths and sizes only;
+the agent reads the contents with its tools when the task actually needs them, which matters when
+the file is a hundred-megabyte JSON.
+
+That block is a listing of the directory *at that moment*, not a log of what you uploaded. The
+difference matters: with a log, deleting a file leaves a notification behind that outlives the file
+and the agent goes hunting for something that isn't there. With a listing there is nothing to go
+stale — and if the directory is empty, the block says so out loud, which is what corrects the
+agent's own earlier replies about a file that used to be there. It's added
 as the very last message and wrapped in a clear envelope that says "this is background state, not
 a new request from the user." It is never saved to history (it's rebuilt each call from the file),
 and it only applies to the main agent — subagents keep their cold context. Appending at the *end*

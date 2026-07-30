@@ -25,6 +25,7 @@ Whether created by the server or the CLI, a session has the same shape. Here it 
 <session>/
 ├── workspace/                 the main agent's read-write zone
 │   ├── <your documents>       e.g. report.json, data/notes.md — whatever you work on
+│   ├── attachments/           files you attached; listed in the agent's context each call
 │   ├── notes/
 │   │   └── decisions.md       running notes; injected into the agent's context each turn
 │   ├── artifacts/             results worth keeping
@@ -90,6 +91,9 @@ When they're taken:
   snapshots once the write succeeds. If the tool fails, no checkpoint is made.
 - **Before delegating to a subagent** — so you can roll back to the state before the subagent
   touched anything.
+- **After you attach or remove a file yourself** (over HTTP, or `/attach` in the CLI). Those
+  writes don't go through a tool, so the snapshot is taken explicitly — without it the next undo
+  would rewind past your file and silently drop it.
 
 A few things worth knowing:
 

@@ -1,8 +1,8 @@
 """Session workspace HTTP routes.
 
-User files (upload to any path inside the zone, download, delete, flat listing for the UI
-picker) and the dialogue history materialized in the workspace. The handlers stay thin: the
-file operations live in `WorkspaceManager`, shared with the CLI `/attach`.
+The user's attachments (upload / download / delete / listing of `workspace/attachments/`) and
+the dialogue history materialized in the workspace. The handlers stay thin: the file
+operations live in the attachments facet of `WorkspaceManager`, shared with the CLI `/attach`.
 """
 
 from __future__ import annotations
@@ -39,7 +39,7 @@ async def get_history(paths: tuple[Path, Path] = Depends(session_paths)) -> dict
     return MessageStore(workspace_path).load_ui_messages()
 
 
-# --- Workspace files ---
+# --- Attachments ---
 
 
 def get_workspace(paths: tuple[Path, Path] = Depends(session_paths)) -> WorkspaceManager:
@@ -72,53 +72,54 @@ def _require_idle(session: AgentSession) -> None:
         raise HTTPException(status_code=409, detail="Session is busy")
 
 
-@router.post("/sessions/{session_id}/workspace/files", status_code=201)
-async def upload_file(
+@router.post("/sessions/{session_id}/attachments", status_code=201)
+async def upload_attachment(
     file: UploadFile,
     path: str | None = None,
     overwrite: bool = False,
     session: AgentSession = Depends(get_session),
     workspace: WorkspaceManager = Depends(get_workspace),
 ) -> dict:
-    """Upload a file to an arbitrary path inside the workspace zone."""
+    """Attach a file to the session. `path` is relative to `attachments/`."""
     _require_idle(session)
 
     # read(cap + 1): never buffer beyond the cap — an oversized body is detected by length.
     content = await file.read(MAX_UPLOAD_BYTES + 1)
     with _as_http_error():
-        saved = workspace.save(path or file.filename or "", content, overwrite=overwrite)
+        saved = workspace.attach(path or file.filename or "", content, overwrite=overwrite)
     return {"path": saved.path, "size": saved.size, "checkpoint": saved.checkpoint}
 
 
-@router.get("/sessions/{session_id}/workspace/files")
-async def list_workspace_files(workspace: WorkspaceManager = Depends(get_workspace)) -> dict:
-    """Flat listing of the zone — feeds the UI picker; never goes into the agent context."""
+@router.get("/sessions/{session_id}/attachments")
+async def list_attachments(workspace: WorkspaceManager = Depends(get_workspace)) -> dict:
+    """Flat listing of `attachments/` — the same set the agent sees in its context."""
     return {
         "files": [
-            {"path": f.path, "size": f.size, "mtime": f.mtime.isoformat()} for f in workspace.list()
+            {"path": f.path, "size": f.size, "mtime": f.mtime.isoformat()}
+            for f in workspace.list_attachments()
         ]
     }
 
 
-@router.get("/sessions/{session_id}/workspace/files/{path:path}")
-async def get_workspace_file(
+@router.get("/sessions/{session_id}/attachments/{path:path}")
+async def get_attachment(
     path: str,
     workspace: WorkspaceManager = Depends(get_workspace),
 ) -> FileResponse:
-    """Download a file from the workspace."""
+    """Download one attachment."""
     with _as_http_error():
-        target = workspace.open_for_read(path)
+        target = workspace.open_attachment(path)
     return FileResponse(path=target, filename=target.name)
 
 
-@router.delete("/sessions/{session_id}/workspace/files/{path:path}")
-async def delete_workspace_file(
+@router.delete("/sessions/{session_id}/attachments/{path:path}")
+async def delete_attachment(
     path: str,
     session: AgentSession = Depends(get_session),
     workspace: WorkspaceManager = Depends(get_workspace),
 ) -> dict:
-    """Delete a file from the workspace."""
+    """Delete one attachment. It leaves the agent's context on the next model call."""
     _require_idle(session)
     with _as_http_error():
-        checkpoint = workspace.delete(path)
+        checkpoint = workspace.delete_attachment(path)
     return {"deleted": path, "checkpoint": checkpoint}

@@ -32,7 +32,7 @@ def _workspace() -> WorkspaceManager:
 
 
 def _attach(arg: str) -> None:
-    """`/attach <путь> [--overwrite]` — копировать файл с хоста в рабочую зону.
+    """`/attach <путь> [--overwrite]` — прикрепить файл с хоста к сессии.
 
     Идёт через `WorkspaceManager`, а не своей записью в ФС: политика путей, кап размера и
     снимок после записи обязаны совпадать с HTTP-загрузкой, иначе обкатка undo в REPL
@@ -46,23 +46,29 @@ def _attach(arg: str) -> None:
         print("использование: /attach <путь> [--overwrite]")
         return
     try:
-        saved = _workspace().copy_from_host(Path(source), overwrite=overwrite)
+        saved = _workspace().attach_from_host(Path(source), overwrite=overwrite)
     except (WorkspaceError, FileAccessError, OSError) as e:
         print(f"ошибка: {e}")
         return
-    print(f"загружено: {saved.path} ({saved.size} байт); чекпоинт {saved.checkpoint or '(нет)'}")
+    print(
+        f"прикреплено: attachments/{saved.path} ({saved.size} байт); "
+        f"чекпоинт {saved.checkpoint or '(нет)'}"
+    )
 
 
 def _print_tree(root: Path, prefix: str = "") -> None:
-    if not root.exists():
-        print("(пусто)")
-        return
-    for child in sorted(root.iterdir(), key=lambda c: (c.is_file(), c.name)):
-        if child.name == ".runtime":
-            continue
-        print(f"{prefix}{child.name}{'/' if child.is_dir() else ''}")
-        if child.is_dir():
-            _print_tree(child, prefix + "  ")
+    try:
+        if not root.exists():
+            print("(пусто)")
+            return
+        for child in sorted(root.iterdir(), key=lambda c: (c.is_file(), c.name)):
+            if child.name == ".runtime":
+                continue
+            print(f"{prefix}{child.name}{'/' if child.is_dir() else ''}")
+            if child.is_dir():
+                _print_tree(child, prefix + "  ")
+    except OSError as e:
+        print(f"не удалось вывести дерево: {e}")
 
 
 def _wipe_session(session_root: Path) -> None:
