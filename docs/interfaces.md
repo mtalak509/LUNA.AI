@@ -81,9 +81,10 @@ It holds many sessions at once and serves the built-in web UI (static files unde
 the same process serves the API and the page. With Docker: `cd docker && docker compose up
 --build`.
 
-The web UI is a chat on one side and a file/checkpoint panel on the other: you talk to the agent,
-watch its progress stream in (with subagent work shown as cards), browse the session's files, and
-restore checkpoints.
+The web UI is a chat on one side and a side panel on the other: you talk to the agent, watch its
+progress stream in (with subagent work shown as cards), browse the session's files, and restore
+checkpoints. The panel's third tab manages attachments — drop files on it (or pick them) to hand
+them to the agent, preview them, download them back, or delete them.
 
 ### The API
 

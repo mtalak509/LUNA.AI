@@ -17,7 +17,7 @@ router = APIRouter()
 async def health_check(sessions: SessionManager = Depends(get_session_manager)) -> dict:
     """Процессная живость: суммарный pending_hitl по всем сессиям + счётчик сессий.
 
-    Per-session факты (has_document, режимы) — в GET /sessions.
+    Per-session факты (busy, режимы) — в GET /sessions.
     """
     try:
         pending = len(get_hitl_registry().pending_ids())
@@ -43,7 +43,7 @@ async def create_session(
 
 @router.get("/sessions")
 async def list_sessions(sessions: SessionManager = Depends(get_session_manager)) -> list[dict]:
-    """Список сессий процесса: busy, режимы, has_document, метки активности."""
+    """Список сессий процесса: busy, режимы, метки активности."""
     return sessions.list_sessions()
 
 
