@@ -7,11 +7,30 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.1.1] — 2026-07-31
+
+### Added
+- **Attachments** — upload, list, download, and delete files under `workspace/attachments/`
+  via HTTP (`/sessions/{id}/attachments`) and the CLI (`/attach`). Multipart upload needs
+  `python-multipart`.
+- **Attachments tab (web UI)** — the old Document tab is gone; the side panel manages
+  attachments with multi-file upload (button and drag-and-drop), download, delete.
+- **Download from the Files tree** — each file row has a ⤓ control; new
+  `GET /sessions/{id}/fs/download?path=...` streams the file as-is (binary included, no
+  UTF-8 / 1 MiB cap of `fs/file`).
+
+### Changed
+- **Patch chip in the feed** — labeled `json_patch` (the real tool name) and shows the file
+  path from the event.
+
 ### Removed
-- **Рудимент `pointer`:** вырезан сквозной тракт «указателя на раздел документа», унаследованный
-  от родительского проекта — поле `pointer` в `TurnRequest`, параметры `run_turn` / `run_stream`,
-  `AgentRuntimeContext.pointer` и команда REPL `/ptr`. Значение доезжало до контекста хода, но его
-  никто не читал: ни middleware, ни тулы, а web UI его вовсе не отправлял.
+- **`pointer` remnant** — dropped the unused “section pointer” path inherited from the parent
+  project: `pointer` on `TurnRequest`, `run_turn` / `run_stream`, `AgentRuntimeContext`, and
+  the REPL `/ptr` command. The value reached turn context but nothing read it (middleware,
+  tools, or the web UI).
+
+### Updated
+- **documentation** — updated the interfaces.md file to reflect the new attachments API.
 
 ## [0.1.0] — 2026-07-23
 
@@ -44,4 +63,5 @@ files.
   read from installed metadata (`cli/banner.py`), with `pyproject.toml` as the single source of
   truth.
 
+[0.1.1]: https://github.com/mtalak509/LUNA.AI/releases/tag/v0.1.1
 [0.1.0]: https://github.com/mtalak509/LUNA.AI/releases/tag/v0.1.0
