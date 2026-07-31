@@ -145,6 +145,7 @@ are the narrow facet of them that the HTTP and CLI surfaces expose today.
 |---|---|
 | `GET /sessions/{id}/fs/tree` | The session's file tree (`workspace/` + `subagents/`). |
 | `GET /sessions/{id}/fs/file?path=...` | Read one text file (read-only view). |
+| `GET /sessions/{id}/fs/download?path=...` | Download one file as raw bytes (any type, no size cap of `fs/file`). |
 | `GET /sessions/{id}/checkpoints` | List checkpoints, newest first. |
 | `POST /sessions/{id}/checkpoints/{cp_id}/restore` | Roll `workspace/` back to a checkpoint (rejected while the session is busy). |
 

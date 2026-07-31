@@ -1,5 +1,5 @@
 """
-Эндпоинты file-viewer'а / чекпоинт-панели (fs/tree, fs/file, checkpoints, restore).
+Эндпоинты file-viewer'а / чекпоинт-панели (fs/tree, fs/file, fs/download, checkpoints, restore).
 
 Исторически «dev-слой» за флагом SERVER_DEV_ENDPOINTS; с промоутом devfront в
 продуктовый UI флаг упразднён — роутер регистрируется всегда.
@@ -11,6 +11,7 @@ from datetime import datetime
 from pathlib import Path, PurePosixPath
 
 from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi.responses import FileResponse
 
 from core.agent.checkpoint import CheckpointManager, _DIR_RE
 from core.agent.session import AgentSession
@@ -139,6 +140,20 @@ async def fs_file(
         "size": size,
         "mtime": datetime.fromtimestamp(stat.st_mtime).isoformat(),
     }
+
+
+@router.get("/sessions/{session_id}/fs/download")
+async def fs_download(
+    session_id: str,
+    path: str,
+    request: Request,
+    _session: AgentSession = Depends(get_session),
+) -> FileResponse:
+    """Скачать файл сессии как есть (бинарный стрим, без лимита fs/file)."""
+    target = _resolve_session_path(request.app.state.session_root, session_id, path)
+    if not target.is_file():
+        raise HTTPException(status_code=404, detail="File not found")
+    return FileResponse(path=target, filename=target.name)
 
 
 @router.get("/sessions/{session_id}/checkpoints")

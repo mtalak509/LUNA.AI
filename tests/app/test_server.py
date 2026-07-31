@@ -819,6 +819,75 @@ async def test_fs_file_oversize_413(client_dev_endpoints, tmp_path, monkeypatch)
     assert r.status_code == 413
 
 
+async def test_fs_download_returns_bytes(client_dev_endpoints, tmp_path):
+    client, _ = client_dev_endpoints
+    target = tmp_path / "s1" / "workspace" / "notes.txt"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_text("hello", encoding="utf-8")
+
+    async with client:
+        r = await client.get(
+            "/sessions/s1/fs/download",
+            params={"path": "workspace/notes.txt"},
+        )
+    assert r.status_code == 200
+    assert r.content == b"hello"
+    assert "notes.txt" in r.headers["content-disposition"]
+
+
+async def test_fs_download_binary_ok(client_dev_endpoints, tmp_path):
+    client, _ = client_dev_endpoints
+    target = tmp_path / "s1" / "workspace" / "blob.bin"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(b"\xff\xfe")
+
+    async with client:
+        r = await client.get(
+            "/sessions/s1/fs/download",
+            params={"path": "workspace/blob.bin"},
+        )
+    assert r.status_code == 200
+    assert r.content == b"\xff\xfe"
+
+
+async def test_fs_download_missing_404(client_dev_endpoints, tmp_path):
+    client, _ = client_dev_endpoints
+    (tmp_path / "s1" / "workspace").mkdir(parents=True, exist_ok=True)
+
+    async with client:
+        r = await client.get(
+            "/sessions/s1/fs/download",
+            params={"path": "workspace/nope.txt"},
+        )
+    assert r.status_code == 404
+
+
+async def test_fs_download_directory_404(client_dev_endpoints, tmp_path):
+    client, _ = client_dev_endpoints
+    (tmp_path / "s1" / "workspace" / "subdir").mkdir(parents=True)
+
+    async with client:
+        r = await client.get(
+            "/sessions/s1/fs/download",
+            params={"path": "workspace/subdir"},
+        )
+    assert r.status_code == 404
+
+
+async def test_fs_download_path_traversal_blocked(client_dev_endpoints, tmp_path):
+    client, _ = client_dev_endpoints
+    outside = tmp_path / "outside.txt"
+    outside.write_text("secret", encoding="utf-8")
+
+    async with client:
+        r = await client.get(
+            "/sessions/s1/fs/download",
+            params={"path": "../outside.txt"},
+        )
+    assert r.status_code in (400, 403, 404)
+    assert r.status_code != 200
+
+
 async def test_checkpoints_list(client_dev_endpoints, tmp_path):
     client, _ = client_dev_endpoints
     cp_dir = tmp_path / "s1" / "checkpoints" / "c000_init"
