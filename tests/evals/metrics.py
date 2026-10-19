@@ -6,6 +6,7 @@ Claude oversees the judge — it spot-checks verdicts against the run artifacts.
 
 from __future__ import annotations
 
+from functools import cache
 from pathlib import Path
 
 from deepeval.metrics import ArgumentCorrectnessMetric, BaseMetric, GEval, ToolCorrectnessMetric
@@ -18,11 +19,14 @@ from core.config import get_config
 
 
 class JudgeSettings(BaseSettings):
-    """Judge model for live evals (`EVAL_JUDGE_MODEL` in `.env`); OpenRouter key is shared."""
+    """Judge model for live evals (`EVAL_JUDGE_MODEL` in `.env`); OpenRouter key is shared.
+
+    No default on purpose: which model grades the agent is a deliberate choice, never implicit.
+    """
 
     model_config = SettingsConfigDict(env_file=".env", env_prefix="EVAL_JUDGE_", extra="ignore")
 
-    model: str = "minimax/minimax-m3.1-flash:free"
+    model: str = ""
 
 
 class OpenRouterJudge(DeepEvalBaseLLM):
@@ -58,17 +62,26 @@ class OpenRouterJudge(DeepEvalBaseLLM):
         return self._name
 
 
-judge = OpenRouterJudge(JudgeSettings().model)
+@cache
+def judge() -> OpenRouterJudge:
+    """The one judge all metrics share. Built lazily so the offline run can import this module."""
+    model = JudgeSettings().model.strip()
+    if not model:
+        raise RuntimeError(
+            "EVAL_JUDGE_MODEL is not set: add it to .env (see .env.example). "
+            "It must be a different model from the agent's."
+        )
+    return OpenRouterJudge(model)
 
 
 def tool_trajectory() -> ToolCorrectnessMetric:
     """Expected tools must all be called, in order; extra calls are allowed. No LLM involved."""
-    return ToolCorrectnessMetric(model=judge, threshold=1.0, should_consider_ordering=True)
+    return ToolCorrectnessMetric(model=judge(), threshold=1.0, should_consider_ordering=True)
 
 
 def argument_correctness() -> ArgumentCorrectnessMetric:
     """Judge: are the tool arguments the right ones for what the user asked."""
-    return ArgumentCorrectnessMetric(model=judge, threshold=0.7)
+    return ArgumentCorrectnessMetric(model=judge(), threshold=0.7)
 
 
 def scenario_correctness(criteria: list[str]) -> GEval:
@@ -81,7 +94,7 @@ def scenario_correctness(criteria: list[str]) -> GEval:
             SingleTurnParams.ACTUAL_OUTPUT,
             SingleTurnParams.TOOLS_CALLED,
         ],
-        model=judge,
+        model=judge(),
         threshold=0.7,
     )
 

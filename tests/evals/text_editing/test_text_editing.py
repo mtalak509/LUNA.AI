@@ -29,13 +29,16 @@ runner = ScenarioRunner(
 @pytest.mark.parametrize("golden", dataset.goldens, ids=lambda g: g.additional_metadata["scenario"])
 def test_text_editing(golden: Golden) -> None:
     meta = golden.additional_metadata
-    run = runner.run(golden)
-    assert not run.errors, run.errors
-
+    # Judge metrics first: a missing judge must fail before the agent burns tokens.
     metrics = [
-        WorkspaceStateMetric(actual=run.workspace, expected=HERE / "expected" / meta["scenario"]),
         tool_trajectory(),
         argument_correctness(),
         scenario_correctness(meta["judge_criteria"]),
     ]
+    run = runner.run(golden)
+    assert not run.errors, run.errors
+
+    metrics.insert(
+        0, WorkspaceStateMetric(actual=run.workspace, expected=HERE / "expected" / meta["scenario"])
+    )
     assert_test(test_case=run.to_test_case(golden), metrics=metrics)

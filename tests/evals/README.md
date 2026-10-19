@@ -38,8 +38,9 @@ are plain code, two ask an LLM judge.
   steps. This is where meaning lives: the answer is honest, nothing is invented, the edit was
   targeted.
 
-The judge is a separate model on OpenRouter, set by `EVAL_JUDGE_MODEL` in `.env`. It must not be
-the agent's own model, or the agent ends up grading itself. The judge is not trusted blindly:
+The judge is a separate model on OpenRouter, set by `EVAL_JUDGE_MODEL` in `.env`. There is no
+default: without it a scenario fails at once, before the agent runs. It must not be the agent's
+own model, or the agent ends up grading itself. The judge is not trusted blindly:
 Claude reads its reasons next to the run artifacts and flags verdicts that don't match them, and
 a new set of criteria is first tried on a deliberately bad case to make sure the judge can fail.
 

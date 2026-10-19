@@ -81,10 +81,15 @@ It holds many sessions at once and serves the built-in web UI (static files unde
 the same process serves the API and the page. With Docker: `cd docker && docker compose up
 --build`.
 
-The web UI is a chat on one side and a side panel on the other: you talk to the agent, watch its
-progress stream in (with subagent work shown as cards), browse the session's files, and restore
-checkpoints. The panel's third tab manages attachments — drop files on it (or pick them) to hand
-them to the agent, preview them, download them back, or delete them.
+The web UI has two columns — your conversations on the left, the conversation itself in the
+middle — plus a workspace panel you open when you need it. You talk to the agent in plain
+language; each turn folds its machine work into one run timeline you can expand ("Read 3 files
+and made 1 edit"), the answer renders as Markdown, and every file the agent changed shows up as
+a diff card with its changed lines. The workspace panel has two views: **Files**, a tree you can
+drill into to read a file or see what changed in it, and **Versions**, the restore points — a
+restore always asks first. Attachments are a normal folder in that tree: drop files anywhere on
+the page, or use the paperclip in the composer, and they land in `attachments/` before your
+message is sent.
 
 ### The API
 
