@@ -42,8 +42,8 @@ Keep the behavior LUNA already has: relative paths, zone scoping, checkpoints on
 `.runtime` hidden, and `edit` matching once unless replace-all is set. The digest records
 the parent's names, not the parent's argument contract, so that contract is not copied.
 
-`read` and `grep` depend on the separate decision to truncate tool output with a decorator
-on the tool. This card does not define that decorator.
+`read` and `grep` depend on [002](002-truncate-tool-output.md). This card does not define
+that decorator.
 
 ## Why this is LUNA
 
@@ -56,5 +56,5 @@ acceptable because LUNA is not a structural JSON editor.
 
 - The parent's sandbox, `bash`, WebSocket transport, and techprocess tools (`tp_*`) from the
   same releases.
-- Truncation middleware details, except that this set depends on the decorator.
+- How the truncation decorator works. That is card 002. This set only depends on it.
 - Renaming checkpoints or rewriting changelog history that mentions `json_patch`.
