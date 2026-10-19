@@ -8,8 +8,7 @@
 ## Why
 
 File tools cannot run the commands a developer already runs on the machine: tests, git,
-formatters, scripts. The parent added `bash` in 1.2.0 inside a per-session Linux user,
-nftables, and `NET_ADMIN`. That cage is the parent's deployment, not LUNA's.
+formatters, scripts. LUNA needs a shell for that work.
 
 LUNA runs as the user who started it. On a developer machine that user is the developer.
 In a container or VM the container is the boundary. The same tool covers both. A second,
@@ -19,7 +18,7 @@ locked-down shell does not belong in the core.
 
 One shell tool. It runs the host shell: PowerShell on Windows, bash on Linux and in a
 container. Any command, pipes, network, and child processes are allowed, as that user.
-There is no command allowlist and no nftables inside the process.
+There is no command allowlist and no network filter inside the process.
 
 The working directory is the agent's zone. `PathScope` does not apply inside the child
 process: the shell can leave the zone, read `.runtime`, and write outside the session.
@@ -41,7 +40,7 @@ of the tool.
 
 ## Out of scope
 
-- The parent's per-session uid, nftables, and `NET_ADMIN`.
+- A per-session user, a host firewall, or any other jail inside the LUNA process.
 - A separate shell for a multi-user deployment.
 - Two tools, `bash` and `powershell`, with different contracts.
 - Teaching the shell to honor `PathScope` or to hide `.runtime`.
