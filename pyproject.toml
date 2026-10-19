@@ -43,6 +43,10 @@ dev = [
     "black>=26.5.1",
     "mypy>=2.1.0",
 ]
+# Live end-to-end agent scenarios (run with `pytest -m integration`)
+eval = [
+    "deepeval>=4.3.1,<5.0",
+]
 
 [tool.setuptools.packages.find]
 include = ["core*", "cli*"]
@@ -68,6 +72,8 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+# Repo root on sys.path so the live e2e suite can share `tests.evals.harness` across features.
+pythonpath = ["."]
 # --import-mode=importlib: allows same-named test files in different packages
 # (tests/agent/test_base.py vs tests/clients/test_base.py) without __init__.py or import clashes.
 # Integration tests (live network) are excluded by default — run them with `-m integration`.

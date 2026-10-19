@@ -44,3 +44,6 @@ docs/tech-debt.md
 # Local session working zones (dev / ad-hoc)
 .devsession/
 .session/
+# Live e2e scenario runs (transcripts + resulting workspaces)
+tests/evals/.runs/
+.deepeval/
