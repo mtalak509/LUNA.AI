@@ -22,7 +22,7 @@ __pycache__/
 # NB: markdown процедурной памяти (core/procedures/**/*.md) НЕ исключаем — он запекается
 # в образ агента, поэтому никакого широкого `*.md`; режем только корневые доки поимённо.
 docs/
-plans/
+specs/
 tests/
 /CLAUDE.md
 /OLD_ARCHITECTURE.md
