@@ -24,7 +24,7 @@ Whether created by the server or the CLI, a session has the same shape. Here it 
 ```
 <session>/
 ├── workspace/                 the main agent's read-write zone
-│   ├── <your documents>       e.g. report.json, data/notes.md — whatever you work on
+│   ├── <your documents>       e.g. report.md, data/sales.csv — whatever you work on
 │   ├── attachments/           files you attached; listed in the agent's context each call
 │   ├── notes/
 │   │   └── decisions.md       running notes; injected into the agent's context each turn
@@ -33,8 +33,8 @@ Whether created by the server or the CLI, a session has the same shape. Here it 
 │       └── messages.jsonl     the append-only chat history (hidden from the agent's file tools)
 │
 ├── checkpoints/               snapshots of workspace/ (the undo history)
-│   ├── c000_write_file/
-│   ├── c001_json_patch/
+│   ├── c000_write/
+│   ├── c001_edit/
 │   └── ...
 │
 └── subagents/                 one folder per delegated subagent
@@ -82,7 +82,7 @@ never land here (see [runtime.md](runtime.md)).
 ## Checkpoints (undo)
 
 A checkpoint is simply a **full copy of `workspace/`** at a moment in time, saved under
-`checkpoints/` with a running number and a label, like `c003_json_patch`. The code is
+`checkpoints/` with a running number and a label, like `c003_edit`. The code is
 `CheckpointManager` ([core/agent/checkpoint.py](../core/agent/checkpoint.py)).
 
 When they're taken:
@@ -143,5 +143,5 @@ previous run are wiped, since the in-memory registry didn't survive the restart 
 
 ## Next
 
-- What the file and JSON tools do with these zones: [tools.md](tools.md)
+- What the file tools do with these zones: [tools.md](tools.md)
 - How history and checkpoints are used during a turn: [runtime.md](runtime.md)

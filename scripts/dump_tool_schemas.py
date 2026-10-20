@@ -1,17 +1,18 @@
-"""Дамп тулов в том виде, в каком они уходят модели (OpenAI function-calling wire-формат).
+"""Dump the tools as they are sent to the model (OpenAI function-calling wire format).
 
-Утилита для глаз: показывает, что именно «видит» агент про каждый тул — имя, description
-(= docstring дословно) и JSON-схему аргументов. Тело функции, `#`-комментарии и тексты
-ошибок в payload НЕ попадают (ошибки видны модели только рантайм-ToolMessage'ом при промахе).
+A tool for the eyes: shows exactly what the agent "sees" about each tool — name, description
+(= the docstring verbatim) and the JSON schema of the arguments. The function body, `#`
+comments and error texts do NOT go into the payload (the model sees errors only as a runtime
+ToolMessage on a miss).
 
-Берёт тот же FULL_POOL, что и CLI (core.agent.pool), поэтому новый тул появляется
-здесь автоматически. Можно применить assemble_pool (срез под scope/mode) и сузить по имени.
+Uses the same FULL_POOL as the CLI (core.agent.pool), so a new tool shows up here
+automatically. Can apply assemble_pool (a slice for scope/mode) and filter by name.
 
-Примеры:
-    python scripts/dump_tool_schemas.py                       # весь пул
-    python scripts/dump_tool_schemas.py -n json_inspect json_search
+Examples:
+    python scripts/dump_tool_schemas.py                       # the whole pool
+    python scripts/dump_tool_schemas.py -n read grep
     python scripts/dump_tool_schemas.py --scope subagent --mode plan
-    python scripts/dump_tool_schemas.py --names-only          # только имена + флаги
+    python scripts/dump_tool_schemas.py --names-only          # names + flags only
 """
 
 from __future__ import annotations
@@ -34,7 +35,7 @@ from core.agent.tools import assemble_pool, fs_scope_of, is_main_only, is_write_
 
 
 def _force_utf8_io() -> None:
-    """Windows-консоль по умолчанию cp1251 и давится на кириллице/стрелках — форсим UTF-8."""
+    """The Windows console defaults to cp1251 and chokes on Cyrillic/arrows — force UTF-8."""
     for name in ("stdout", "stderr"):
         stream = getattr(sys, name)
         if stream.encoding and stream.encoding.lower().startswith("utf"):
@@ -43,7 +44,7 @@ def _force_utf8_io() -> None:
 
 
 def _select_pool(scope: str | None, mode: str | None) -> list[BaseTool]:
-    """FULL_POOL как есть, либо срез assemble_pool под scope/mode (как видит конкретный агент)."""
+    """FULL_POOL as is, or an assemble_pool slice for scope/mode (what a given agent sees)."""
     if scope is None:
         return list(FULL_POOL)
     return assemble_pool(FULL_POOL, agent_scope=scope, permission_mode=mode)

@@ -6,7 +6,7 @@ This is the map of the whole system. Read it first; the other documents zoom int
 
 LUNA helps you work with documents and files by talking to a language model. You write a request
 in plain language; the model figures out the steps and carries them out by calling **tools** —
-small functions that read a file, search inside a big JSON document, apply an edit, and so on.
+small functions that find a file, search inside it, apply an edit, and so on.
 
 The important design choice is that LUNA is a **thin harness around one agent**, not a workflow
 system. There is no diagram of boxes and arrows that decides "first classify the request, then
@@ -122,7 +122,6 @@ Main agent  ──────────────► think-act loop (LangCh
  │   │                            self-correction signals)
  │   │
  │   ├─ file tools ──────────► workspace/ on disk
- │   ├─ json_* tools ────────► JSON documents in workspace/
  │   ├─ knowledge base ──────► RAG search (optional, off by default)
  │   ├─ ask_user / select ───► pauses and waits for your answer
  │   └─ delegate_to_subagent ─► launches a subagent (asyncio task)

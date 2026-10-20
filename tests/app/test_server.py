@@ -1,11 +1,11 @@
 """
-Тесты FastAPI-сервера MainAgent — мультисессия.
+Tests for the MainAgent FastAPI server — multi-session.
 
-lifespan (init_process → GPUStack/сеть) в тестах НЕ поднимаем: httpx ASGITransport не гоняет
-lifespan-протокол, поэтому app.state.sessions подставляем вручную. Маршруты юнит-тестируем
-против FakeSessionManager/FakeSession (сервер — тонкий маппер); проводку create→turn→delete
-через реальный SessionManager с фейковой фабрикой агента — отдельным интеграционным блоком.
-SSE-хелперы тестируем как юниты.
+The lifespan (init_process → GPUStack/network) is NOT started in tests: httpx ASGITransport does
+not run the lifespan protocol, so app.state.sessions is set by hand. Routes are unit-tested
+against FakeSessionManager/FakeSession (the server is a thin mapper); the create→turn→delete
+wiring through a real SessionManager with a fake agent factory is a separate integration block.
+SSE helpers are tested as units.
 """
 
 from __future__ import annotations
@@ -27,7 +27,7 @@ from core.agent.tools._hitl import HitlError
 
 
 class FakeReloadAgent:
-    """Подмена BaseAgent: считает вызовы reload_history (ре-гидратация после restore)."""
+    """Stand-in for BaseAgent: counts reload_history calls (re-hydration after restore)."""
 
     def __init__(self) -> None:
         self.reload_calls = 0
@@ -37,7 +37,7 @@ class FakeReloadAgent:
 
 
 class FakeSession:
-    """Подмена AgentSession: фиксирует вызовы, управляемо кидает ошибки, отдаёт события."""
+    """Stand-in for AgentSession: records calls, raises errors on demand, yields events."""
 
     def __init__(self, profile: str = "standalone") -> None:
         self.runs: list[str] = []
@@ -72,7 +72,7 @@ class FakeSession:
 
 
 class FakeSessionManager:
-    """Подмена SessionManager: реестр в dict, диск не трогает (кроме листинга-заглушки)."""
+    """Stand-in for SessionManager: a dict registry, does not touch disk (except a stub listing)."""
 
     def __init__(self) -> None:
         self.sessions: dict[str, FakeSession] = {}
@@ -104,7 +104,7 @@ class FakeSessionManager:
 
 @pytest.fixture
 def client_and_session(tmp_path):
-    """Клиент + одна предсозданная фейковая сессия 's1' (workspace на диске под upload)."""
+    """Client + one pre-created fake session 's1' (workspace on disk for uploads)."""
     app = create_app()
     manager = FakeSessionManager()
     session = FakeSession()
@@ -142,7 +142,7 @@ async def test_create_session_201(client_and_session):
 
 @pytest.mark.parametrize("body", [None, {}, {"profile": "wtf"}, {"profile": ""}])
 async def test_create_session_invalid_profile_422(client_and_session, body):
-    """профиль обязателен и без дефолта — контрактная ошибка видна сразу как 422."""
+    """The profile is required and has no default — the contract error shows up at once as 422."""
     client, _ = client_and_session
     async with client:
         kwargs = {"json": body} if body is not None else {}
@@ -151,8 +151,8 @@ async def test_create_session_invalid_profile_422(client_and_session, body):
 
 
 def test_factories_registry_covers_all_profiles(tmp_path):
-    """Синхронизатор: ключи реестра фабрик == значения SessionProfile (литералы
-    продублированы сознательно — bootstrap не должен зависеть от HTTP-контракта)."""
+    """Sync check: factory registry keys == SessionProfile values (the literals are
+    duplicated on purpose — bootstrap must not depend on the HTTP contract)."""
     from typing import get_args
 
     from core.agent.bootstrap import build_agent_factory
@@ -202,7 +202,7 @@ async def test_delete_unknown_session_404(client_and_session):
     ],
 )
 async def test_unknown_session_id_404(client_and_session, method, path, body):
-    """Все session-scoped маршруты: неизвестный id → 404."""
+    """Every session-scoped route: unknown id → 404."""
     client, _ = client_and_session
     async with client:
         kwargs = {"json": body} if body is not None else {}
@@ -230,7 +230,7 @@ async def test_turn_conflict_when_busy(client_and_session):
 
 
 async def test_turn_attachments_typed(client_and_session):
-    """Контракт-задел: валидные attachments принимаются, мусорные → 422."""
+    """Contract groundwork: valid attachments are accepted, garbage → 422."""
     client, session = client_and_session
     async with client:
         ok = await client.post(
@@ -291,7 +291,7 @@ async def test_stop_nothing_to_cancel(client_and_session):
 # --- /sessions/{id}/history ----------------------------------------------------
 
 async def test_history_empty_session(client_and_session):
-    """Свежая сессия без журнала → пустой вид, не 404/500."""
+    """A fresh session without a log → an empty view, not 404/500."""
     client, _ = client_and_session
     async with client:
         r = await client.get("/sessions/s1/history")
@@ -300,8 +300,8 @@ async def test_history_empty_session(client_and_session):
 
 
 async def test_history_returns_canonical_shape(client_and_session, tmp_path):
-    """История — форма `{type, data}` (= updates-кадры SSE): human/ai/tool,
-    tool_calls — структуры, не repr-строки."""
+    """History has the `{type, data}` shape (= SSE updates frames): human/ai/tool,
+    tool_calls are structures, not repr strings."""
     from core.agent.messages import MessageStore
 
     client, _ = client_and_session
@@ -310,10 +310,10 @@ async def test_history_returns_canonical_shape(client_and_session, tmp_path):
         HumanMessage("сделай патч"),
         AIMessage(
             content="",
-            tool_calls=[{"name": "json_patch", "args": {"operations": []}, "id": "c1",
+            tool_calls=[{"name": "edit", "args": {"operations": []}, "id": "c1",
                          "type": "tool_call"}],
         ),
-        ToolMessage(content="ok", tool_call_id="c1", name="json_patch", status="success"),
+        ToolMessage(content="ok", tool_call_id="c1", name="edit", status="success"),
         AIMessage("готово"),
     ])
 
@@ -324,7 +324,7 @@ async def test_history_returns_canonical_shape(client_and_session, tmp_path):
     assert body["summary"] is None
     assert [m["type"] for m in body["messages"]] == ["human", "ai", "tool", "ai"]
     (tc,) = body["messages"][1]["data"]["tool_calls"]
-    assert tc["name"] == "json_patch"
+    assert tc["name"] == "edit"
     assert tc["args"] == {"operations": []}
     assert body["messages"][2]["data"]["tool_call_id"] == "c1"
     assert body["messages"][3]["data"]["content"] == "готово"
@@ -346,7 +346,7 @@ async def test_history_with_compaction_summary(client_and_session, tmp_path):
 
 
 async def test_history_readable_while_busy(client_and_session, tmp_path):
-    """Журнал append-only — история читается и при активном ходе (снапшот)."""
+    """The log is append-only — history is readable during an active turn (a snapshot)."""
     from core.agent.messages import MessageStore
 
     client, session = client_and_session
@@ -401,7 +401,7 @@ async def test_set_mode_invalid_value_422(client_and_session):
 # --- root_path -----------------------------------------------------------------------
 
 async def test_root_path_from_config(monkeypatch):
-    """create_app пробрасывает server.root_path в FastAPI (жизнь под ingress-префиксом)."""
+    """create_app passes server.root_path to FastAPI (running behind an ingress prefix)."""
     from types import SimpleNamespace
 
     monkeypatch.setattr(
@@ -417,7 +417,7 @@ async def test_root_path_from_config(monkeypatch):
 # --- зачистка stale-сессий на старте -----------------------------------------------------
 
 def test_wipe_stale_sessions_removes_dirs_keeps_files(tmp_path):
-    """Директории прошлого процесса (сессии, procedures) сносятся, файлы в корне — нет."""
+    """Directories of a previous process (sessions, procedures) are removed; root files stay."""
     (tmp_path / "deadbeef01" / "workspace").mkdir(parents=True)
     (tmp_path / "procedures").mkdir()
     stray = tmp_path / "stray.log"
@@ -435,9 +435,9 @@ def test_wipe_stale_sessions_missing_root_is_noop(tmp_path):
 
 
 async def test_lifespan_wipes_stale_sessions_before_init(tmp_path, monkeypatch):
-    """Регрессия (devfront): после рестарта на диске оставались сессии-«сироты»,
-    невидимые для GET /sessions. lifespan обязан зачистить диск ДО init_process
-    (тот кладёт procedures/ в тот же корень)."""
+    """Regression (devfront): after a restart, orphan sessions stayed on disk,
+    invisible to GET /sessions. The lifespan must clean the disk BEFORE init_process
+    (which puts procedures/ into the same root)."""
     from types import SimpleNamespace
 
     stale = tmp_path / "deadbeef01"
@@ -470,7 +470,7 @@ async def test_lifespan_wipes_stale_sessions_before_init(tmp_path, monkeypatch):
 # --- проводка через реальный SessionManager ---------------------------------------------
 
 class FakeAgent:
-    """Подмена BaseAgent для реального SessionManager: ход висит до cancel."""
+    """Stand-in for BaseAgent for the real SessionManager: the turn hangs until cancel."""
 
     def __init__(self, gen_factory):
         self._gen_factory = gen_factory
@@ -486,7 +486,7 @@ async def _hang_forever_gen(text):
 
 @pytest.fixture
 def client_real_manager(tmp_path):
-    """Клиент поверх реального SessionManager (фейковая только сборка агента)."""
+    """Client over a real SessionManager (only the agent build is fake)."""
     app = create_app()
     app.state.session_root = tmp_path
 
@@ -503,7 +503,7 @@ def client_real_manager(tmp_path):
 
 
 async def test_two_sessions_lifecycle(client_real_manager, tmp_path):
-    """Интеграция маршрутов с реальным реестром: create ×2 → turn в одной → delete busy."""
+    """Routes integrated with a real registry: create ×2 → turn in one → delete busy."""
     client = client_real_manager
     async with client:
         s1 = (await client.post("/sessions", json={"profile": "standalone"})).json()["session_id"]
@@ -542,7 +542,7 @@ async def test_two_sessions_lifecycle(client_real_manager, tmp_path):
 
 
 async def app_wait_idle(client, session_id):
-    """Дождаться завершения Task хода после stop (иначе pending-task warning)."""
+    """Wait for the turn Task to finish after stop (otherwise a pending-task warning)."""
     manager = client._transport.app.state.sessions
     session = manager.get_session(session_id)
     if session is not None:
@@ -552,13 +552,13 @@ async def app_wait_idle(client, session_id):
 # --- SSE-хелперы -----------------------------------------------------------------------
 
 def _frame_data(frame: str) -> dict:
-    """Распарсить SSE-кадр: JSON после 'data: '."""
+    """Parse an SSE frame: the JSON after 'data: '."""
     payload = frame.split("data: ", 1)[1].rstrip("\n")
     return json.loads(payload)
 
 
 def test_sse_frame_messages_normalized():
-    """`messages`-кадр — чистый JSON: текст-дельта + reasoning-дельта, не repr-строка."""
+    """A `messages` frame is clean JSON: text delta + reasoning delta, not a repr string."""
     chunk = AIMessageChunk(
         content=[
             {
@@ -584,7 +584,7 @@ def test_sse_frame_messages_tool_call_chunks():
     chunk = AIMessageChunk(
         content=[],
         tool_call_chunks=[
-            {"type": "tool_call_chunk", "name": "json_patch", "args": '{"op', "id": "c1", "index": 0}
+            {"type": "tool_call_chunk", "name": "edit", "args": '{"op', "id": "c1", "index": 0}
         ],
         response_metadata={"model_provider": "openai"},
     )
@@ -594,13 +594,13 @@ def test_sse_frame_messages_tool_call_chunks():
     assert data["text"] == ""
     assert data["reasoning"] is None
     (tc,) = data["tool_call_chunks"]
-    assert tc["name"] == "json_patch"
+    assert tc["name"] == "edit"
     assert tc["args"] == '{"op'
 
 
 def test_sse_frame_messages_non_ai_chunk():
-    """LangGraph в mode=messages эмитит и ToolMessage — кадр остаётся JSON-чистым."""
-    tool = ToolMessage(content="ok", tool_call_id="c1", name="read_file", status="success")
+    """In mode=messages LangGraph also emits ToolMessage — the frame stays clean JSON."""
+    tool = ToolMessage(content="ok", tool_call_id="c1", name="read", status="success")
     frame = _sse_frame(StreamEvent("main", "messages", (tool, {"langgraph_node": "tools"})))
 
     data = _frame_data(frame)["data"]
@@ -611,12 +611,12 @@ def test_sse_frame_messages_non_ai_chunk():
 
 
 def test_sse_frame_updates_messages_are_structured():
-    """`updates`-кадр: tool_calls/статус — структуры, а не Python-repr."""
+    """An `updates` frame: tool_calls/status are structures, not Python repr."""
     ai = AIMessage(
         content="",
-        tool_calls=[{"name": "read_file", "args": {"path": "x"}, "id": "c1", "type": "tool_call"}],
+        tool_calls=[{"name": "read", "args": {"path": "x"}, "id": "c1", "type": "tool_call"}],
     )
-    tool = ToolMessage(content="ok", tool_call_id="c1", name="read_file", status="success")
+    tool = ToolMessage(content="ok", tool_call_id="c1", name="read", status="success")
     event = StreamEvent(
         "main", "updates", {"model": {"messages": [ai]}, "tools": {"messages": [tool]}}
     )
@@ -625,7 +625,7 @@ def test_sse_frame_updates_messages_are_structured():
     model_msg = data["model"]["messages"][0]
     assert model_msg["type"] == "ai"
     (tc,) = model_msg["data"]["tool_calls"]
-    assert tc["name"] == "read_file"
+    assert tc["name"] == "read"
     assert tc["args"] == {"path": "x"}
     tool_msg = data["tools"]["messages"][0]
     assert tool_msg["type"] == "tool"
@@ -634,7 +634,7 @@ def test_sse_frame_updates_messages_are_structured():
 
 
 def test_sse_frame_custom_control_passthrough():
-    """`custom`/`control` уже JSON-чисты — проходят без изменений."""
+    """`custom`/`control` are already clean JSON — they pass through unchanged."""
     for mode, payload in [
         ("custom", {"type": "hitl_question", "hitl_id": "h1"}),
         ("control", {"type": "turn_done", "turn_id": "turn-1"}),
@@ -644,8 +644,8 @@ def test_sse_frame_custom_control_passthrough():
 
 
 def test_sse_frame_subagent_event_messages_normalized():
-    """вложенный `subagent_event` c mode=messages несёт сырой
-    `(AIMessageChunk, metadata)` — нормализуется рекурсивно, а не через default=str."""
+    """A nested `subagent_event` with mode=messages carries a raw
+    `(AIMessageChunk, metadata)` — it is normalized recursively, not via default=str."""
     chunk = AIMessageChunk(
         content=[{"type": "text", "text": "суб-токен", "index": 0}],
         response_metadata={"model_provider": "openai"},
@@ -666,11 +666,11 @@ def test_sse_frame_subagent_event_messages_normalized():
 
 
 def test_sse_frame_subagent_event_updates_normalized():
-    """вложенный `subagent_event` c mode=updates несёт LangChain-сообщения —
-    структура `{node: {messages: [{type, data}]}}` восстанавливается для дорожки субагента."""
+    """A nested `subagent_event` with mode=updates carries LangChain messages —
+    the `{node: {messages: [{type, data}]}}` structure is restored for the subagent lane."""
     ai = AIMessage(
         content="",
-        tool_calls=[{"name": "read_file", "args": {"path": "x"}, "id": "c1", "type": "tool_call"}],
+        tool_calls=[{"name": "read", "args": {"path": "x"}, "id": "c1", "type": "tool_call"}],
     )
     payload = {
         "type": "subagent_event",
@@ -682,18 +682,18 @@ def test_sse_frame_subagent_event_updates_normalized():
     model_msg = data["data"]["model"]["messages"][0]
     assert model_msg["type"] == "ai"
     (tc,) = model_msg["data"]["tool_calls"]
-    assert tc["name"] == "read_file"
+    assert tc["name"] == "read"
 
 
 def test_sse_frame_subagent_event_other_type_passthrough():
-    """`custom`-кадры без subagent_event (namespace_*, document_patch, HITL) — как есть."""
+    """`custom` frames without subagent_event (namespace_*, document_patch, HITL) pass as is."""
     payload = {"type": "namespace_open", "namespace": "subagent.default.abc123"}
     data = _frame_data(_sse_frame(StreamEvent("main", "custom", payload)))["data"]
     assert data == payload
 
 
 def test_sse_frame_malformed_messages_does_not_raise():
-    """Сбой нормализации не роняет стрим: деградация default=str."""
+    """A normalization failure does not break the stream: it degrades to default=str."""
     frame = _sse_frame(StreamEvent("main", "messages", {"weird": object()}))
     assert frame.startswith("event: messages\n")
     _frame_data(frame)  # кадр всё равно валидный JSON (default=str)
@@ -703,7 +703,7 @@ def test_sse_frame_malformed_messages_does_not_raise():
 
 @pytest.fixture
 def client_dev_endpoints(tmp_path):
-    """Клиент для маршрутов file-viewer'а/чекпоинтов (регистрируются всегда)."""
+    """Client for the file-viewer/checkpoint routes (always registered)."""
     app = create_app()
     manager = FakeSessionManager()
     session = FakeSession()
@@ -804,7 +804,7 @@ async def test_fs_file_binary_415(client_dev_endpoints, tmp_path):
 
 
 async def test_fs_file_oversize_413(client_dev_endpoints, tmp_path, monkeypatch):
-    """Файл больше лимита → 413. Лимит понижаем monkeypatch'ем ради скорости."""
+    """A file over the limit → 413. The limit is lowered with monkeypatch for speed."""
     client, _ = client_dev_endpoints
     monkeypatch.setattr(dev_routes, "_MAX_DEV_FILE_BYTES", 8)
     target = tmp_path / "s1" / "workspace" / "big.txt"
@@ -938,7 +938,7 @@ async def test_checkpoint_restore_ok(client_dev_endpoints, tmp_path):
 
 
 async def test_checkpoint_restore_reloads_agent_history(client_dev_endpoints, tmp_path):
-    """После успешного restore живая история агента ре-гидратируется."""
+    """After a successful restore the live agent history is re-hydrated."""
     client, session = client_dev_endpoints
     workspace = tmp_path / "s1" / "workspace"
     checkpoints = tmp_path / "s1" / "checkpoints"
@@ -956,7 +956,7 @@ async def test_checkpoint_restore_reloads_agent_history(client_dev_endpoints, tm
 
 
 async def test_checkpoint_restore_invalid_id(client_dev_endpoints):
-    """Некорректный cp_id (malformed / '..') → 400, до любой ФС-операции."""
+    """An invalid cp_id (malformed / '..') → 400, before any filesystem operation."""
     client, session = client_dev_endpoints
     session.is_busy = False
     async with client:
@@ -980,7 +980,7 @@ async def test_static_index_served_at_root(client_and_session):
 
 
 async def test_static_mount_does_not_shadow_api(client_and_session):
-    """API-роуты зарегистрированы до mount — берут приоритет над статикой."""
+    """API routes are registered before the mount — they take priority over static files."""
     client, _ = client_and_session
     async with client:
         r = await client.get("/sessions")
@@ -1012,11 +1012,11 @@ async def test_sse_stream_heartbeat_on_idle(monkeypatch):
 
 
 async def test_sse_stream_survives_heartbeat_then_delivers(monkeypatch):
-    """Регрессия (обкатка 15.5): heartbeat не должен убивать генератор событий.
+    """Regression: a heartbeat must not kill the event generator.
 
-    Старый код через wait_for(anext) отменял anext на таймауте → CancelledError убивал
-    events(), и следующий anext ронял стрим StopAsyncIteration'ом. Проверяем полный цикл:
-    ping на паузе → событие ПОСЛЕ ping'а доставляется, стрим жив.
+    The old code used wait_for(anext), which cancelled anext on timeout → CancelledError killed
+    events(), and the next anext broke the stream with StopAsyncIteration. Checks the full cycle:
+    ping during a pause → an event AFTER the ping is delivered, the stream is alive.
     """
     monkeypatch.setattr(sse, "_SSE_HEARTBEAT_INTERVAL", 0.01)
     session = FakeSession()

@@ -2,7 +2,7 @@
 
 LUNA is a personal work assistant for reading and editing documents and files. You talk to it
 in plain language ("find where the price is set in this report and change it to 42"), and it
-does the work by calling tools — reading files, searching inside large JSON, applying edits.
+does the work by calling tools — finding files, searching inside them, applying edits.
 
 Under the hood LUNA is a **thin harness around one LLM agent**. There is no workflow engine and
 no database. The agent decides what to do next by itself, one tool call at a time, and all state
@@ -23,7 +23,7 @@ Read these in order the first time. Each is short and focused.
    inside the context window.
 3. **[storage.md](storage.md)** — where everything lives on disk: sessions, the working folder,
    subagent folders, and checkpoints (the undo history).
-4. **[tools.md](tools.md)** — the tools the agent can call (files, JSON, knowledge base,
+4. **[tools.md](tools.md)** — the tools the agent can call (files, knowledge base,
    delegation, asking you a question) and how each agent only gets the tools it's allowed.
 5. **[modes-and-hitl.md](modes-and-hitl.md)** — the two safety switches (Plan/Act and
    Confirm/Accept-all) and how the agent pauses to ask you something.

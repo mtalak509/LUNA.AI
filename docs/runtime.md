@@ -13,8 +13,8 @@ The agent does not answer in one shot. It runs a loop:
 3. The model reads that result and decides again — maybe another tool, maybe the final answer.
 4. This repeats until the model produces a reply for you instead of a tool call.
 
-So a single request like "change the title in report.json to 'Report 2'" might turn into: look at
-the document structure → search for where the title is → apply the edit → tell you it's done.
+So a single request like "change the title in report.md to 'Report 2'" might turn into: search
+for where the title is → read the lines around it → apply the edit → tell you it's done.
 Four steps, one turn, no plan written in advance — the route is just what the model chose.
 
 There is a hard ceiling (`recursion_limit`, default 50) so a confused model can't loop forever.
@@ -61,7 +61,7 @@ context to the message list. Two things go in there today: your running notes fr
 `notes/decisions.md`, and a listing of `workspace/attachments/` — the files you attached — so the
 agent knows they're there without going looking for them. The listing carries paths and sizes only;
 the agent reads the contents with its tools when the task actually needs them, which matters when
-the file is a hundred-megabyte JSON.
+the file is a hundred megabytes of text.
 
 That block is a listing of the directory *at that moment*, not a log of what you uploaded. The
 difference matters: with a log, deleting a file leaves a notification behind that outlives the file
@@ -82,8 +82,8 @@ instead of waiting for the end. Each event is tagged with the agent it came from
 
 - **messages** — the model's reply, token by token, as it's generated.
 - **updates** — a tool was called or a tool returned a result.
-- **custom** — domain events from tools: a subagent starting or finishing, a JSON patch being
-  applied (used for live document preview), and so on.
+- **custom** — domain events from tools: a subagent starting or finishing, a question waiting
+  for your answer, and so on.
 
 The CLI colors these as it prints them; the web UI renders `main` as the chat and `subagent.*` as
 progress cards under the delegation. The HTTP server forwards the same stream to the browser as

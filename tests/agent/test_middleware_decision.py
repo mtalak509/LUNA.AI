@@ -1,11 +1,11 @@
 """
-Unit-тесты `DecisionMiddleware` (2.3 → фикс HITL) в изоляции.
+Unit tests for `DecisionMiddleware` in isolation.
 
-Гейт теперь программный: любой write-тул (по `is_write_tool`) в режиме `confirm`
-паркуется на `request_human`, не завися от того, вызовет ли модель отдельный тул
-подтверждения (`confirm_with_user` упразднён — модель его игнорировала, что делало
-gate ненадёжным). Реальный `ToolCallRequest`/`BaseTool` не нужны — подменяем лёгкими
-фейками, а `request_human` мокаем прямо в модуле `decision.py`.
+The gate is programmatic: any write tool (by `is_write_tool`) in `confirm` mode parks on
+`request_human`, regardless of whether the model calls a separate confirmation tool (there
+is none: a model-driven confirmation tool was ignored by the model, which made the gate
+unreliable). Real `ToolCallRequest`/`BaseTool` are not needed — light fakes stand in, and
+`request_human` is mocked right in the `decision.py` module.
 """
 
 from __future__ import annotations
@@ -59,7 +59,7 @@ def _req(
 
 
 def _make_handler(return_value):
-    """Фейковый async-handler: фиксирует факт вызова, возвращает заданный результат."""
+    """Fake async handler: records that it was called, returns the given result."""
     captured = {"called": False}
 
     async def handler(request):
@@ -72,7 +72,7 @@ def _make_handler(return_value):
 
 @pytest.fixture(autouse=True)
 def _no_real_hitl(monkeypatch):
-    """По умолчанию request_human не должен звать реальный реестр — тесты его мокают явно."""
+    """By default request_human must not reach the real registry — tests mock it explicitly."""
     async def _boom(*args, **kwargs):
         raise AssertionError("request_human не должен вызываться в этой ветке")
 
@@ -85,25 +85,25 @@ def _no_real_hitl(monkeypatch):
 
 
 async def test_read_tool_passes_through_even_in_confirm() -> None:
-    """Не-write тул исполняется без гейта в любом режиме."""
+    """A non-write tool runs without the gate in any mode."""
     mw = DecisionMiddleware()
     sentinel = ToolMessage(content="HANDLER", tool_call_id="call_1")
     handler, captured = _make_handler(sentinel)
 
-    result = await mw.awrap_tool_call(_req("read_file", "confirm", is_write=False), handler)
+    result = await mw.awrap_tool_call(_req("read", "confirm", is_write=False), handler)
 
     assert captured["called"] is True
     assert result is sentinel
 
 
 async def test_write_tool_accept_all_passes_through_without_confirm() -> None:
-    """accept_all: write-тул исполняется сразу, request_human не вызывается."""
+    """accept_all: a write tool runs at once, request_human is not called."""
     mw = DecisionMiddleware()
     sentinel = ToolMessage(content="HANDLER", tool_call_id="call_1")
     handler, captured = _make_handler(sentinel)
 
     result = await mw.awrap_tool_call(
-        _req("write_file", "accept_all", is_write=True), handler
+        _req("write", "accept_all", is_write=True), handler
     )
 
     assert captured["called"] is True
@@ -111,7 +111,7 @@ async def test_write_tool_accept_all_passes_through_without_confirm() -> None:
 
 
 async def test_write_tool_confirm_mode_approved_calls_handler(monkeypatch) -> None:
-    """confirm + пользователь подтвердил (True) → handler вызывается."""
+    """confirm + the user approved (True) → the handler is called."""
     mw = DecisionMiddleware()
     sentinel = ToolMessage(content="HANDLER", tool_call_id="call_1")
     handler, captured = _make_handler(sentinel)
@@ -129,18 +129,18 @@ async def test_write_tool_confirm_mode_approved_calls_handler(monkeypatch) -> No
     )
 
     result = await mw.awrap_tool_call(
-        _req("json_patch", "confirm", is_write=True, args={"ops": [1]}), handler
+        _req("edit", "confirm", is_write=True, args={"ops": [1]}), handler
     )
 
     assert captured["called"] is True
     assert result is sentinel
     assert called_with["kind"] == "confirm"
-    assert "json_patch" in called_with["payload"]["action_description"]
+    assert "edit" in called_with["payload"]["action_description"]
     assert "{'ops': [1]}" in called_with["payload"]["action_description"]
 
 
 async def test_write_tool_confirm_mode_rejected_returns_error(monkeypatch) -> None:
-    """confirm + пользователь отклонил (False) → handler НЕ вызывается, ToolMessage(error)."""
+    """confirm + the user rejected (False) → the handler is NOT called, ToolMessage(error)."""
     mw = DecisionMiddleware()
     handler, captured = _make_handler(ToolMessage(content="HANDLER", tool_call_id="call_1"))
 
@@ -152,11 +152,11 @@ async def test_write_tool_confirm_mode_rejected_returns_error(monkeypatch) -> No
     )
 
     result = await mw.awrap_tool_call(
-        _req("delete_file", "confirm", is_write=True, tc_id="call_9"), handler
+        _req("rm", "confirm", is_write=True, tc_id="call_9"), handler
     )
 
     assert captured["called"] is False
     assert isinstance(result, ToolMessage)
     assert result.status == "error"
     assert result.tool_call_id == "call_9"
-    assert result.name == "delete_file"
+    assert result.name == "rm"

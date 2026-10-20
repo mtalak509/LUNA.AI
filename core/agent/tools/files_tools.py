@@ -1,13 +1,17 @@
 """
-Шесть файловых тулов плоского пула: read/write/edit/list/search/delete.
+File tools of the flat pool: read, write, edit, ls, find, grep, rm.
 
-Работа с обычными файлами рабочей зоны агента — аналог Read/Write/Edit/Glob/Grep, но НЕ
-через shell: именно в туле навешиваются скоуп зон, чекпоинт (@with_checkpoint)
- и блок .runtime/. Зона определяется в рантайме из контекста (get_runtime), поэтому одни
-и те же тулы обслуживают и MainAgent (workspace/), и субагента (своя зона + RO-вид workspace).
+They work on ordinary files of the agent's zone without a shell, so the tool itself enforces
+zone scoping, the checkpoint (@with_checkpoint) and the `.runtime/` block. The zone comes from
+the runtime context (get_runtime), so the same tools serve the MainAgent (workspace/) and a
+subagent (its own zone + a read-only view of workspace).
 """
 
 from __future__ import annotations
+
+import re
+from collections.abc import Callable, Iterator
+from pathlib import Path
 
 from langgraph.runtime import get_runtime
 
@@ -15,14 +19,13 @@ from core.agent.checkpoint import with_checkpoint
 from core.agent.tools import agent_tool
 from core.agent.tools.fs_paths import FileAccessError, PathScope
 
-# Имя runtime-каталога, скрываемого из листинга/поиска (резолвер и так блокирует вход).
+# Runtime directory hidden from listings and searches (the resolver already blocks entering it).
 _RUNTIME_DIRNAME = ".runtime"
-_MAX_SEARCH_RESULTS = 100
-_MAX_SEARCH_FILE_BYTES = 1_000_000
+_NOTHING_FOUND = "(ничего не найдено)"
 
 
 def _scope() -> PathScope:
-    """Получить PathScope для текущего агента из рантайм-контекста."""
+    """PathScope of the current agent, built from the runtime context."""
     context = get_runtime().context
     return PathScope(
         agent_scope=context.agent_scope,
@@ -31,15 +34,7 @@ def _scope() -> PathScope:
     )
 
 
-# --- чтение (is_write=False) --------------------------------------------------------
-
-
-@agent_tool(is_write=False)
-async def read_file(path: str) -> str:
-    """Прочитать текстовый файл из рабочей зоны. Путь относительный (напр. 'notes/working.md')."""
-    p = _scope().resolve_read(path)
-    if not p.is_file():
-        raise FileAccessError(f"файл не найден: {path!r}")
+def _read_text(p: Path, path: str) -> str:
     try:
         return p.read_text(encoding="utf-8")
     except UnicodeDecodeError as e:
@@ -48,13 +43,66 @@ async def read_file(path: str) -> str:
         raise FileAccessError(f"не удалось прочитать {path!r}: {e}") from e
 
 
+def _zone_files(root: Path, select: Callable[[Path], Iterator[Path]]) -> list[Path]:
+    """Files picked by `select(root)`, sorted, inside `root` and outside `.runtime/`.
+
+    A glob pattern may climb out of `root` with `..`, so every hit is checked after resolving.
+    """
+    base = root.resolve()
+    files = []
+    for f in select(root):
+        if not f.is_file():
+            continue
+        try:
+            rel = f.resolve().relative_to(base)
+        except ValueError:
+            continue
+        if _RUNTIME_DIRNAME in rel.parts:
+            continue
+        files.append(f.resolve())
+    return sorted(set(files))
+
+
+def _rel(f: Path, root: Path) -> str:
+    return f.relative_to(root.resolve()).as_posix()
+
+
+# --- reading (is_write=False) --------------------------------------------------------
+
+
 @agent_tool(is_write=False)
-async def list_files(path: str = ".") -> str:
-    """Получить список файлов в директории. Путь относительный (напр. 'notes/')."""
+async def read(path: str, offset: int | None = None, limit: int | None = None) -> str:
+    """Read a text file from the working zone. The path is relative (e.g. 'notes/working.md').
+
+    Without offset and limit — the whole file. offset is the first line number (from 1),
+    limit is how many lines to return. With a window the answer starts with the header
+    «[строки X–Y из N]».
+    """
+    p = _scope().resolve_read(path)
+    if not p.is_file():
+        raise FileAccessError(f"файл не найден: {path!r}")
+    text = _read_text(p, path)
+    if offset is None and limit is None:
+        return text
+
+    start = 1 if offset is None else offset
+    if start < 1 or (limit is not None and limit < 1):
+        raise FileAccessError("offset и limit должны быть не меньше 1")
+    lines = text.splitlines(keepends=True)
+    total = len(lines)
+    if start > total:
+        raise FileAccessError(f"offset {start} за концом файла: в {path!r} строк {total}")
+    end = total if limit is None else min(total, start + limit - 1)
+    return f"[строки {start}–{end} из {total}]\n" + "".join(lines[start - 1 : end])
+
+
+@agent_tool(is_write=False)
+async def ls(path: str = ".") -> str:
+    """List the files in a directory (one level). The path is relative (e.g. 'notes/')."""
     d = _scope().resolve_read(path)
     if not d.is_dir():
         raise FileAccessError(f"директория не найдена: {path!r}")
-    # Каталоги сначала, потом файлы; .runtime/ скрыт (шум + защита от самопохищения контекста).
+    # Directories first, then files; .runtime/ hidden (noise, and the agent must not read it).
     entries = [
         child.name + ("/" if child.is_dir() else "")
         for child in sorted(d.iterdir(), key=lambda c: (c.is_file(), c.name))
@@ -64,70 +112,86 @@ async def list_files(path: str = ".") -> str:
 
 
 @agent_tool(is_write=False)
-async def search_files(query: str, path_hint: str = ".") -> str:
-    """Найти файлы в зоне по подстроке в ИМЕНИ или СОДЕРЖИМОМ. path_hint сужает поддерево."""
-    if query.strip() == "":
-        raise FileAccessError("пустой запрос")
-    root = _scope().resolve_read(path_hint)
+async def find(pattern: str, path: str = ".") -> str:
+    """Find files by name with a glob pattern: '*.md' — in the directory, '**/*.md' — in all
+    subdirectories, '*report*' — by part of the name. path is the directory to search from;
+    paths in the answer are relative to it.
+    """
+    root = _scope().resolve_read(path)
     if not root.is_dir():
-        raise FileAccessError(f"не каталог: {path_hint!r}")
+        raise FileAccessError(f"не каталог: {path!r}")
+    try:
+        files = _zone_files(root, lambda r: r.glob(pattern))
+    except (NotImplementedError, ValueError) as e:
+        raise FileAccessError(f"неверный шаблон {pattern!r}: {e}") from e
+    return "\n".join(_rel(f, root) for f in files) if files else _NOTHING_FOUND
 
-    needle = query.lower()
+
+@agent_tool(is_write=False)
+async def grep(
+    pattern: str, path: str = ".", glob: str | None = None, ignore_case: bool = False
+) -> str:
+    """Find lines by content with a regular expression (Python re).
+
+    path is a directory or a single file. glob narrows the set of files (e.g. '*.md'). Each
+    match is a 'path:line_number: text' line; the line number works as offset for read.
+    """
+    try:
+        regex = re.compile(pattern, re.IGNORECASE if ignore_case else 0)
+    except re.error as e:
+        raise FileAccessError(f"неверная регулярка {pattern!r}: {e}") from e
+
+    target = _scope().resolve_read(path)
+    if target.is_file():
+        root = target.parent
+        files = [target.resolve()]
+    elif target.is_dir():
+        root = target
+        files = _zone_files(root, lambda r: r.rglob(glob or "*"))
+    else:
+        raise FileAccessError(f"не найдено: {path!r}")
+
     hits: list[str] = []
-    for f in sorted(root.rglob("*")):
-        if _RUNTIME_DIRNAME in f.parts or not f.is_file():
-            continue
-        rel = f.relative_to(root)
-        if needle in f.name.lower():
-            hits.append(str(rel))
-        else:
-            try:
-                if f.stat().st_size > _MAX_SEARCH_FILE_BYTES:
-                    continue
-                text = f.read_text(encoding="utf-8")
-            except (UnicodeDecodeError, OSError):
-                continue  # бинарь/недоступный — пропускаем молча
-            for i, line in enumerate(text.splitlines(), 1):
-                if needle in line.lower():
-                    hits.append(f"{rel}:{i}: {line.strip()[:200]}")
-                    break
-        if len(hits) >= _MAX_SEARCH_RESULTS:
-            hits.append("... (результаты усечены)")
-            break
-    return "\n".join(hits) if hits else "(ничего не найдено)"
+    for f in files:
+        try:
+            text = f.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue  # binary or unreadable files are skipped silently
+        rel = _rel(f, root)
+        for i, line in enumerate(text.splitlines(), 1):
+            if regex.search(line):
+                hits.append(f"{rel}:{i}: {line}")
+    return "\n".join(hits) if hits else _NOTHING_FOUND
 
 
-# --- запись (is_write=True, триггерят чекпоинт) -------------------------------------
+# --- writing (is_write=True, triggers a checkpoint) ----------------------------------
 
 
 @agent_tool(is_write=True)
 @with_checkpoint()
-async def write_file(path: str, content: str) -> str:
-    """Создать или перезаписать файл в рабочей зоне (RW). Путь относительный."""
-    p = _scope().resolve_write(path)          # FileAccessError резолвера проходит как есть
+async def write(path: str, content: str) -> str:
+    """Create or overwrite a file in the working zone (RW). The path is relative."""
+    p = _scope().resolve_write(path)  # the resolver's FileAccessError passes through as is
     try:
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(content, encoding="utf-8")
-    except OSError as e:                       # только реальный IO-сбой, с оригиналом
+    except OSError as e:  # only a real IO failure, with the original
         raise FileAccessError(f"не удалось записать {path!r}: {e}") from e
     return f"Записано: {path} ({len(content)} символов)"
 
 
 @agent_tool(is_write=True)
 @with_checkpoint()
-async def edit_file(path: str, old_string: str, new_string: str, replace_all: bool = False) -> str:
-    """Заменить old_string на new_string в существующем файле.
+async def edit(path: str, old_string: str, new_string: str, replace_all: bool = False) -> str:
+    """Replace old_string with new_string in an existing file.
 
-    По умолчанию old_string обязан встречаться РОВНО ОДИН раз (иначе ошибка — уточните
-    контекст). replace_all=True заменяет все вхождения.
+    By default old_string must occur EXACTLY ONCE (otherwise an error — add more context).
+    replace_all=True replaces every occurrence.
     """
     p = _scope().resolve_write(path)
     if not p.is_file():
         raise FileAccessError(f"файл не найден: {path!r}")
-    try:
-        text = p.read_text(encoding="utf-8")
-    except (UnicodeDecodeError, OSError) as e:
-        raise FileAccessError(f"не удалось прочитать {path!r}: {e}") from e
+    text = _read_text(p, path)
 
     count = text.count(old_string)
     if count == 0:
@@ -145,8 +209,8 @@ async def edit_file(path: str, old_string: str, new_string: str, replace_all: bo
 
 @agent_tool(is_write=True)
 @with_checkpoint()
-async def delete_file(path: str) -> str:
-    """Удалить файл из рабочей зоны (RW). Каталоги не удаляются."""
+async def rm(path: str) -> str:
+    """Delete a file from the working zone (RW). Directories are not deleted."""
     p = _scope().resolve_write(path)
     if not p.is_file():
         raise FileAccessError(f"файл не найден: {path!r}")

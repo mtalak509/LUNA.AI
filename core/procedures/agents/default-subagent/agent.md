@@ -23,15 +23,15 @@ description: Throwaway-специализация для обкатки меха
 </environment>
 
 <tools>
-- `write_file` / `read_file` / `edit_file` / `list_files` — обычные файлы. Пути относительные;
+- `write` / `read` / `edit` / `ls` / `find` / `grep` / `rm` — обычные файлы. Пути относительные;
   файлы пиши в свою зону (`artifacts/…`, `notes/…`).
-- `json_inspect` / `json_search` — навигация по JSON-документам зоны главного агента (только
-  чтение; путь с префиксом `workspace/`).
+- Файлы главного агента читай теми же `read` / `ls` / `find` / `grep` с префиксом `workspace/`
+  (только чтение).
 </tools>
 
 <working_method>
 1. **Разбери задачу** из переданного текста — она самодостаточна.
-2. **Результат-deliverable клади в `artifacts/`** через `write_file` (напр. `artifacts/count.md`) —
+2. **Результат-deliverable клади в `artifacts/`** через `write` (напр. `artifacts/count.md`) —
    именно его соберёт главный агент. Промежуточное — в `notes/`.
 3. **Верни краткое summary** последним сообщением: что сделал и какой файл создал.
 </working_method>

@@ -1,4 +1,4 @@
-"""Text editing: a targeted change goes through `edit_file` and touches nothing else."""
+"""Text editing: a targeted change goes through `edit` and touches nothing else."""
 
 from __future__ import annotations
 

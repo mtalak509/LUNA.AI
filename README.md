@@ -19,8 +19,8 @@
 **A personal work assistant for reading and editing documents and files.**
 
 You talk to LUNA in plain language — "find where the price is set in this report and change it to
-42" — and it does the work by calling tools: reading files, searching inside large JSON documents,
-applying edits. Under the hood it is a **thin harness around one LLM agent**. There is no workflow
+42" — and it does the work by calling tools: finding files, searching inside them, reading the
+part that matters, applying edits. Under the hood it is a **thin harness around one LLM agent**. There is no workflow
 engine and no database: the agent decides each next step by itself, and all state lives as plain
 files on disk. You use it through a **command-line REPL** or a **web UI**, both backed by the same
 agent core.

@@ -12,36 +12,27 @@ The set is defined in [core/agent/pool.py](../core/agent/pool.py); the tools the
 
 ### Working with files
 
-Ordinary file operations, scoped to the agent's zone (see [storage.md](storage.md)). Paths are
-always relative.
+LUNA works with the files you bring: notes, reports, data, anything stored as text. Seven
+ordinary file tools cover that work, scoped to the agent's zone (see [storage.md](storage.md)).
+Paths are always relative.
 
 | Tool | What it does |
 |---|---|
-| `read_file` | Read a text file. |
-| `write_file` | Create or overwrite a file. |
-| `edit_file` | Replace an exact piece of text in a file (must match once, unless `replace_all`). |
-| `list_files` | List a directory. |
-| `search_files` | Find files by name or by a substring in their contents. |
-| `delete_file` | Delete a file. |
+| `read` | Read a text file. With `offset` and `limit` it returns only a window of lines, headed by "lines X–Y of N". |
+| `write` | Create a file or overwrite it whole. |
+| `edit` | Replace an exact piece of text in a file (must match once, unless `replace_all`). |
+| `ls` | List one directory. |
+| `find` | Find files by name with a glob pattern, like `*.md` or `**/*.md`. |
+| `grep` | Find lines by content with a regular expression. Each hit is `path:line: text`. |
+| `rm` | Delete a file. |
 
-These are LUNA's equivalent of Read/Write/Edit/Glob/Grep, but as real tools rather than shell
-commands — which is what lets LUNA attach zone-scoping and checkpoints to them.
+They mirror the Read/Write/Edit/Glob/Grep tools that coding agents use, so models already know
+them. But they are real tools rather than shell commands, which is what lets LUNA attach
+zone-scoping and checkpoints to them.
 
-### Working with JSON documents
-
-The point of LUNA is documents, and many are large JSON files. Reading a big JSON wholesale into
-the model's context is wasteful and error-prone, so there are three purpose-built tools that let
-the agent navigate and edit JSON *structurally*, without loading the whole thing.
-
-| Tool | What it does |
-|---|---|
-| `json_inspect` | Show one level of a JSON document at a given position (a JSON Pointer). Scalars are shown in full; nested objects and arrays are collapsed to a summary like "object: 5 keys". To go deeper, call again pointing at a child. |
-| `json_search` | Find where a substring appears (in keys or values). Returns `<pointer>: <value>` lines. It's a plain text match, not semantic search. |
-| `json_patch` | Change the document with a list of [JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902) operations (add / remove / replace / move / copy / test). It's transactional: if any operation fails, the document is left untouched. |
-
-The usual flow is: `json_inspect` or `json_search` to find the exact pointer, then `json_patch` to
-change precisely that. This keeps edits surgical and keeps huge documents out of the context
-window.
+Large files never need to go into the context whole. The usual flow is: `grep` for the place you
+need, `read` a window of lines around the line number it reports, then `edit` exactly that piece.
+A JSON or CSV file is just another text file here: the same three steps apply.
 
 ### Knowledge base (optional)
 
@@ -109,13 +100,13 @@ assembled. The code stays in place; only the tools disappear from what the model
 
 ## Errors are self-correction, not crashes
 
-When a tool hits an expected problem — a missing file, a bad JSON pointer, a patch that doesn't
-apply — it raises a clean error that becomes an "error result" message back to the model, which
-then fixes its arguments and retries. This is handled by the tool-error middleware
-([runtime.md](runtime.md)) and is why a wrong guess is a nudge, not a dead turn. Real bugs still
-raise loudly and get logged with a trace.
+When a tool hits an expected problem — a missing file, a bad regular expression, an `edit`
+whose text doesn't match — it raises a clean error that becomes an "error result" message back to
+the model, which then fixes its arguments and retries. This is handled by the tool-error
+middleware ([runtime.md](runtime.md)) and is why a wrong guess is a nudge, not a dead turn. Real
+bugs still raise loudly and get logged with a trace.
 
 ## Next
 
-- The zones the file/JSON tools operate in: [storage.md](storage.md)
+- The zones the file tools operate in: [storage.md](storage.md)
 - Plan/Act, Confirm, and the question tools: [modes-and-hitl.md](modes-and-hitl.md)

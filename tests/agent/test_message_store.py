@@ -1,9 +1,9 @@
 """
-Unit-тесты шага 2.4: `MessageStore` (`messages.jsonl`).
+Unit tests for `MessageStore` (`messages.jsonl`).
 
-Без сети и LLM — на временном каталоге. Покрываем: round-trip load/append, устойчивость
-к пустому/отсутствующему файлу, append-only, реконструкцию от маркера-саммари (`head`),
-восстановление `message_count`, вынос тяжёлого base64 в blob (ссылка вместо инлайна).
+No network or LLM — on a temporary directory. Covers: load/append round-trip, tolerance of an
+empty/missing file, append-only, reconstruction from the summary marker (`head`), restoring
+`message_count`, moving heavy base64 into a blob (a reference instead of inline data).
 """
 
 from __future__ import annotations
@@ -50,7 +50,7 @@ def test_append_then_load_round_trip(tmp_path: Path) -> None:
 
 
 def test_append_is_append_only(tmp_path: Path) -> None:
-    """Второй append дописывает, не перезатирая первый."""
+    """A second append adds to the file without overwriting the first."""
     store = MessageStore(tmp_path)
     store.append([HumanMessage("первое")])
     store.append([AIMessage("второе")])
@@ -75,7 +75,7 @@ def test_message_count_tracks_and_restores(tmp_path: Path) -> None:
 
 
 def test_load_reconstructs_from_summary(tmp_path: Path) -> None:
-    """Загрузка = саммари + хвост от head; начало (свёрнутое) не возвращается."""
+    """Load = summary + tail from head; the (compacted) beginning is not returned."""
     store = MessageStore(tmp_path)
     # 5 сообщений: m0..m4
     store.append([HumanMessage(f"m{i}") for i in range(5)])
@@ -97,7 +97,7 @@ def test_load_without_summary_returns_full_log(tmp_path: Path) -> None:
 
 
 def test_last_summary_wins(tmp_path: Path) -> None:
-    """При нескольких компакциях реконструкция идёт от последнего саммари."""
+    """With several compactions the reconstruction starts from the last summary."""
     store = MessageStore(tmp_path)
     store.append([HumanMessage(f"m{i}") for i in range(4)])  # m0..m3
     store.append_summary(SystemMessage("саммари-1"), head=2)
@@ -127,7 +127,7 @@ def test_heavy_base64_externalized_to_blob(tmp_path: Path) -> None:
 
 
 def test_small_data_uri_stays_inline(tmp_path: Path) -> None:
-    """Короткий data:-URI ниже порога не выносится."""
+    """A short data: URI below the threshold is not moved out."""
     small = "data:image/png;base64,AAAA"
     store = MessageStore(tmp_path)
     store.append([HumanMessage(content=[{"type": "image_url", "image_url": {"url": small}}])])
@@ -145,7 +145,7 @@ def test_ui_messages_missing_file(tmp_path: Path) -> None:
 
 
 def test_ui_messages_without_summary_returns_raw_dicts(tmp_path: Path) -> None:
-    """Записи отдаются диктами `messages_to_dict` ({type, data}) без гидратации."""
+    """Records are returned as `messages_to_dict` dicts ({type, data}) without hydration."""
     store = MessageStore(tmp_path)
     store.append([HumanMessage("привет"), AIMessage("здравствуй")])
 
@@ -156,7 +156,7 @@ def test_ui_messages_without_summary_returns_raw_dicts(tmp_path: Path) -> None:
 
 
 def test_ui_messages_summary_separate_tail_from_head(tmp_path: Path) -> None:
-    """Summary — отдельным полем (в load() он неотличим от human), хвост — от head."""
+    """Summary is a separate field (load() shows it as a human message); the tail starts at head."""
     store = MessageStore(tmp_path)
     store.append([HumanMessage(f"m{i}") for i in range(5)])
     store.append_summary(HumanMessage("[Сводка предыдущего диалога]\nсаммари"), head=3)
@@ -180,18 +180,18 @@ def test_ui_messages_last_summary_wins(tmp_path: Path) -> None:
 
 
 def test_ui_messages_json_clean(tmp_path: Path) -> None:
-    """Дикты пришли из json.loads → сериализуемы обратно без default=str."""
+    """The dicts came from json.loads → serializable back without default=str."""
     store = MessageStore(tmp_path)
     store.append([AIMessage(
         content="",
-        tool_calls=[{"name": "json_patch", "args": {"operations": []}, "id": "c1",
+        tool_calls=[{"name": "edit", "args": {"operations": []}, "id": "c1",
                      "type": "tool_call"}],
     )])
     json.dumps(MessageStore(tmp_path).load_ui_messages())  # не кидает
 
 
 def test_ui_messages_does_not_touch_message_count(tmp_path: Path) -> None:
-    """load_ui_messages — чистое чтение: счётчик write-пути не трогает."""
+    """load_ui_messages is a pure read: it does not touch the write-path counter."""
     store = MessageStore(tmp_path)
     store.append([HumanMessage("a")])
     assert store.message_count == 1
@@ -203,8 +203,8 @@ def test_ui_messages_does_not_touch_message_count(tmp_path: Path) -> None:
 
 
 def test_ui_messages_torn_last_line_skipped(tmp_path: Path) -> None:
-    """Недописанная последняя строка (читатель поймал append на середине) — молча
-    пропускается, целые записи отдаются."""
+    """A half-written last line (the reader caught an append midway) is skipped
+    silently; whole records are returned."""
     store = MessageStore(tmp_path)
     store.append([HumanMessage("целое")])
     with _jsonl(tmp_path).open("a", encoding="utf-8") as f:
@@ -215,7 +215,7 @@ def test_ui_messages_torn_last_line_skipped(tmp_path: Path) -> None:
 
 
 def test_ui_messages_corruption_mid_file_raises(tmp_path: Path) -> None:
-    """Битая строка в СЕРЕДИНЕ — порча журнала, не гонка: глушить нельзя."""
+    """A broken line in the MIDDLE is log corruption, not a race: it must not be silenced."""
     store = MessageStore(tmp_path)
     store.append([HumanMessage("a"), HumanMessage("b")])
     path = _jsonl(tmp_path)
