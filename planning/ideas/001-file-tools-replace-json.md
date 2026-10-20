@@ -9,13 +9,10 @@
 
 LUNA still carries a JSON document layer (`json_inspect`, `json_search`, `json_patch`, and
 `json_doc`) and a file layer with long names (`read_file`, `write_file`, `edit_file`,
-`list_files`, `search_files`, `delete_file`). The JSON tools are an early parent leftover.
-The parent kept them only as a base for a techprocess document, then wrapped that document
-in domain edits. LUNA already dropped the document tab and the unused section pointer.
-There is no canonical JSON document left for these tools to serve.
+`list_files`, `search_files`, `delete_file`). There is no canonical JSON document for the
+JSON tools to serve. The document tab and the unused section pointer are already gone.
 
-`search_files` also mixes two jobs: find a file by name, and find a line by content. The
-parent split those in 1.2.0.
+`search_files` also mixes two jobs: find a file by name, and find a line by content.
 
 ## What changes
 
@@ -23,7 +20,7 @@ Remove the JSON tool layer completely: the three tools, `json_doc`, their pool r
 the procedure text that teaches them, the tools doc section, and the tests that exist only
 for them.
 
-The file tool set becomes the parent's set:
+The file tool set is:
 
 | Tool | Job |
 |------|-----|
@@ -39,8 +36,8 @@ JSON is an ordinary file. Find a field with `grep`, read a slice with `read`, ch
 slice with `edit`, replace a file with `write`.
 
 Keep the behavior LUNA already has: relative paths, zone scoping, checkpoints on writes,
-`.runtime` hidden, and `edit` matching once unless replace-all is set. The digest records
-the parent's names, not the parent's argument contract, so that contract is not copied.
+`.runtime` hidden, and `edit` matching once unless replace-all is set. This card sets the
+names and jobs. It does not adopt an argument contract from the digest.
 
 `read` and `grep` depend on [002](002-truncate-tool-output.md). This card does not define
 that decorator.
@@ -54,7 +51,6 @@ acceptable because LUNA is not a structural JSON editor.
 
 ## Out of scope
 
-- The parent's sandbox, `bash`, WebSocket transport, and techprocess tools (`tp_*`) from the
-  same releases.
+- A process sandbox, a second transport, and tools for a domain document.
 - How the truncation decorator works. That is card 002. This set only depends on it.
 - Renaming checkpoints or rewriting changelog history that mentions `json_patch`.

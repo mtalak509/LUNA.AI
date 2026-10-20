@@ -1,7 +1,7 @@
 # Planning
 
 Development ideas live here, next to the code. This folder is the decision log. It is not a
-description of how LUNA works today (`docs/`), not a parent-release snapshot (`digests/`), and
+description of how LUNA works today (`docs/`), not a release digest (`digests/`), and
 not a record of what already shipped (`CHANGELOG.md`).
 
 ## Layout
@@ -51,7 +51,9 @@ Cards are written in English. Identifiers and paths are English too.
 ## What gets a card
 
 A card is a decision about what to build. A feature earns one when it makes LUNA easier to
-understand, extend, or run locally. "The parent had it" is not a reason.
+understand, extend, or run locally. A digest path in `source` records where the note came
+from. The card itself states the LUNA decision and does not depend on that note to be
+understood.
 
 `planning/index.md` is only the table: number, title, status, source. Update it in the same
 change as the card.
