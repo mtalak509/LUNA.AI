@@ -1,7 +1,7 @@
 # 004. CLI on prompt_toolkit and rich
 
 - id: 004
-- status: accepted
+- status: building
 - source: own
 - value: high
 
