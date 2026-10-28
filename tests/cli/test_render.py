@@ -130,6 +130,23 @@ def test_subagent_work_is_framed_and_indented():
     assert lines[-1] == f"  └─ субагент {ns} завершён"
 
 
+def test_empty_subagent_event_is_skipped():
+    view, out = _view()
+    for mode in ("messages", "updates"):
+        for data in (None, {}):
+            event = {"type": "subagent_event", "namespace": "s", "mode": mode, "data": data}
+            view.handle(_ev("custom", event))
+    view.stop()
+    assert out.export_text() == ""
+
+
+def test_spinner_advances_between_refreshes():
+    view, _ = _view()
+    first = str(view._bottom().render(0.0))
+    later = str(view._bottom().render(0.5))
+    assert first.split()[0] != later.split()[0]
+
+
 def test_subagent_error_is_reported():
     view, out = _view()
     view.handle(_ev("custom", {"type": "namespace_close", "namespace": "s", "error": "boom"}))

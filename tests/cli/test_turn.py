@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 from io import StringIO
 
+import pytest
 from langchain_core.messages import AIMessageChunk
 from rich.console import Console
 
@@ -83,6 +84,24 @@ async def test_turn_answers_hitl_and_continues(monkeypatch):
     await turn.drive_turn(session, "x", view)
     assert session.resolved == [("h1", "42")]
     assert "поменяла" in out.export_text()
+
+
+class FailingView(TurnView):
+    def handle(self, ev: StreamEvent) -> None:
+        raise RuntimeError("render failed")
+
+
+async def test_render_failure_cancels_turn_and_drains_its_events():
+    leftover = StreamEvent("main", "messages", (AIMessageChunk(content="хвост"), {}))
+    next_turn = StreamEvent("main", "messages", (AIMessageChunk(content="следующий"), {}))
+    session = ScriptedSession([leftover, leftover, _done(), next_turn])
+    events = session.events()
+    session.events = lambda: events  # type: ignore[method-assign]
+    out = Console(file=StringIO(), width=100, record=True, color_system=None)
+    with pytest.raises(RuntimeError, match="render failed"):
+        await turn.drive_turn(session, "x", FailingView(out))
+    assert session.cancelled
+    assert await anext(events) is next_turn
 
 
 async def test_ctrl_c_in_question_cancels_the_turn(monkeypatch):

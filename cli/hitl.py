@@ -66,7 +66,7 @@ async def handle_hitl(session: AgentSession, hitl: dict) -> None:
         console.print(Text(f"  {description}", style="dim"))
         answer = await prompt.ask_choice(
             "Выполнить?",
-            [(True, "Да"), (ALWAYS, "Да, и больше не спрашивать в этой сессии"), (False, "Нет")],
+            [(True, "Да"), (ALWAYS, "Да, и больше не спрашивать"), (False, "Нет")],
         )
         if answer == ALWAYS:
             state["dec"] = "accept_all"

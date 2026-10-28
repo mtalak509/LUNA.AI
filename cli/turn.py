@@ -61,10 +61,11 @@ async def drive_turn(session: AgentSession, text: str, view: TurnView | None = N
     view = view or TurnView()
     keys = CancelKeys(session.cancel_turn)
     session.run_turn(text)
-    view.start()
-    keys.start()
+    events = session.events()
     try:
-        async for ev in session.events():
+        view.start()
+        keys.start()
+        async for ev in events:
             if ev.mode == "control":
                 etype = (ev.data or {}).get("type")
                 if etype == "turn_cancelled":
@@ -85,6 +86,14 @@ async def drive_turn(session: AgentSession, text: str, view: TurnView | None = N
                     keys.start()
                 continue
             view.handle(ev)
+    except Exception:
+        # A failure on our side must not orphan the turn: its leftover events would be
+        # read as the next turn's output.
+        session.cancel_turn()
+        async for ev in events:
+            if ev.mode == "control" and (ev.data or {}).get("type") == "turn_done":
+                break
+        raise
     finally:
         keys.stop()
         view.stop()

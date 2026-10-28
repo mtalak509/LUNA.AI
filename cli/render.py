@@ -156,6 +156,8 @@ class TurnView:
         self._sub_text: dict[str, str] = {}
         self._t0 = time.monotonic()
         self.activity = "думаю"
+        # One instance for the whole turn: a Spinner counts frames from its first render.
+        self._spinner = Spinner("dots", style="yellow")
 
     # --- Live -----------------------------------------------------------------------------
 
@@ -188,15 +190,13 @@ class TurnView:
 
     def _bottom(self) -> RenderableType:
         elapsed = int(time.monotonic() - self._t0)
-        spinner = Spinner(
-            "dots",
+        self._spinner.update(
             text=Text.assemble(
                 (f"{self.activity}…", "yellow"), (f"  ({elapsed} с · esc — прервать)", "dim")
-            ),
-            style="yellow",
+            )
         )
         tail = self._md.tail if self._md is not None else None
-        return Group(tail, spinner) if tail is not None else spinner
+        return Group(tail, self._spinner) if tail is not None else self._spinner
 
     # --- печать ---------------------------------------------------------------------------
 
@@ -309,9 +309,9 @@ class TurnView:
             self.activity = "думаю"
         elif etype == "subagent_event":
             ns = data.get("namespace") or ""
-            mode, inner = data.get("mode"), data.get("data") or ((), None)
+            mode, inner = data.get("mode"), data.get("data")
             if mode == "messages":
-                chunk, meta = inner
+                chunk, meta = inner or ((), None)
                 if (meta or {}).get("langgraph_node") != "tools":
                     self._sub_text[ns] = self._sub_text.get(ns, "") + _chunk_text(chunk)
             elif mode == "updates":
