@@ -17,7 +17,11 @@ collect_ignore_glob = ["*"] if find_spec("deepeval") is None else []
 
 @pytest.hookimpl(tryfirst=True)  # must run before `-m` deselection
 def pytest_collection_modifyitems(items: list[pytest.Item]) -> None:
-    """Every scenario hits a live LLM, so keep it out of the default offline run."""
+    """Feature scenarios hit a live LLM, so keep them out of the default offline run.
+
+    A test module sitting directly in this folder (next to the harness) is offline and stays
+    in the default run.
+    """
     for item in items:
-        if _EVALS_DIR in item.path.parents:
+        if _EVALS_DIR in item.path.parents and item.path.parent != _EVALS_DIR:
             item.add_marker(pytest.mark.integration)

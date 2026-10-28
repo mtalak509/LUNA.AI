@@ -10,8 +10,10 @@ from functools import cache
 from pathlib import Path
 
 from deepeval.metrics import ArgumentCorrectnessMetric, BaseMetric, GEval, ToolCorrectnessMetric
-from deepeval.models import DeepEvalBaseLLM
+from deepeval.models import OpenRouterModel
+from deepeval.models.utils import EvaluationCost
 from deepeval.test_case import LLMTestCase, SingleTurnParams
+from langchain_core.messages import AIMessage
 from langchain_openai import ChatOpenAI
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -29,17 +31,23 @@ class JudgeSettings(BaseSettings):
     model: str = ""
 
 
-class OpenRouterJudge(DeepEvalBaseLLM):
+class OpenRouterJudge(OpenRouterModel):
     """DeepEval evaluation model backed by a chat model on OpenRouter.
+
+    Subclasses `OpenRouterModel` so DeepEval treats the judge as a native model and adds each
+    call's billed cost into the run total (`token cost: … USD`). The amount is the dollars
+    OpenRouter reports on the response, not a local price table.
 
     `generate` takes no `schema` argument on purpose: DeepEval then falls back to asking for JSON
     in the prompt and parsing the text, which works with any model — free ones often lack
-    structured-output support.
+    structured-output support. `generate_raw_response` is refused for the same reason: GEval would
+    otherwise score from log probabilities on the inherited gateway client.
     """
 
     def __init__(self, model_name: str) -> None:
         cfg = get_config().openrouter
         self._name = model_name
+        # `usage.include` asks OpenRouter to attach the billed USD cost to `usage`.
         self._chat = ChatOpenAI(
             base_url=cfg.base_url,
             api_key=cfg.api_key or "EMPTY",
@@ -47,19 +55,43 @@ class OpenRouterJudge(DeepEvalBaseLLM):
             temperature=0,
             timeout=cfg.timeout,
             max_retries=cfg.retries,
+            extra_body={"usage": {"include": True}},
         )
 
     def load_model(self) -> ChatOpenAI:
         return self._chat
 
-    def generate(self, prompt: str) -> str:
-        return self._chat.invoke(prompt).text
+    def generate(self, prompt: str) -> tuple[str, EvaluationCost]:
+        return _reply(self._chat.invoke(prompt))
 
-    async def a_generate(self, prompt: str) -> str:
-        return (await self._chat.ainvoke(prompt)).text
+    async def a_generate(self, prompt: str) -> tuple[str, EvaluationCost]:
+        return _reply(await self._chat.ainvoke(prompt))
+
+    def generate_raw_response(self, *args: object, **kwargs: object) -> tuple[object, float]:
+        raise AttributeError("log probabilities are not used; the judge answers in JSON")
+
+    async def a_generate_raw_response(
+        self, *args: object, **kwargs: object
+    ) -> tuple[object, float]:
+        raise AttributeError("log probabilities are not used; the judge answers in JSON")
 
     def get_model_name(self) -> str:
         return self._name
+
+
+def _reply(message: AIMessage) -> tuple[str, EvaluationCost]:
+    """Text plus the dollars OpenRouter billed for this call."""
+    usage = (message.response_metadata or {}).get("token_usage") or {}
+    raw = usage.get("cost")
+    if raw is None:
+        raise RuntimeError(
+            "OpenRouter did not report a billed cost for this judge call "
+            "(expected usage.cost). The request sends usage.include."
+        )
+    tokens = message.usage_metadata or {}
+    return message.text, EvaluationCost(
+        float(raw), tokens.get("input_tokens"), tokens.get("output_tokens")
+    )
 
 
 @cache
