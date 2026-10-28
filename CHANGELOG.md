@@ -7,6 +7,14 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- **Tool output limit** — `read`, `grep`, `find` and `ls` cut output over 2000 lines or 50 KB
+  and end it with a `[вывод обрезан: …]` note. Each tool declares its cut (`head` / `tail`) with
+  the `@truncate_output` decorator. The full output of `grep` / `find` / `ls` is saved to
+  `.truncated_outputs/` in the agent's zone and the note gives the path; `read` points to
+  `offset` / `limit` instead. The folder is readable by `read` and hidden from `ls` / `find` /
+  `grep`.
+
 ### Changed
 - **File tools renamed and split** — the file layer is now `read`, `write`, `edit`, `ls`,
   `find`, `grep`, `rm` (was `read_file`, `write_file`, `edit_file`, `list_files`,

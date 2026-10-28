@@ -37,6 +37,11 @@ Open questions:
   or pick one with a flag.
 - **Config lookup.** `.env` is in the repository today. An installed `luna` needs a user-level
   config, and possibly a per-project override.
+- **Spilled tool output.** `.truncated_outputs/` (card
+  [002](002-truncate-tool-output.md)) sits in the zone today. If the zone becomes a real
+  project folder, it would clutter that project, so it should move with session state. The
+  location comes from `PathScope.spill_dir` alone; if it leaves the zone, the agent needs read
+  access to it by an explicit prefix, the way `subagents/` works now.
 - **The web server.** Decide whether it gets the same option or stays on
   `~/.luna/sessions/`.
 
