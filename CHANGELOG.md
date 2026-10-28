@@ -7,6 +7,20 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- **File tools renamed and split** — the file layer is now `read`, `write`, `edit`, `ls`,
+  `find`, `grep`, `rm` (was `read_file`, `write_file`, `edit_file`, `list_files`,
+  `search_files`, `delete_file`). `search_files` is split in two: `find` matches file names by
+  glob, `grep` matches lines by regular expression and reports `path:line: text`. `read` takes
+  `offset` and `limit` to return a window of lines. Zone scoping, checkpoints on writes and the
+  hidden `.runtime/` work as before. Prompts and docs teach the new names — breaking for any
+  prompt or client that calls tools by the old names.
+
+### Removed
+- **JSON tool layer** — `json_inspect`, `json_search`, `json_patch` and the `json_doc` module
+  are gone. JSON is an ordinary text file: find a field with `grep`, read it with `read`,
+  change it with `edit` or `write`.
+
 ## [0.1.1] — 2026-07-31
 
 ### Added
