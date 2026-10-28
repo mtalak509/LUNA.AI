@@ -29,6 +29,7 @@ Whether created by the server or the CLI, a session has the same shape. Here it 
 │   ├── notes/
 │   │   └── decisions.md       running notes; injected into the agent's context each turn
 │   ├── artifacts/             results worth keeping
+│   ├── .truncated_outputs/    full output of tool results that were cut (see tools.md)
 │   └── .runtime/
 │       └── messages.jsonl     the append-only chat history (hidden from the agent's file tools)
 │
@@ -70,6 +71,13 @@ Two safety rules are baked into the gatekeeper regardless of agent:
   out are rejected.
 - **`.runtime/` is off-limits to file tools.** The history file lives there, and letting the agent
   read or overwrite its own message log would be a foot-gun. It's hidden from listings too.
+
+One more service folder sits in each zone: `.truncated_outputs/`. When a tool's output is too
+large, the full text lands there ([tools.md](tools.md)). The agent may read it, but `ls`, `find`
+and `grep` don't show it, so a search never finds its own earlier output. A subagent's cut output
+goes to its own zone, since it cannot write to `workspace/`. Its location is decided in one place,
+`PathScope.spill_dir`. That matters if session state ever moves out of the working zone: the
+folder moves with it.
 
 ## The chat history file
 

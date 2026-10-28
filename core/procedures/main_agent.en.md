@@ -53,6 +53,11 @@ Tools are universal — specialization is set by this prompt, not by tool select
 Do not read a large file top to bottom: find the place with `grep`, read a window around it with
 `read(path, offset, limit)`, change it with `edit`.
 
+Large output of `read`, `grep`, `find`, `ls` is cut, with a `[вывод обрезан: …]` note at the
+end. Do not treat a cut result as complete. If the note names a file in `.truncated_outputs/`,
+that file holds the full output: read it with `read` and `offset`/`limit`, or narrow it with
+`grep`. If there is no such file, page through the source with `offset`/`limit`.
+
 **Knowledge base (RAG), if enabled — two-step pattern:**
 - `knowledge_base_search(query, top_k?)` — semantic search, returns previews
   (`id`, `score`, `description`, `tags`).

@@ -34,6 +34,24 @@ Large files never need to go into the context whole. The usual flow is: `grep` f
 need, `read` a window of lines around the line number it reports, then `edit` exactly that piece.
 A JSON or CSV file is just another text file here: the same three steps apply.
 
+### When output is too large
+
+A tool's output can still be big: `grep` over a long log, `find` over a deep tree, `read` of a
+whole file. Such output is cut before it reaches the model, so one call cannot fill the context
+window. The limit is 2000 lines or 50 KB, whichever comes first.
+
+Each tool says how it wants to be cut, with the `@truncate_output` decorator
+([core/agent/tools/tool_output.py](../core/agent/tools/tool_output.py)). `head` keeps the start,
+which is right for search results and file reads. `tail` keeps the end, which is right for a
+command whose last lines matter most. The choice sits on the tool itself, so a new tool never
+gets the wrong cut by accident.
+
+A cut result ends with a note: how much is shown and how much there was. For `grep`, `find` and
+`ls` the full output is saved to `.truncated_outputs/` in the agent's own zone, and the note gives
+that path. The agent reads the rest with `read` and `offset`/`limit`, or narrows it with `grep`,
+the same way it handles any large file. `read` saves nothing, because its source is already a
+file: its note just says to continue with `offset`.
+
 ### Knowledge base (optional)
 
 If a knowledge base is configured, two tools give the agent semantic search over it, in two steps:
