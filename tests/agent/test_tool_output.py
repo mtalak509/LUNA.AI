@@ -4,7 +4,8 @@ Unit tests for tool output truncation: the pure cut (OutputTruncator) and the de
 Edge cases covered by name: output within limits is untouched; the line limit; the byte limit;
 one line longer than the byte limit is cut on a character boundary (Cyrillic); `tail` keeps the
 end and puts the note first; spill goes to the calling agent's zone (main / subagent);
-`spill=False` writes nothing; a failed spill write degrades to a note; tool errors pass through.
+a failed spill write degrades to a note; tool errors pass through. `cut_window` (read): the
+header and note name the lines actually shown and the next offset.
 """
 
 from __future__ import annotations
@@ -16,7 +17,7 @@ import pytest
 
 from core.agent.tools import tool_output as to
 from core.agent.tools.fs_paths import SPILL_DIR, FileAccessError
-from core.agent.tools.tool_output import OutputTruncator, truncate_output
+from core.agent.tools.tool_output import OutputTruncator, cut_window, truncate_output
 
 
 def _lines(n: int, width: int = 3) -> str:
@@ -86,6 +87,29 @@ def test_unknown_strategy_rejected() -> None:
         OutputTruncator("middle")  # type: ignore[arg-type]
 
 
+# --- cut_window: read's own cut ------------------------------------------------------
+
+
+def test_window_within_limits_is_not_cut() -> None:
+    assert cut_window(_lines(10), 1, 10) is None
+
+
+def test_window_cut_names_shown_lines_and_next_offset() -> None:
+    result = cut_window(_lines(3000, width=4), 1, 3000)
+    assert result is not None
+    lines = result.splitlines()
+    assert lines[0] == "[строки 1–2000 из 3000]"
+    assert lines[1] == "0001" and lines[-2] == "2000"
+    assert lines[-1] == "[вывод обрезан: показаны строки 1–2000 из 3000. Продолжай с offset=2001.]"
+
+
+def test_window_cut_counts_from_its_start() -> None:
+    result = cut_window(_lines(2500, width=4), 501, 3000)
+    assert result is not None
+    assert result.splitlines()[0] == "[строки 501–2500 из 3000]"
+    assert result.endswith("Продолжай с offset=2501.]")
+
+
 # --- @truncate_output: note and spill ------------------------------------------------
 
 
@@ -134,16 +158,6 @@ async def test_tail_puts_note_first_and_keeps_end(zones) -> None:
     result = await shell()
     assert result.startswith("[вывод обрезан")
     assert result.endswith("3000\n")
-
-
-async def test_no_spill_writes_nothing_and_suggests_offset(zones) -> None:
-    @truncate_output("head", spill=False)
-    async def read() -> str:
-        return _lines(3000, width=4)
-
-    result = await read()
-    assert "offset" in result.splitlines()[-1]
-    assert not (zones.workspace / SPILL_DIR).exists()
 
 
 async def test_failed_spill_write_still_returns_cut_output(zones) -> None:

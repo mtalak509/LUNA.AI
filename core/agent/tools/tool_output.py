@@ -95,16 +95,15 @@ class OutputTruncator:
 
 
 def truncate_output(
-    strategy: Strategy, *, spill: bool = True
+    strategy: Strategy,
 ) -> Callable[[Callable[..., Awaitable[str]]], Callable[..., Awaitable[str]]]:
     """Decorator over a tool that returns text: cut a large result and mark the cut.
 
     Order: `@agent_tool(...)` outside, `@truncate_output(...)` closer to the function.
 
-    `spill=True` saves the full output to `<zone>/.truncated_outputs/<tool>-<id>.txt` and the
-    note gives that path. `spill=False` is for a tool whose source is already a file the model
-    can page through (`read`): the note points to `offset`/`limit` instead. Tool errors pass
-    through untouched.
+    The full output is saved to `<zone>/.truncated_outputs/<tool>-<id>.txt` and the note gives
+    that path. Tool errors pass through untouched. `read` does not use this decorator: its
+    source is already a file, so it cuts its own window with `cut_window`.
     """
     truncator = OutputTruncator(strategy)
 
@@ -115,8 +114,7 @@ def truncate_output(
             cut = truncator.cut(result)
             if cut is None:
                 return result
-            hint = _spill_hint(result, func.__name__) if spill else _PAGE_HINT
-            note = f"[вывод обрезан: {_extent(cut)}. {hint}]"
+            note = f"[вывод обрезан: {_extent(cut)}. {_spill_hint(result, func.__name__)}]"
             if strategy == "head":
                 return f"{_with_newline(cut.text)}{note}"
             return f"{note}\n{cut.text}"
@@ -126,7 +124,24 @@ def truncate_output(
     return decorator
 
 
-_PAGE_HINT = "Остальное читай тем же тулом с offset/limit."
+_WINDOW_TRUNCATOR = OutputTruncator("head")
+
+
+def cut_window(body: str, start: int, total: int) -> str | None:
+    """Cut the lines `read` returns, starting at file line `start` of `total`; None if they fit.
+
+    The header and the note are built after the cut, so they name the lines actually shown and
+    the exact offset to go on from.
+    """
+    cut = _WINDOW_TRUNCATOR.cut(body)
+    if cut is None:
+        return None
+    last = start + cut.shown_lines - 1
+    note = (
+        f"[вывод обрезан: показаны строки {start}–{last} из {total}. "
+        f"Продолжай с offset={last + 1}.]"
+    )
+    return f"[строки {start}–{last} из {total}]\n{_with_newline(cut.text)}{note}"
 
 
 def _extent(cut: Cut) -> str:

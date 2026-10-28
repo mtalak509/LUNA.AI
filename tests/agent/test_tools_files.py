@@ -467,8 +467,20 @@ async def test_read_large_file_is_cut_without_spill(env, monkeypatch) -> None:
     _big_log(workspace)
 
     out = await ft.read.ainvoke({"path": "app.log"})
-    assert "offset" in out.splitlines()[-1]
+    assert "offset=2001" in out.splitlines()[-1]
     assert not (workspace / SPILL_DIR).exists()
+
+
+async def test_read_window_cut_does_not_lose_a_line(env, monkeypatch) -> None:
+    workspace, checkpoints, _ = env
+    _patch(monkeypatch, workspace=workspace, checkpoints=checkpoints)
+    _big_log(workspace)
+
+    out = await ft.read.ainvoke({"path": "app.log", "offset": 1, "limit": 3000})
+    lines = out.splitlines()
+    assert lines[0] == "[строки 1–2000 из 3000]"
+    assert lines[-2] == "2000 ERROR boom"
+    assert lines[-1].endswith("Продолжай с offset=2001.]")
 
 
 async def test_spill_is_readable_but_hidden_from_ls_find_grep(env, monkeypatch) -> None:

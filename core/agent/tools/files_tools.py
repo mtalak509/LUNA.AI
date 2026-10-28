@@ -19,7 +19,7 @@ from langgraph.runtime import get_runtime
 from core.agent.checkpoint import with_checkpoint
 from core.agent.tools import agent_tool
 from core.agent.tools.fs_paths import HIDDEN_DIRS, FileAccessError, PathScope
-from core.agent.tools.tool_output import truncate_output
+from core.agent.tools.tool_output import cut_window, truncate_output
 
 _NOTHING_FOUND = "(ничего не найдено)"
 
@@ -66,30 +66,35 @@ def _rel(f: Path, root: Path) -> str:
 
 
 @agent_tool(is_write=False)
-@truncate_output("head", spill=False)
 async def read(path: str, offset: int | None = None, limit: int | None = None) -> str:
     """Read a text file from the working zone. The path is relative (e.g. 'notes/working.md').
 
     Without offset and limit — the whole file. offset is the first line number (from 1),
     limit is how many lines to return. With a window the answer starts with the header
-    «[строки X–Y из N]».
+    «[строки X–Y из N]». A large answer is cut, and the note at its end gives the offset to
+    continue from.
     """
     p = _scope().resolve_read(path)
     if not p.is_file():
         raise FileAccessError(f"файл не найден: {path!r}")
     text = _read_text(p, path)
-    if offset is None and limit is None:
-        return text
-
-    start = 1 if offset is None else offset
-    if start < 1 or (limit is not None and limit < 1):
-        raise FileAccessError("offset и limit должны быть не меньше 1")
     lines = text.splitlines(keepends=True)
     total = len(lines)
-    if start > total:
-        raise FileAccessError(f"offset {start} за концом файла: в {path!r} строк {total}")
+    windowed = offset is not None or limit is not None
+
+    start = 1 if offset is None else offset
+    if windowed:
+        if start < 1 or (limit is not None and limit < 1):
+            raise FileAccessError("offset и limit должны быть не меньше 1")
+        if start > total:
+            raise FileAccessError(f"offset {start} за концом файла: в {path!r} строк {total}")
     end = total if limit is None else min(total, start + limit - 1)
-    return f"[строки {start}–{end} из {total}]\n" + "".join(lines[start - 1 : end])
+    body = "".join(lines[start - 1 : end]) if windowed else text
+
+    cut = cut_window(body, start, total)
+    if cut is not None:
+        return cut
+    return f"[строки {start}–{end} из {total}]\n{body}" if windowed else body
 
 
 @agent_tool(is_write=False)
