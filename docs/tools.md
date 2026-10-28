@@ -49,7 +49,9 @@ gets the wrong cut by accident.
 A cut result ends with a note: how much is shown and how much there was. For `grep`, `find` and
 `ls` the full output is saved to `.truncated_outputs/` in the agent's own zone, and the note gives
 that path. The agent reads the rest with `read` and `offset`/`limit`, or narrows it with `grep`,
-the same way it handles any large file.
+the same way it handles any large file. The folder is read-only for the agent: `write`, `edit` and
+`rm` refuse any path inside it, because a file put there would be hidden from `ls`, `find` and
+`grep`.
 
 `read` cuts on its own and saves nothing, because its source is already a file. It cuts only
 the file's lines, then writes the "lines X–Y of N" header and the note for what is actually shown,

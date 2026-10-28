@@ -249,6 +249,32 @@ def test_spill_dir_is_readable_by_its_relative_path(zones: tuple[Path, Path]) ->
     )
 
 
+@pytest.mark.parametrize(
+    "rel",
+    [
+        f"{SPILL_DIR}/grep-1.txt",
+        f"{SPILL_DIR}/new.md",
+        f"notes/../{SPILL_DIR}/grep-1.txt",
+        SPILL_DIR,
+    ],
+)
+def test_spill_dir_is_not_writable(zones: tuple[Path, Path], rel: str) -> None:
+    workspace, _ = zones
+    scope = PathScope(agent_scope="main", workspace_path=workspace)
+    with pytest.raises(FileAccessError, match="только на чтение"):
+        scope.resolve_write(rel)
+
+
+def test_spill_dir_is_not_writable_in_any_zone(zones: tuple[Path, Path]) -> None:
+    workspace, subagent = zones
+    sub = PathScope(agent_scope="subagent", workspace_path=workspace, subagent_path=subagent)
+    main = PathScope(agent_scope="main", workspace_path=workspace)
+    with pytest.raises(FileAccessError, match="только на чтение"):
+        sub.resolve_write(f"{SPILL_DIR}/grep-1.txt")
+    with pytest.raises(FileAccessError, match="только на чтение"):
+        main.resolve_write(f"subagents/abc123/{SPILL_DIR}/grep-1.txt")
+
+
 def test_from_context_builds_scope_of_the_agent(zones: tuple[Path, Path]) -> None:
     workspace, subagent = zones
     context = SimpleNamespace(

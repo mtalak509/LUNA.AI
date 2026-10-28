@@ -40,23 +40,24 @@ _SUBAGENTS_PREFIX = "subagents"
 
 
 class FileAccessError(ToolException):
-    """Доменная ошибка доступа файлового тула.
+    """Domain access error of a file tool.
 
-    Возвращается агенту как tool error (текст «доступ запрещён: …»), а НЕ роняет процесс:
-    агент видит отказ и корректирует следующий шаг. Подкласс ToolException — штатный исход
-    тула (отказ гард-рейла), а не баг: ToolErrorMiddleware логирует его без traceback.
+    It reaches the agent as a tool error (text like «доступ запрещён: …») instead of crashing
+    the process, so the agent sees the refusal and corrects its next step. As a ToolException
+    it is a regular tool outcome (a guardrail refusal), not a bug: ToolErrorMiddleware logs it
+    without a traceback.
     """
 
 
 def _safe_join(root: Path, rel: str) -> Path:
-    """Безопасно резолвит относительный `rel` под `root`. Любое нарушение → FileAccessError.
+    """Safely resolve the relative `rel` under `root`. Any violation → FileAccessError.
 
-    Гарантии (по порядку):
-    1. `rel` относительный и непустой (абсолютный / пустой — отказ);
-    2. результат не покидает `root` (traversal `..` и symlink-побег) — проверка ПОСЛЕ
-        нормализации, через `relative_to`;
-    3. `.runtime/` не адресуется (проверка тоже ПОСЛЕ нормализации — иначе `foo/../.runtime`
-        проскользнёт мимо).
+    Guarantees, in order:
+    1. `rel` is relative and not empty (absolute or empty is refused);
+    2. the result does not leave `root` (`..` traversal or a symlink escape), checked AFTER
+       normalization, with `relative_to`;
+    3. `.runtime/` cannot be addressed (also checked after normalization, otherwise
+       `foo/../.runtime` would slip through).
     """
     if not rel or not rel.strip():
         raise FileAccessError("Пустой путь")
@@ -143,12 +144,20 @@ class PathScope:
         return self.workspace_path.parent / _SUBAGENTS_PREFIX
 
     def resolve_write(self, rel: str) -> Path:
-        """Путь под запись — RW-зона агента; MainAgent ещё и зоны субагентов (cleanup)."""
+        """Path to write to: the agent's RW zone, plus subagent zones for the MainAgent (cleanup).
+
+        Spilled output is read-only: a file written there would be hidden from ls/find/grep.
+        """
         if self.agent_scope == "subagent" and _has_workspace_prefix(rel):
             raise FileAccessError(f"workspace/ доступен субагенту только на чтение: {rel!r}")
         if self.agent_scope == "main" and _has_subagents_prefix(rel):
-            return _safe_join(self._subagents_root, _strip_first_segment(rel))
-        return _safe_join(self._rw_root, rel)
+            root, sub = self._subagents_root, _strip_first_segment(rel)
+        else:
+            root, sub = self._rw_root, rel
+        target = _safe_join(root, sub)
+        if SPILL_DIR in target.relative_to(root.resolve()).parts:
+            raise FileAccessError(f"{SPILL_DIR}/ доступна только на чтение: {rel!r}")
+        return target
 
     def resolve_read(self, rel: str) -> Path:
         """Путь под чтение — RW-зона агента; плюс соседняя зона по явному префиксу:

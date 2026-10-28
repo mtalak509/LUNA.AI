@@ -493,3 +493,22 @@ async def test_spill_is_readable_but_hidden_from_ls_find_grep(env, monkeypatch) 
     assert SPILL_DIR not in await ft.ls.ainvoke({"path": "."})
     assert await ft.find.ainvoke({"pattern": "**/*.txt"}) == "(ничего не найдено)"
     assert await ft.grep.ainvoke({"pattern": "needle"}) == "(ничего не найдено)"
+
+
+async def test_spill_cannot_be_written_edited_or_removed(env, monkeypatch) -> None:
+    workspace, checkpoints, _ = env
+    _patch(monkeypatch, workspace=workspace, checkpoints=checkpoints)
+    (workspace / SPILL_DIR).mkdir()
+    spill = workspace / SPILL_DIR / "grep-1.txt"
+    spill.write_text("needle", encoding="utf-8")
+
+    calls = [
+        (ft.write, {"path": f"{SPILL_DIR}/summary.md", "content": "x"}),
+        (ft.edit, {"path": f"{SPILL_DIR}/grep-1.txt", "old_string": "needle", "new_string": "y"}),
+        (ft.rm, {"path": f"{SPILL_DIR}/grep-1.txt"}),
+    ]
+    for tool, args in calls:
+        with pytest.raises(FileAccessError, match="только на чтение"):
+            await tool.ainvoke(args)
+    assert spill.read_text(encoding="utf-8") == "needle"
+    assert not (workspace / SPILL_DIR / "summary.md").exists()
