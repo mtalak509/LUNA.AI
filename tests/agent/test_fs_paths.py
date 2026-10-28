@@ -10,10 +10,11 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
-from core.agent.tools.fs_paths import FileAccessError, PathScope, _safe_join
+from core.agent.tools.fs_paths import SPILL_DIR, FileAccessError, PathScope, _safe_join
 
 
 @pytest.fixture()
@@ -170,9 +171,10 @@ def test_subagent_has_no_subagents_prefix_privilege(zones: tuple[Path, Path]) ->
     резолвится буквально в его собственной зоне (изоляция цела)."""
     workspace, subagent = zones
     scope = PathScope(agent_scope="subagent", workspace_path=workspace, subagent_path=subagent)
-    assert scope.resolve_read("subagents/other/x.txt") == (
-        subagent / "subagents" / "other" / "x.txt"
-    ).resolve()
+    assert (
+        scope.resolve_read("subagents/other/x.txt")
+        == (subagent / "subagents" / "other" / "x.txt").resolve()
+    )
 
 
 # --- PathScope: субагент -------------------------------------------------------------
@@ -189,9 +191,10 @@ def test_subagent_paths_resolve_to_own_zone(zones: tuple[Path, Path]) -> None:
 def test_subagent_reads_workspace_via_prefix(zones: tuple[Path, Path]) -> None:
     workspace, subagent = zones
     scope = PathScope(agent_scope="subagent", workspace_path=workspace, subagent_path=subagent)
-    assert scope.resolve_read("workspace/notes/decisions.md") == (
-        workspace / "notes" / "decisions.md"
-    ).resolve()
+    assert (
+        scope.resolve_read("workspace/notes/decisions.md")
+        == (workspace / "notes" / "decisions.md").resolve()
+    )
 
 
 def test_subagent_read_bare_prefix_is_workspace_root(zones: tuple[Path, Path]) -> None:
@@ -221,3 +224,34 @@ def test_subagent_runtime_blocked_through_workspace_prefix(zones: tuple[Path, Pa
     scope = PathScope(agent_scope="subagent", workspace_path=workspace, subagent_path=subagent)
     with pytest.raises(FileAccessError):
         scope.resolve_read("workspace/.runtime/messages.jsonl")
+
+
+# --- spill_dir: where truncated tool output is kept ----------------------------------
+
+
+def test_spill_dir_is_in_main_workspace(zones: tuple[Path, Path]) -> None:
+    workspace, _ = zones
+    scope = PathScope(agent_scope="main", workspace_path=workspace)
+    assert scope.spill_dir == workspace / SPILL_DIR
+
+
+def test_spill_dir_is_in_subagent_own_zone(zones: tuple[Path, Path]) -> None:
+    workspace, subagent = zones
+    scope = PathScope(agent_scope="subagent", workspace_path=workspace, subagent_path=subagent)
+    assert scope.spill_dir == subagent / SPILL_DIR
+
+
+def test_spill_dir_is_readable_by_its_relative_path(zones: tuple[Path, Path]) -> None:
+    workspace, _ = zones
+    scope = PathScope(agent_scope="main", workspace_path=workspace)
+    assert (
+        scope.resolve_read(f"{SPILL_DIR}/grep-1.txt") == (scope.spill_dir / "grep-1.txt").resolve()
+    )
+
+
+def test_from_context_builds_scope_of_the_agent(zones: tuple[Path, Path]) -> None:
+    workspace, subagent = zones
+    context = SimpleNamespace(
+        agent_scope="subagent", workspace_path=workspace, subagent_path=subagent
+    )
+    assert PathScope.from_context(context).spill_dir == subagent / SPILL_DIR

@@ -16,7 +16,8 @@ import pytest
 from core.agent import checkpoint as cp
 from core.agent.checkpoint import CheckpointManager
 from core.agent.tools import files_tools as ft
-from core.agent.tools.fs_paths import FileAccessError
+from core.agent.tools import tool_output as to
+from core.agent.tools.fs_paths import SPILL_DIR, FileAccessError
 
 
 @pytest.fixture()
@@ -49,6 +50,7 @@ def _patch(
     rt = SimpleNamespace(context=ctx)
     monkeypatch.setattr(ft, "get_runtime", lambda *a, **k: rt)
     monkeypatch.setattr(cp, "get_runtime", lambda *a, **k: rt)
+    monkeypatch.setattr(to, "get_runtime", lambda *a, **k: rt)
 
 
 def _checkpoints(workspace: Path, checkpoints: Path) -> list[str]:
@@ -435,3 +437,47 @@ async def test_subagent_reads_workspace_readonly(env, monkeypatch) -> None:
     (workspace / "notes" / "decisions.md").write_text("RO", encoding="utf-8")
     out = await ft.read.ainvoke({"path": "workspace/notes/decisions.md"})
     assert out == "RO"
+
+
+# --- truncation of large output ------------------------------------------------------
+
+
+def _big_log(workspace: Path, lines: int = 3000) -> Path:
+    log = workspace / "app.log"
+    log.write_text("".join(f"{i} ERROR boom\n" for i in range(1, lines + 1)), encoding="utf-8")
+    return log
+
+
+async def test_grep_large_output_is_cut_and_spilled(env, monkeypatch) -> None:
+    workspace, checkpoints, _ = env
+    _patch(monkeypatch, workspace=workspace, checkpoints=checkpoints)
+    _big_log(workspace)
+
+    out = await ft.grep.ainvoke({"pattern": "ERROR", "path": "app.log"})
+    assert out.splitlines()[0] == "app.log:1: 1 ERROR boom"
+    # grep lines are long enough that the 50 KB limit bites before the line limit.
+    assert "из 3000 строк, 50 КБ из" in out.splitlines()[-1]
+    spills = list((workspace / SPILL_DIR).iterdir())
+    assert len(spills) == 1 and spills[0].name.startswith("grep-")
+
+
+async def test_read_large_file_is_cut_without_spill(env, monkeypatch) -> None:
+    workspace, checkpoints, _ = env
+    _patch(monkeypatch, workspace=workspace, checkpoints=checkpoints)
+    _big_log(workspace)
+
+    out = await ft.read.ainvoke({"path": "app.log"})
+    assert "offset" in out.splitlines()[-1]
+    assert not (workspace / SPILL_DIR).exists()
+
+
+async def test_spill_is_readable_but_hidden_from_ls_find_grep(env, monkeypatch) -> None:
+    workspace, checkpoints, _ = env
+    _patch(monkeypatch, workspace=workspace, checkpoints=checkpoints)
+    (workspace / SPILL_DIR).mkdir()
+    (workspace / SPILL_DIR / "grep-1.txt").write_text("needle", encoding="utf-8")
+
+    assert await ft.read.ainvoke({"path": f"{SPILL_DIR}/grep-1.txt"}) == "needle"
+    assert SPILL_DIR not in await ft.ls.ainvoke({"path": "."})
+    assert await ft.find.ainvoke({"pattern": "**/*.txt"}) == "(ничего не найдено)"
+    assert await ft.grep.ainvoke({"pattern": "needle"}) == "(ничего не найдено)"

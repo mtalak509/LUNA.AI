@@ -2,7 +2,8 @@
 File tools of the flat pool: read, write, edit, ls, find, grep, rm.
 
 They work on ordinary files of the agent's zone without a shell, so the tool itself enforces
-zone scoping, the checkpoint (@with_checkpoint) and the `.runtime/` block. The zone comes from
+zone scoping, the checkpoint (@with_checkpoint), the `.runtime/` block and the output limit
+(@truncate_output). The zone comes from
 the runtime context (get_runtime), so the same tools serve the MainAgent (workspace/) and a
 subagent (its own zone + a read-only view of workspace).
 """
@@ -17,21 +18,15 @@ from langgraph.runtime import get_runtime
 
 from core.agent.checkpoint import with_checkpoint
 from core.agent.tools import agent_tool
-from core.agent.tools.fs_paths import FileAccessError, PathScope
+from core.agent.tools.fs_paths import HIDDEN_DIRS, FileAccessError, PathScope
+from core.agent.tools.tool_output import truncate_output
 
-# Runtime directory hidden from listings and searches (the resolver already blocks entering it).
-_RUNTIME_DIRNAME = ".runtime"
 _NOTHING_FOUND = "(ничего не найдено)"
 
 
 def _scope() -> PathScope:
     """PathScope of the current agent, built from the runtime context."""
-    context = get_runtime().context
-    return PathScope(
-        agent_scope=context.agent_scope,
-        workspace_path=context.workspace_path,
-        subagent_path=context.subagent_path,
-    )
+    return PathScope.from_context(get_runtime().context)
 
 
 def _read_text(p: Path, path: str) -> str:
@@ -44,7 +39,7 @@ def _read_text(p: Path, path: str) -> str:
 
 
 def _zone_files(root: Path, select: Callable[[Path], Iterator[Path]]) -> list[Path]:
-    """Files picked by `select(root)`, sorted, inside `root` and outside `.runtime/`.
+    """Files picked by `select(root)`, sorted, inside `root` and outside hidden directories.
 
     A glob pattern may climb out of `root` with `..`, so every hit is checked after resolving.
     """
@@ -57,7 +52,7 @@ def _zone_files(root: Path, select: Callable[[Path], Iterator[Path]]) -> list[Pa
             rel = f.resolve().relative_to(base)
         except ValueError:
             continue
-        if _RUNTIME_DIRNAME in rel.parts:
+        if HIDDEN_DIRS.intersection(rel.parts):
             continue
         files.append(f.resolve())
     return sorted(set(files))
@@ -71,6 +66,7 @@ def _rel(f: Path, root: Path) -> str:
 
 
 @agent_tool(is_write=False)
+@truncate_output("head", spill=False)
 async def read(path: str, offset: int | None = None, limit: int | None = None) -> str:
     """Read a text file from the working zone. The path is relative (e.g. 'notes/working.md').
 
@@ -97,21 +93,23 @@ async def read(path: str, offset: int | None = None, limit: int | None = None) -
 
 
 @agent_tool(is_write=False)
+@truncate_output("head")
 async def ls(path: str = ".") -> str:
     """List the files in a directory (one level). The path is relative (e.g. 'notes/')."""
     d = _scope().resolve_read(path)
     if not d.is_dir():
         raise FileAccessError(f"директория не найдена: {path!r}")
-    # Directories first, then files; .runtime/ hidden (noise, and the agent must not read it).
+    # Directories first, then files; service directories (.runtime/, spilled output) hidden.
     entries = [
         child.name + ("/" if child.is_dir() else "")
         for child in sorted(d.iterdir(), key=lambda c: (c.is_file(), c.name))
-        if child.name != _RUNTIME_DIRNAME
+        if child.name not in HIDDEN_DIRS
     ]
     return "\n".join(entries) if entries else "(пусто)"
 
 
 @agent_tool(is_write=False)
+@truncate_output("head")
 async def find(pattern: str, path: str = ".") -> str:
     """Find files by name with a glob pattern: '*.md' — in the directory, '**/*.md' — in all
     subdirectories, '*report*' — by part of the name. path is the directory to search from;
@@ -128,6 +126,7 @@ async def find(pattern: str, path: str = ".") -> str:
 
 
 @agent_tool(is_write=False)
+@truncate_output("head")
 async def grep(
     pattern: str, path: str = ".", glob: str | None = None, ignore_case: bool = False
 ) -> str:
