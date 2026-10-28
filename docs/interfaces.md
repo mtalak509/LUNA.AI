@@ -29,14 +29,39 @@ directly — no HTTP, no server. It's the quickest way to work with LUNA or to t
 python -m cli      # or the `luna` console command
 ```
 
-You get a prompt showing the current modes:
-
-```
-[act/accept_all] >
-```
-
+You get a `>` prompt with a status line under it: the current modes, the provider and the model.
 Type anything without a leading `/` and it goes to the agent as your message. Type a `/command` to
-control the session. When the agent asks you a question, answer at the follow-up prompt.
+control the session.
+
+The CLI prints into the normal terminal scrollback, the way Claude Code does; it does not take over
+the screen. Input is [prompt_toolkit](https://python-prompt-toolkit.readthedocs.io/), output is
+[rich](https://rich.readthedocs.io/):
+
+- The model's answer streams as rendered markdown (bold, lists, tables, code).
+- Each tool call is one line, `● name(args)`, with the first lines of its result under it
+  (`⎿ …`); longer results are cut with a "… ещё N строк" count. An `edit_file` call shows a colored
+  diff of the change. A subagent's work is framed with `┌─ … └─` and indented.
+- While the agent works, a spinner at the bottom shows what it's doing and for how long.
+- When the agent asks you something, the spinner goes away and you answer in place: a confirm or a
+  choice is a menu (arrows + Enter, or the number); a free question is a line of input. In a
+  confirm, "Да, и больше не спрашивать" switches the session to Accept-all, starting with the rest
+  of the current turn.
+
+Without a terminal (input piped in) the CLI falls back to plain `input()` and numbered menus.
+
+### Keys
+
+| Key | What it does |
+|---|---|
+| `Enter` | Send the message (or take the highlighted completion). |
+| `Alt+Enter`, `Ctrl+J` | New line inside the message. Pasted multi-line text stays one message. |
+| `/` | Complete a command; `/attach` completes paths on your machine, `/fs` workspace folders, `/undo` checkpoint ids. |
+| `@` | Complete a file or folder in `workspace/`; the path is inserted as `@path` into your message. |
+| `↑` / `↓` | Message history, kept across runs in `~/.luna/cli/history`. |
+| `Shift+Tab` | Toggle Plan / Act for the next turn. |
+| `Esc`, `Ctrl+C` during a turn | Stop the turn (the runner cancels it, subagent included). The CLI stays open. |
+| `Ctrl+C` at the prompt | Clear the line; on an empty line press it twice to exit. |
+| `Ctrl+D` | Exit. |
 
 ### Commands
 
@@ -50,14 +75,14 @@ control the session. When the agent asks you a question, answer at the follow-up
 | `/undo <id>` | Roll `workspace/` back to a checkpoint and reload history. |
 | `/reset` | Recreate the session from scratch (wipe `workspace/`, checkpoints, history). |
 | `/help`, `/?` | Show the commands. |
-| `/quit` | Exit (Ctrl-C / Ctrl-D also work). |
+| `/quit` | Exit (Ctrl-D, or Ctrl-C twice on an empty line, also work). |
 
 ### Where its files go
 
 The CLI keeps everything under `~/.luna/cli/` — a sibling of the server's `~/.luna/sessions/`, so
 the two never clash. Its single session id is fixed (`dev`). Logs go to a file
 (`~/.luna/cli/repl.log`), not the console, so the screen stays clean; only the streamed turn is
-printed. See [storage.md](storage.md) for the folder layout.
+printed. Input history is kept in `~/.luna/cli/history`. See [storage.md](storage.md) for the folder layout.
 
 ### How the CLI builds the agent
 

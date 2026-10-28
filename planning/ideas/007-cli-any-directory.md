@@ -1,6 +1,6 @@
-# 005. Run the CLI from any directory
+# 007. Run the CLI from any directory
 
-- id: 005
+- id: 007
 - status: seed
 - source: own
 - value: high

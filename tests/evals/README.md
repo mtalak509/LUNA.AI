@@ -86,7 +86,11 @@ deepeval test run tests/evals -m integration
 deepeval test run tests/evals/<feature> -m integration   # one feature
 ```
 
-Everything in this folder is marked `integration` automatically, so the default offline `pytest`
-run never touches it. Runs are slow and cost tokens: run them after changing agent behaviour and
-before a release, not on every commit. A result belongs to the model it ran on — note the
-provider and model when you report one.
+Scenario modules (each feature subfolder) are marked `integration` automatically, so the default
+offline `pytest` run never touches them. Runs are slow and cost tokens: run them after changing
+agent behaviour and before a release, not on every commit. A result belongs to the model it ran
+on — note the provider and model when you report one.
+
+The closing line `token cost: … USD` is the judge's OpenRouter bill for scoring that run. Each
+judge call asks OpenRouter to attach the dollars it actually charged, and DeepEval adds those
+amounts up.

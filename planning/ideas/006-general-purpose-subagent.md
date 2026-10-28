@@ -1,6 +1,6 @@
-# 004. General-purpose subagent and a prompt refresh
+# 006. General-purpose subagent and a prompt refresh
 
-- id: 004
+- id: 006
 - status: shaped
 - source: own
 - value: medium
