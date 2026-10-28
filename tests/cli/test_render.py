@@ -48,11 +48,11 @@ def test_summarize_result_keeps_first_lines_and_counts_the_rest():
     assert summarize_result("") == (["(пусто)"], 0)
 
 
-def test_edit_diff_only_for_edit_file():
-    diff = edit_diff("edit_file", {"old_string": '"price": 39.9', "new_string": '"price": 42'})
+def test_edit_diff_only_for_edit():
+    diff = edit_diff("edit", {"old_string": '"price": 39.9', "new_string": '"price": 42'})
     plain = [t.plain for t in diff]
     assert '-"price": 39.9' in plain and '+"price": 42' in plain
-    assert edit_diff("write_file", {"content": "x"}) == []
+    assert edit_diff("write", {"content": "x"}) == []
 
 
 def test_markdown_answer_is_rendered():
@@ -87,10 +87,10 @@ def test_failed_tool_result_is_shown():
 
 def test_edit_call_shows_diff():
     view, out = _view()
-    view.handle(_call("edit_file", {"path": "r.json", "old_string": "a: 1", "new_string": "a: 2"}))
+    view.handle(_call("edit", {"path": "r.json", "old_string": "a: 1", "new_string": "a: 2"}))
     text = out.export_text()
     assert "-a: 1" in text and "+a: 2" in text
-    assert "● edit_file(path='r.json')" in text  # old/new_string только в diff
+    assert "● edit(path='r.json')" in text  # old/new_string только в diff
 
 
 def test_subagent_work_is_framed_and_indented():

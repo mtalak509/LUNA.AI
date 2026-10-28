@@ -17,6 +17,7 @@ from langchain_core.messages import AIMessage
 from langchain_openai import ChatOpenAI
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from core.agent.tools.fs_paths import HIDDEN_DIRS
 from core.config import get_config
 
 
@@ -134,7 +135,8 @@ def scenario_correctness(criteria: list[str]) -> GEval:
 class WorkspaceStateMetric(BaseMetric):
     """Deterministic: the workspace after the run equals the expected one, file for file.
 
-    Ignores the test case — the evidence is on disk. The agent's own `.runtime/` is excluded.
+    Ignores the test case — the evidence is on disk. Service folders (`.runtime/`, the spilled
+    output in `.truncated_outputs/`, whose file names are random) are excluded.
     """
 
     def __init__(self, actual: Path, expected: Path) -> None:
@@ -172,5 +174,5 @@ def _files(root: Path) -> dict[str, str]:
     return {
         p.relative_to(root).as_posix(): p.read_text(encoding="utf-8").replace("\r\n", "\n")
         for p in root.rglob("*")
-        if p.is_file() and ".runtime" not in p.relative_to(root).parts
+        if p.is_file() and not HIDDEN_DIRS.intersection(p.relative_to(root).parts)
     }

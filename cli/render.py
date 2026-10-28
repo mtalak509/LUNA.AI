@@ -28,7 +28,7 @@ console = Console(highlight=False)
 ARGS_WIDTH = 90  # аргументы тула в строке вызова
 RESULT_LINES = 3  # строк результата тула под вызовом
 RESULT_WIDTH = 160  # ширина строки результата до обрезки
-DIFF_LINES = 40  # строк diff'а edit_file до обрезки
+DIFF_LINES = 40  # diff lines of `edit` shown before the cut
 LIVE_TAIL = 8  # строк markdown, которые ещё могут перерисоваться (живут в Live)
 RENDER_EVERY = 0.08  # с; не чаще перерисовываем markdown на стриме токенов
 
@@ -64,8 +64,8 @@ def summarize_result(content: Any) -> tuple[list[str], int]:
 
 
 def edit_diff(name: str, args: Any) -> list[Text]:
-    """Цветной unified diff для edit_file (old_string → new_string); иначе пусто."""
-    if name != "edit_file" or not isinstance(args, dict):
+    """Colored unified diff for `edit` (old_string → new_string); empty for any other tool."""
+    if name != "edit" or not isinstance(args, dict):
         return []
     old, new = args.get("old_string"), args.get("new_string")
     if not isinstance(old, str) or not isinstance(new, str):
