@@ -7,6 +7,19 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- **CLI rebuilt on prompt_toolkit and rich** ([planning/ideas/004](planning/ideas/004-cli-prompt-toolkit-rich.md)).
+  The REPL keeps every command and mode and now has: streamed markdown answers; one line per tool
+  call with a short result, long results cut; a colored diff for `edit_file`; a framed, indented
+  subagent block; a spinner with elapsed time; Esc / Ctrl+C to stop the running turn without
+  leaving the CLI; arrow-key menus for agent confirms and choices ("yes, don't ask again" switches
+  to Accept-all); input history across runs, multi-line input, completion of `/commands`, their
+  arguments and `@` workspace files; Shift+Tab for Plan/Act; a status line with modes and model.
+  Without a terminal it falls back to plain input.
+
+### Added
+- **Dependencies** — `prompt_toolkit` and `rich` are now direct dependencies.
+
 ## [0.1.1] — 2026-07-31
 
 ### Added

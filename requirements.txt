@@ -95,6 +95,7 @@ platformdirs==4.10.0
 pluggy==1.6.0
 portalocker==3.2.0
 prettytable==3.17.0
+prompt_toolkit==3.0.53
 propcache==0.5.2
 protobuf==6.33.6
 py_rust_stemmers==0.1.8
