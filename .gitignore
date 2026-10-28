@@ -20,11 +20,12 @@ __pycache__/
 
 
 #CLAUDE
-.claude/
-CLAUDE.md
+.claude/agents/
+.claude/skills/parent-release-digest/
+
 
 #cursor
-.cursor/
+
 
 # Specs and plans
 specs/
