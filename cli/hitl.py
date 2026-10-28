@@ -1,18 +1,26 @@
 """HITL: перехват вопроса агента + конкурентный ответ.
 
-Пока ход припаркован на future, читаем ввод в отдельном потоке и резолвим — потребитель
-свободен, потому что ход крутится отдельной задачей (см. cli/turn.py и AgentSession).
+Пока ход припаркован на future, читаем ответ и резолвим — потребитель свободен, потому что
+ход крутится отдельной задачей (см. cli/turn.py и AgentSession). Подтверждение и выбор —
+меню со стрелками (`cli.prompt.ask_choice`), свободный ответ — строка ввода.
 """
 
 from __future__ import annotations
 
-import asyncio
+from typing import Any
 
-from cli.render import yellow
+from rich.text import Text
+
+from cli import prompt
+from cli.config import state
+from cli.render import console, shorten
 from core.agent.session import AgentSession
 
+FREE_TEXT = object()  # маркер пункта «свой ответ» в меню выбора
+ALWAYS = "always"  # «да, и больше не спрашивать» в подтверждении
 
-def _find_hitl(data) -> dict | None:
+
+def _find_hitl(data: Any) -> dict | None:
     """Достать HITL-payload из custom-события, разворачивая обёртку субагента на 1 уровень.
 
     Main-HITL приходит как `{type: hitl_question|hitl_confirm, ...}`; субагентский — обёрнут
@@ -28,18 +36,17 @@ def _find_hitl(data) -> dict | None:
     return None
 
 
-def extract_hitl(ev) -> dict | None:
+def extract_hitl(ev: Any) -> dict | None:
     """HITL-payload из StreamEvent или None (HITL едет только custom-каналом)."""
     return _find_hitl(ev.data) if ev.mode == "custom" else None
 
 
-async def _ask(prompt: str) -> str:
-    """Прочитать строку, не блокируя event loop (ход припаркован на future в это время)."""
-    return (await asyncio.to_thread(input, prompt)).strip()
+def _question(text: str) -> None:
+    console.print(Text.assemble(("❓ ", "yellow"), (text, "bold")))
 
 
 async def handle_hitl(session: AgentSession, hitl: dict) -> None:
-    """Показать вопрос агента, прочитать ответ, резолвнуть future → ход продолжится.
+    """Показать вопрос агента, получить ответ, резолвнуть future → ход продолжится.
 
     Форма value повторяет контракт тула: ask → строка; confirm → bool; select →
     `{type: selected, id}` или `{type: free_text, value}`.
@@ -48,28 +55,42 @@ async def handle_hitl(session: AgentSession, hitl: dict) -> None:
     kind = hitl.get("kind")
 
     if hitl.get("type") == "hitl_confirm" or kind == "confirm":
-        print(yellow(f"\n  ❓ подтвердите: {hitl.get('action_description', '')}  [y/n]"))
-        ans = (await _ask("  ответ > ")).lower()
-        session.resolve_hitl(hitl_id, ans in ("y", "yes", "д", "да", "1", "true"))
+        description = shorten(hitl.get("action_description", ""), 300)
+        if state["dec"] == "accept_all":
+            # «Не спрашивать» выбрано раньше в этом же ходе: режим хода ещё confirm,
+            # но пользователь уже разрешил — не дёргаем его повторно.
+            console.print(Text(f"  ✓ подтверждено автоматически: {description}", style="dim"))
+            session.resolve_hitl(hitl_id, True)
+            return
+        _question("Подтвердите действие")
+        console.print(Text(f"  {description}", style="dim"))
+        answer = await prompt.ask_choice(
+            "Выполнить?",
+            [(True, "Да"), (ALWAYS, "Да, и больше не спрашивать"), (False, "Нет")],
+        )
+        if answer == ALWAYS:
+            state["dec"] = "accept_all"
+            session.decision_mode = "accept_all"
+            answer = True
+        session.resolve_hitl(hitl_id, bool(answer))
         return
 
     if kind == "select":
         options = hitl.get("options") or []
-        allow_free = hitl.get("allow_free_text", True)
-        print(yellow(f"\n  ❓ {hitl.get('question', '')}"))
-        for i, opt in enumerate(options):
-            print(yellow(f"    [{i}] {opt.get('label')}  (id={opt.get('id')})"))
-        hint = "номер или текст" if allow_free else "номер"
-        while True:
-            raw = await _ask(f"  выбор ({hint}) > ")
-            if raw.isdigit() and int(raw) < len(options):
-                session.resolve_hitl(hitl_id, {"type": "selected", "id": options[int(raw)]["id"]})
-                return
-            if allow_free:
-                session.resolve_hitl(hitl_id, {"type": "free_text", "value": raw})
-                return
-            print(yellow("    нужен номер варианта"))
+        _question(hitl.get("question", ""))
+        choices: list[tuple[object, str]] = [
+            (opt.get("id"), str(opt.get("label"))) for opt in options
+        ]
+        if hitl.get("allow_free_text", True):
+            choices.append((FREE_TEXT, "Свой ответ…"))
+        picked = await prompt.ask_choice("Выберите вариант", choices)
+        if picked is FREE_TEXT:
+            text = await prompt.ask_text("ответ")
+            session.resolve_hitl(hitl_id, {"type": "free_text", "value": text})
+        else:
+            session.resolve_hitl(hitl_id, {"type": "selected", "id": picked})
+        return
 
     # ask (свободный ответ)
-    print(yellow(f"\n  ❓ {hitl.get('question', '')}"))
-    session.resolve_hitl(hitl_id, await _ask("  ответ > "))
+    _question(hitl.get("question", ""))
+    session.resolve_hitl(hitl_id, await prompt.ask_text("ответ"))

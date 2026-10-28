@@ -16,8 +16,23 @@ from core.agent.checkpoint import CheckpointManager
 from core.agent.tools.fs_paths import FileAccessError
 from core.agent.workspace import WorkspaceError, WorkspaceManager
 
+# Имя → (аргументы, описание). Единый список для /help и автодополнения в приглашении.
+COMMANDS: dict[str, tuple[str, str]] = {
+    "/plan": ("", "только план, write-тулы скрыты"),
+    "/act": ("", "выполнять задачу (write-тулы доступны)"),
+    "/confirm": ("", "спрашивать перед каждой правкой"),
+    "/accept": ("", "применять правки без вопросов"),
+    "/attach": ("<path> [--overwrite]", "положить файл с диска в attachments/"),
+    "/fs": ("[path]", "дерево файлов workspace"),
+    "/cp": ("", "список чекпоинтов"),
+    "/undo": ("<id>", "откатить workspace и историю к чекпоинту"),
+    "/reset": ("", "новая сессия с чистого листа"),
+    "/help": ("", "эта справка"),
+    "/quit": ("", "выход"),
+}
 
-def _manager() -> CheckpointManager:
+
+def checkpoint_manager() -> CheckpointManager:
     return CheckpointManager(
         workspace_path=SESSION_DIR / "workspace",
         checkpoints_root=SESSION_DIR / "checkpoints",
@@ -108,14 +123,14 @@ def handle_command(line: str) -> bool:
     elif cmd == "/fs":
         _print_tree(SESSION_DIR / "workspace" / arg if arg else SESSION_DIR / "workspace")
     elif cmd == "/cp":
-        snaps = _manager().list()
+        snaps = checkpoint_manager().list()
         print("\n".join(f"{c.id}  ({c.created_at:%H:%M:%S})" for c in snaps) or "(нет снимков)")
     elif cmd == "/undo":
         if not arg:
             print("использование: /undo <checkpoint_id>")
         else:
             try:
-                _manager().restore(arg)
+                checkpoint_manager().restore(arg)
                 agent = state["session"]._agent  # ре-гидратация: restore трогает только ФС
                 agent._messages = agent._store.load()
                 print(f"откат до {arg}; история перезагружена")
@@ -126,9 +141,13 @@ def handle_command(line: str) -> bool:
         state["session"] = new_session()
         print("сессия пересоздана")
     elif cmd in ("/help", "/?"):
+        width = max(len(f"{name} {args}".strip()) for name, (args, _) in COMMANDS.items())
+        print("команды:")
+        for name, (args, desc) in COMMANDS.items():
+            print(f"  {f'{name} {args}'.strip():<{width}}  {desc}")
         print(
-            "команды: /plan /act  /confirm /accept  "
-            "/attach <path> [--overwrite]  /fs [path]  /cp  /undo <id>  /reset  /quit"
+            "клавиши: esc или ctrl+c — прервать ход; shift+tab — plan/act; "
+            "alt+enter — новая строка; @ — файл из workspace; ctrl+d — выход"
         )
     elif cmd == "/quit":
         return False

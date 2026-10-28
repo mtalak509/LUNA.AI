@@ -25,6 +25,10 @@ dependencies = [
     "pydantic-settings>=2.0",     
     "python-dotenv>=1.2.2",         
 
+    # CLI (prompt_toolkit: ввод и меню HITL; rich: рендер стрима)
+    "prompt_toolkit>=3.0.52",
+    "rich>=14.0",
+
     # RAG
     "qdrant-client>=1.18.0",
     "fastembed>=0.8.0",            
