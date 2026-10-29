@@ -4,6 +4,7 @@
 # env
 .env
 .mcp.json
+.vscode/
 
 # devfront (перерабатывается — пока вне области видимости)
 devfront/
@@ -26,7 +27,6 @@ __pycache__/
 
 
 #cursor
-
 
 # Specs and plans
 specs/
