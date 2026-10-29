@@ -1,5 +1,5 @@
-"""Консольный CLI-харнесс для ручной обкатки MainAgent (без HTTP/оркестратора).
+"""Console harness for driving MainAgent by hand (no HTTP, no orchestrator).
 
-Пакет самодостаточен: сборка агента берётся напрямую из `core`.
-Точка входа — `python -m cli` (или консольная команда `luna`).
+The package stands on its own: the agent is built directly from `core`.
+Entry point: `python -m cli` (or the `luna` console script).
 """

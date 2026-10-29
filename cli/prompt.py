@@ -1,11 +1,12 @@
-"""Ввод CLI на prompt_toolkit: приглашение, автодополнение, клавиши, строка состояния.
+"""CLI input on prompt_toolkit: the prompt, completion, keys, and the status line.
 
-На терминале — `PromptSession` с историей в `~/.luna/cli/history`, многострочным вводом
-(alt+enter), автодополнением `/команд`, `@файлов` workspace и аргументов команд, и нижней
-строкой с режимами и моделью. Без терминала (пайп, тесты) — обычный `input()`, как раньше.
+On a terminal this is a `PromptSession` with history in `~/.luna/cli/history`, multiline
+input (alt+enter), completion of `/commands`, workspace `@files`, and command arguments,
+plus a bottom line with the modes and the model. Without a terminal (a pipe, tests) it
+falls back to plain `input()`.
 
-Здесь же — вопросы HITL (`ask_text`, `ask_choice`): меню со стрелками на терминале,
-номер варианта без него.
+HITL questions live here too (`ask_text`, `ask_choice`): an arrow menu on a terminal, an
+option number without one.
 """
 
 from __future__ import annotations
@@ -31,7 +32,7 @@ from cli.commands import COMMANDS, checkpoint_manager
 from cli.config import SESSION_DIR, SESSION_ROOT, state
 
 HISTORY_FILE = SESSION_ROOT / "history"
-MAX_WORKSPACE_FILES = 2000  # потолок обхода workspace для @-дополнения
+MAX_WORKSPACE_FILES = 2000  # cap on the workspace walk for @-completion
 
 STYLE = Style.from_dict(
     {
@@ -47,22 +48,22 @@ def is_interactive() -> bool:
 
 
 def model_label() -> str:
-    """`provider · model` для строки состояния; пусто, если конфиг не читается."""
+    """`provider · model` for the status line; empty when the config cannot be read."""
     try:
         from core.config import get_config
 
         cfg = get_config()
         provider = cfg.llm_provider
         return f"{provider} · {getattr(cfg, provider).llm_model}"
-    except Exception:  # noqa: BLE001 — строка состояния не должна ронять CLI
+    except Exception:  # noqa: BLE001 — the status line must not take down the CLI
         return ""
 
 
-# --- автодополнение --------------------------------------------------------------------------
+# --- completion -------------------------------------------------------------------------------
 
 
 def workspace_files(root: Path, limit: int = MAX_WORKSPACE_FILES) -> list[str]:
-    """Пути файлов и папок workspace относительно корня, без `.runtime`."""
+    """Workspace file and directory paths relative to the root, excluding `.runtime`."""
     found: list[str] = []
     if not root.is_dir():
         return found
@@ -79,7 +80,7 @@ def workspace_files(root: Path, limit: int = MAX_WORKSPACE_FILES) -> list[str]:
 
 
 class LunaCompleter(Completer):
-    """`/команды` с описанием, их аргументы и `@путь` внутри workspace."""
+    """`/commands` with their descriptions, their arguments, and `@path` inside the workspace."""
 
     def __init__(self, workspace: Path | None = None) -> None:
         self._workspace = workspace
@@ -126,7 +127,7 @@ class LunaCompleter(Completer):
     def _checkpoints(self, typed: str) -> Iterable[Completion]:
         try:
             snaps = checkpoint_manager().list()
-        except Exception:  # noqa: BLE001 — нет каталога чекпоинтов → нечего предлагать
+        except Exception:  # noqa: BLE001 — no checkpoint directory, so nothing to offer
             return
         for c in reversed(snaps):
             if c.id.startswith(typed):
@@ -135,7 +136,7 @@ class LunaCompleter(Completer):
                 )
 
 
-# --- приглашение ----------------------------------------------------------------------------
+# --- prompt -----------------------------------------------------------------------------------
 
 
 def toggle_permission_mode() -> None:
@@ -150,7 +151,7 @@ def _toolbar() -> FormattedText:
             ("class:bottom-toolbar", f"   {model}" if model else ""),
             (
                 "class:bottom-toolbar",
-                "   ·   shift+tab режим · alt+enter новая строка · / команды · @ файлы",
+                "   ·   shift+tab mode · alt+enter new line · / commands · @ files",
             ),
         ]
     )
@@ -165,9 +166,9 @@ def _key_bindings() -> KeyBindings:
 
     @kb.add("enter", filter=has_completions)
     def _take_completion(event: Any) -> None:
-        # Меню открыто: выбранный стрелками вариант уже вставлен — закрыть меню; ничего не
-        # выбрано — взять первый, если он что-то дописывает. Иначе (команда набрана целиком,
-        # пустой аргумент) enter отправляет строку, как без меню.
+        # The menu is open: the item chosen with the arrows is already inserted — close the
+        # menu. Nothing chosen — take the first item if it adds something. Otherwise (the
+        # command is complete, or the argument is empty) enter submits the line.
         buf = event.current_buffer
         state_ = buf.complete_state
         if state_.current_completion is not None:
@@ -193,7 +194,7 @@ def _key_bindings() -> KeyBindings:
 
     @kb.add("c-c")
     def _interrupt(event: Any) -> None:
-        # Непустая строка — просто очистить; пустая — сигнал выхода (второй ctrl+c подряд).
+        # A non-empty line is just cleared; an empty one signals quit (a second ctrl+c).
         buf = event.current_buffer
         if buf.text:
             buf.reset()
@@ -204,7 +205,7 @@ def _key_bindings() -> KeyBindings:
 
 
 class Prompter:
-    """Чтение строки пользователя: prompt_toolkit на терминале, `input()` без него."""
+    """Read the user's line: prompt_toolkit on a terminal, `input()` without one."""
 
     def __init__(self) -> None:
         self._session: PromptSession | None = None
@@ -227,11 +228,11 @@ class Prompter:
         return await self._session.prompt_async([("class:prompt", "> ")])
 
 
-# --- вопросы HITL ---------------------------------------------------------------------------
+# --- HITL questions ---------------------------------------------------------------------------
 
 
 async def ask_text(message: str) -> str:
-    """Свободный ответ на вопрос агента."""
+    """A free-text answer to the agent's question."""
     if not is_interactive():
         return (await asyncio.to_thread(input, f"  {message} > ")).strip()
     session: PromptSession = PromptSession(style=STYLE)
@@ -239,7 +240,7 @@ async def ask_text(message: str) -> str:
 
 
 async def ask_choice(message: str, options: Sequence[tuple[Any, str]]) -> Any:
-    """Выбор одного варианта: стрелки и enter на терминале, номер без него."""
+    """Pick one option: arrows and enter on a terminal, a number without one."""
     if is_interactive():
         return await ChoiceInput(
             message=message, options=list(options), symbol="❯", style=STYLE
@@ -247,7 +248,7 @@ async def ask_choice(message: str, options: Sequence[tuple[Any, str]]) -> Any:
     for i, (_, label) in enumerate(options, 1):
         print(f"    [{i}] {label}")
     while True:
-        raw = (await asyncio.to_thread(input, "  выбор > ")).strip()
+        raw = (await asyncio.to_thread(input, "  choice > ")).strip()
         if raw.isdigit() and 1 <= int(raw) <= len(options):
             return options[int(raw) - 1][0]
-        print("    нужен номер варианта")
+        print("    enter an option number")

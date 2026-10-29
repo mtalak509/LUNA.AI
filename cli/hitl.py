@@ -1,8 +1,8 @@
-"""HITL: перехват вопроса агента + конкурентный ответ.
+"""HITL: catch the agent's question and answer it while the turn is parked.
 
-Пока ход припаркован на future, читаем ответ и резолвим — потребитель свободен, потому что
-ход крутится отдельной задачей (см. cli/turn.py и AgentSession). Подтверждение и выбор —
-меню со стрелками (`cli.prompt.ask_choice`), свободный ответ — строка ввода.
+While the turn waits on a future, we read the answer and resolve it — the consumer is free
+because the turn runs as its own task (see cli/turn.py and AgentSession). Confirm and
+choice are arrow menus (`cli.prompt.ask_choice`); a free answer is a line of input.
 """
 
 from __future__ import annotations
@@ -16,16 +16,16 @@ from cli.config import state
 from cli.render import console, shorten
 from core.agent.session import AgentSession
 
-FREE_TEXT = object()  # маркер пункта «свой ответ» в меню выбора
-ALWAYS = "always"  # «да, и больше не спрашивать» в подтверждении
+FREE_TEXT = object()  # marker for the "your own answer" menu item
+ALWAYS = "always"  # "yes, and don't ask again" in a confirmation
 
 
 def _find_hitl(data: Any) -> dict | None:
-    """Достать HITL-payload из custom-события, разворачивая обёртку субагента на 1 уровень.
+    """Pull the HITL payload out of a custom event, unwrapping one subagent envelope.
 
-    Main-HITL приходит как `{type: hitl_question|hitl_confirm, ...}`; субагентский — обёрнут
-    мультиплексом делегации в `{type: subagent_event, mode: custom, data: <hitl>}`.
-    Иерархия одноуровневая — глубже одного разворота не бывает.
+    Main HITL arrives as `{type: hitl_question|hitl_confirm, ...}`; a subagent's is wrapped
+    by the delegation multiplex in `{type: subagent_event, mode: custom, data: <hitl>}`.
+    The hierarchy is one level deep.
     """
     if not isinstance(data, dict):
         return None
@@ -37,7 +37,7 @@ def _find_hitl(data: Any) -> dict | None:
 
 
 def extract_hitl(ev: Any) -> dict | None:
-    """HITL-payload из StreamEvent или None (HITL едет только custom-каналом)."""
+    """HITL payload from a StreamEvent, or None (HITL travels only on the custom channel)."""
     return _find_hitl(ev.data) if ev.mode == "custom" else None
 
 
@@ -46,10 +46,10 @@ def _question(text: str) -> None:
 
 
 async def handle_hitl(session: AgentSession, hitl: dict) -> None:
-    """Показать вопрос агента, получить ответ, резолвнуть future → ход продолжится.
+    """Show the agent's question, read the answer, resolve the future so the turn continues.
 
-    Форма value повторяет контракт тула: ask → строка; confirm → bool; select →
-    `{type: selected, id}` или `{type: free_text, value}`.
+    The value matches the tool contract: ask → a string; confirm → a bool; select →
+    `{type: selected, id}` or `{type: free_text, value}`.
     """
     hitl_id = hitl["hitl_id"]
     kind = hitl.get("kind")
@@ -57,16 +57,16 @@ async def handle_hitl(session: AgentSession, hitl: dict) -> None:
     if hitl.get("type") == "hitl_confirm" or kind == "confirm":
         description = shorten(hitl.get("action_description", ""), 300)
         if state["dec"] == "accept_all":
-            # «Не спрашивать» выбрано раньше в этом же ходе: режим хода ещё confirm,
-            # но пользователь уже разрешил — не дёргаем его повторно.
-            console.print(Text(f"  ✓ подтверждено автоматически: {description}", style="dim"))
+            # "Don't ask again" was chosen earlier in this same turn: the turn is still in
+            # confirm mode, but the user already allowed it — don't ask a second time.
+            console.print(Text(f"  ✓ confirmed automatically: {description}", style="dim"))
             session.resolve_hitl(hitl_id, True)
             return
-        _question("Подтвердите действие")
+        _question("Confirm the action")
         console.print(Text(f"  {description}", style="dim"))
         answer = await prompt.ask_choice(
-            "Выполнить?",
-            [(True, "Да"), (ALWAYS, "Да, и больше не спрашивать"), (False, "Нет")],
+            "Run it?",
+            [(True, "Yes"), (ALWAYS, "Yes, and don't ask again"), (False, "No")],
         )
         if answer == ALWAYS:
             state["dec"] = "accept_all"
@@ -82,15 +82,15 @@ async def handle_hitl(session: AgentSession, hitl: dict) -> None:
             (opt.get("id"), str(opt.get("label"))) for opt in options
         ]
         if hitl.get("allow_free_text", True):
-            choices.append((FREE_TEXT, "Свой ответ…"))
-        picked = await prompt.ask_choice("Выберите вариант", choices)
+            choices.append((FREE_TEXT, "Your own answer…"))
+        picked = await prompt.ask_choice("Choose an option", choices)
         if picked is FREE_TEXT:
-            text = await prompt.ask_text("ответ")
+            text = await prompt.ask_text("answer")
             session.resolve_hitl(hitl_id, {"type": "free_text", "value": text})
         else:
             session.resolve_hitl(hitl_id, {"type": "selected", "id": picked})
         return
 
-    # ask (свободный ответ)
+    # ask (free text)
     _question(hitl.get("question", ""))
-    session.resolve_hitl(hitl_id, await prompt.ask_text("ответ"))
+    session.resolve_hitl(hitl_id, await prompt.ask_text("answer"))

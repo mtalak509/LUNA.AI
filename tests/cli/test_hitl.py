@@ -86,7 +86,7 @@ async def test_select_option_and_free_text(answers):
         ("h1", {"type": "selected", "id": "b"}),
         ("h2", {"type": "free_text", "value": "оба"}),
     ]
-    assert [label for _, label in answers.menus[0]] == ["A", "B", "Свой ответ…"]
+    assert [label for _, label in answers.menus[0]] == ["A", "B", "Your own answer…"]
 
 
 async def test_select_without_free_text_has_no_extra_item(answers):

@@ -1,8 +1,8 @@
-"""Слэш-команды CLI (хендлеры).
+"""CLI slash-command handlers.
 
-Диспетчер `handle_command` мутирует общий `state` (режимы, текущая сессия) и
-возвращает флаг «продолжать цикл». Текущий раннер живёт в `state["session"]`, поэтому
-/reset и /undo работают с ним напрямую, не гоняя сессию через сигнатуры.
+`handle_command` mutates the shared `state` (modes, current session) and returns whether
+the loop should continue. The current runner lives in `state["session"]`, so /reset and
+/undo talk to it directly.
 """
 
 from __future__ import annotations
@@ -16,19 +16,19 @@ from core.agent.checkpoint import CheckpointManager
 from core.agent.tools.fs_paths import FileAccessError
 from core.agent.workspace import WorkspaceError, WorkspaceManager
 
-# Имя → (аргументы, описание). Единый список для /help и автодополнения в приглашении.
+# Name → (arguments, description). One list for /help and prompt completion.
 COMMANDS: dict[str, tuple[str, str]] = {
-    "/plan": ("", "только план, write-тулы скрыты"),
-    "/act": ("", "выполнять задачу (write-тулы доступны)"),
-    "/confirm": ("", "спрашивать перед каждой правкой"),
-    "/accept": ("", "применять правки без вопросов"),
-    "/attach": ("<path> [--overwrite]", "положить файл с диска в attachments/"),
-    "/fs": ("[path]", "дерево файлов workspace"),
-    "/cp": ("", "список чекпоинтов"),
-    "/undo": ("<id>", "откатить workspace и историю к чекпоинту"),
-    "/reset": ("", "новая сессия с чистого листа"),
-    "/help": ("", "эта справка"),
-    "/quit": ("", "выход"),
+    "/plan": ("", "plan only, write tools hidden"),
+    "/act": ("", "carry out the task (write tools available)"),
+    "/confirm": ("", "ask before each edit"),
+    "/accept": ("", "apply edits without asking"),
+    "/attach": ("<path> [--overwrite]", "copy a file from disk into attachments/"),
+    "/fs": ("[path]", "workspace file tree"),
+    "/cp": ("", "list checkpoints"),
+    "/undo": ("<id>", "restore the workspace and history to a checkpoint"),
+    "/reset": ("", "start a new empty session"),
+    "/help": ("", "this help"),
+    "/quit": ("", "quit"),
 }
 
 
@@ -47,34 +47,34 @@ def _workspace() -> WorkspaceManager:
 
 
 def _attach(arg: str) -> None:
-    """`/attach <путь> [--overwrite]` — прикрепить файл с хоста к сессии.
+    """`/attach <path> [--overwrite]` — copy a host file into the session.
 
-    Идёт через `WorkspaceManager`, а не своей записью в ФС: политика путей, кап размера и
-    снимок после записи обязаны совпадать с HTTP-загрузкой, иначе обкатка undo в REPL
-    перестанет говорить что-либо о сервере.
+    Goes through `WorkspaceManager` rather than writing the file itself: path policy, the
+    size cap, and the snapshot after the write must match the HTTP upload, or exercising
+    undo in the REPL says nothing about the server.
     """
     tokens = arg.split()
     overwrite = "--overwrite" in tokens
-    # Путь берём остатком строки, а не первым токеном: пути на Windows содержат пробелы.
+    # The path is the rest of the line, not the first token: Windows paths contain spaces.
     source = " ".join(t for t in tokens if t != "--overwrite").strip().strip("\"'")
     if not source:
-        print("использование: /attach <путь> [--overwrite]")
+        print("usage: /attach <path> [--overwrite]")
         return
     try:
         saved = _workspace().attach_from_host(Path(source), overwrite=overwrite)
     except (WorkspaceError, FileAccessError, OSError) as e:
-        print(f"ошибка: {e}")
+        print(f"error: {e}")
         return
     print(
-        f"прикреплено: attachments/{saved.path} ({saved.size} байт); "
-        f"чекпоинт {saved.checkpoint or '(нет)'}"
+        f"attached: attachments/{saved.path} ({saved.size} bytes); "
+        f"checkpoint {saved.checkpoint or '(none)'}"
     )
 
 
 def _print_tree(root: Path, prefix: str = "") -> None:
     try:
         if not root.exists():
-            print("(пусто)")
+            print("(empty)")
             return
         for child in sorted(root.iterdir(), key=lambda c: (c.is_file(), c.name)):
             if child.name == ".runtime":
@@ -83,15 +83,15 @@ def _print_tree(root: Path, prefix: str = "") -> None:
             if child.is_dir():
                 _print_tree(child, prefix + "  ")
     except OSError as e:
-        print(f"не удалось вывести дерево: {e}")
+        print(f"could not list the tree: {e}")
 
 
 def _wipe_session(session_root: Path) -> None:
-    """Снести содержимое сессии (SESSION_DIR) для свежего старта.
+    """Delete the session contents (SESSION_DIR) for a fresh start.
 
-    repl.log живёт УРОВНЕМ ВЫШЕ (в корне процесса SESSION_ROOT), поэтому под снос не
-    попадает — но проходим по-детально с пропуском на случай, если кто-то запустил CLI
-    из старой раскладки, где лог лежал внутри сессии (WinError 32 на открытом файле).
+    repl.log lives one level up (in the process root SESSION_ROOT), so it is not deleted —
+    but the walk skips it anyway, in case an old layout left the log inside the session
+    (WinError 32 on an open file).
     """
     if not session_root.exists():
         return
@@ -105,9 +105,9 @@ def _wipe_session(session_root: Path) -> None:
 
 
 def handle_command(line: str) -> bool:
-    """Обработать слэш-команду. Вернуть True — продолжать цикл, False — выйти.
+    """Handle a slash command. True — keep the loop going, False — quit.
 
-    Текущая сессия берётся/пересоздаётся в `state["session"]`.
+    The current session is read and replaced in `state["session"]`.
     """
     cmd, *rest = line.split(maxsplit=1)
     arg = rest[0].strip() if rest else ""
@@ -124,34 +124,34 @@ def handle_command(line: str) -> bool:
         _print_tree(SESSION_DIR / "workspace" / arg if arg else SESSION_DIR / "workspace")
     elif cmd == "/cp":
         snaps = checkpoint_manager().list()
-        print("\n".join(f"{c.id}  ({c.created_at:%H:%M:%S})" for c in snaps) or "(нет снимков)")
+        print("\n".join(f"{c.id}  ({c.created_at:%H:%M:%S})" for c in snaps) or "(no snapshots)")
     elif cmd == "/undo":
         if not arg:
-            print("использование: /undo <checkpoint_id>")
+            print("usage: /undo <checkpoint_id>")
         else:
             try:
                 checkpoint_manager().restore(arg)
-                agent = state["session"]._agent  # ре-гидратация: restore трогает только ФС
+                agent = state["session"]._agent  # rehydrate: restore touches only the filesystem
                 agent._messages = agent._store.load()
-                print(f"откат до {arg}; история перезагружена")
+                print(f"restored to {arg}; history reloaded")
             except ValueError as e:
-                print(f"ошибка: {e}")
+                print(f"error: {e}")
     elif cmd == "/reset":
         _wipe_session(SESSION_DIR)
         state["session"] = new_session()
-        print("сессия пересоздана")
+        print("session reset")
     elif cmd in ("/help", "/?"):
         width = max(len(f"{name} {args}".strip()) for name, (args, _) in COMMANDS.items())
-        print("команды:")
+        print("commands:")
         for name, (args, desc) in COMMANDS.items():
             print(f"  {f'{name} {args}'.strip():<{width}}  {desc}")
         print(
-            "клавиши: esc или ctrl+c — прервать ход; shift+tab — plan/act; "
-            "alt+enter — новая строка; @ — файл из workspace; ctrl+d — выход"
+            "keys: esc or ctrl+c — interrupt the turn; shift+tab — plan/act; "
+            "alt+enter — new line; @ — a workspace file; ctrl+d — quit"
         )
     elif cmd == "/quit":
         return False
     else:
-        print(f"неизвестная команда {cmd!r}; /help")
+        print(f"unknown command {cmd!r}; /help")
 
     return True

@@ -121,4 +121,4 @@ async def test_ctrl_c_in_question_cancels_the_turn(monkeypatch):
     view, out = _view()
     await turn.drive_turn(session, "x", view)
     assert session.cancelled
-    assert "ход прерван" in out.export_text()
+    assert "turn interrupted" in out.export_text()

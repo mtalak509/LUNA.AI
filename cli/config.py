@@ -16,13 +16,12 @@ SESSION_ID = "dev"
 SESSION_PROFILE = "standalone"
 SESSION_DIR = SESSION_ROOT / SESSION_ID
 
-# Единый разделяемый словарь состояния. Модули делают `from cli.config import state`
-# и мутируют его ПО КЛЮЧУ (никогда не переприсваивают сам dict) — поэтому изменения
-# из одного модуля видны во всех остальных (один и тот же объект по ссылке).
-#   perm: plan|act — Plan прячет write-тулы (PermissionMiddleware).
-#   dec:  confirm|accept_all — confirm гейтит любой write-тул на подтверждение (DecisionMiddleware).
-#   procedures_root: procedures_root процесса; ставится один раз в app.main() через init_process.
-#   session: текущий раннер AgentSession; пересоздаётся на /reset.
+# One shared state dict. Modules do `from cli.config import state` and mutate it by key
+# (never rebind the dict), so a change in one module is visible in the others.
+#   perm: plan|act — plan hides write tools (PermissionMiddleware).
+#   dec:  confirm|accept_all — confirm gates every write tool (DecisionMiddleware).
+#   procedures_root: the process procedures root; set once in app.main() via init_process.
+#   session: the current AgentSession runner; replaced on /reset.
 state: dict = {
     "perm": "act",
     "dec": "accept_all",
