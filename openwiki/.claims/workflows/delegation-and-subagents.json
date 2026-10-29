@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:7e71d6cccb7438fc7a600b4154a053967e941411409817916cc42a22e91950bf",
+  "claims": [
+    {
+      "id": "claim_2cfc0c2c47884ab4bd5be911f38a6ea8",
+      "statement": "delegate_to_subagent raises a self-correctable DelegationError before creating anything when agents/<type>/agent.md is missing.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L116-L129",
+          "version": "repo-lines-v1:sha256:eeee118d3058c75c6f4110b7df5bd3566b496ab80827c898ef18b4b607fce9f7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjNTkxZWNmOGVhNDM4NThhMDNjMGM1MDY4YTgwZDJhMzJmYWI5MTUxMWUwZTNhN2I1ZGNjZTU1YmYxMzA2OTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYwMjVjNGIxZWQwNmI1ZmYzM2RjMGU5ZjVmMzk1OWMxYmY4MTgxNjRlMTdkYTg1ZjE5YzI0MDE1MGZmOWJhNDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRhOGQ0Njg3ZjAzNGNhNGZkNDI3ZGNhMjM5NzVhYjQwNjBjZmY1OTBmMGVjNjE5ZTNmNjlkODAyN2E3MjQ1ODAifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L36-L38",
+          "version": "repo-lines-v1:sha256:454191fadf34e300e2e4d00631d58552944b18bb58a675019fd724c73d7f261b:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmU3ZmE5ZmJkMWFhNTgyNDhmYmE5MjFiMTE0N2U3NTlkY2I1ZWQ0OTAyYzYyNDVmNDBjODY1MDhiMmFiMzA5OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzdhM2JmNGYxZWVlNzQxYjFiMTE5OWE1YWQxMTcyNWVkZDk3ZDViZGE5ZmI5ZDgzN2M2OThmY2RjMGIwY2I3MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGJkNmVjOWZiNzJlMGNhNDJkZDlmZmEyYTQxNDM3NmRmNzY3ZDViZDEwMTZmZWRmOWNmMDc0NGY0MzYzOTkyNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDYzMzFiNGRmNTRkNWU0M2Q3Zjc1YTJkZDU5ODc2MDk0Y2MzMTY0MWE3MjEwNmVmMjcxYTdlYmYzMzY4NzY2MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_030fd8e07a1549a0a649d1ea948b69d8",
+      "statement": "Delegation creates a subagent zone subagents/<uid>/ with notes, artifacts and .runtime under the session root derived from the workspace path, and names the subagent namespace subagent.<type>.<uid6>.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L119-L139",
+          "version": "repo-lines-v1:sha256:11aa405b9961c3202fc2c7e5244ab9e3f01d101bbffffdf08e952eaf8a7bdada:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2ZDZjYWY2MWY1NWFmZTg3ZTJhNzVlYzAxMzIzYjAwYmEyZWExOWNjMjdlMDg1MWE2MDRjMzlhMmM2OTYxOWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4NjU1NDI1MzhiMzMxZmE0NWRlNzlmZTEwMmRiOTFhZjdlZjYwM2ViNTZkNzk2ZjRhNWExN2RlMzYwMTFlYmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM4ZWI3ZmVkNzZhODc2YzAyYjc5YzViZjA1YTQyMTgyNjVlMWQ0MWY5ZmFhYTZkODIzYmU2OWIzMTNhNWFjMDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkYzdmMTE5ZWNkYmI3YTBkZTQ4NWEwNmVkN2I3ZjQzZmQyYTNiN2EwOTU3ZDUxMzMxYTIwZTczNjIxZWM4NjcifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L32-L32",
+          "version": "repo-lines-v1:sha256:beb690964561fa6fd5e728d0a013a0cd5c305ea82ce667bd857ec6c0deb3bee9:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmViNjkwOTY0NTYxZmE2ZmQ1ZTcyOGQwYTAxM2EwY2Q1YzMwNWVhODJjZTY2N2JkODU3ZWM2YzBkZWIzYmVlOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmViNjkwOTY0NTYxZmE2ZmQ1ZTcyOGQwYTAxM2EwY2Q1YzMwNWVhODJjZTY2N2JkODU3ZWM2YzBkZWIzYmVlOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2FiMWI1NzY3MjJkN2NiMDllNzkwMjhiMzQxZWZmNzM0ZTYwNTAxYWQxZjk3MTA4MmExMDI5ZTJmMjY4MjFhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGJkNmVjOWZiNzJlMGNhNDJkZDlmZmEyYTQxNDM3NmRmNzY3ZDViZDEwMTZmZWRmOWNmMDc0NGY0MzYzOTkyNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2013230ae7404add8f1031645b8495a5",
+      "statement": "The subagent runs with the main turn's permission mode and session id but always with decision_mode accept_all, and each of its events is forwarded as a subagent_event custom event between namespace_open and namespace_close.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L144-L198",
+          "version": "repo-lines-v1:sha256:5ca48e954fd4a58cefc665dc5be91f03bfe37852e24a391d3aab27cc7404135f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNTE4NTAwMDc1OGRkOTY0ZTIyMTYwMjE1NWZkZDg1OGUwYTkyZmNmNmZmNzBmNzMxNzAyOWRlMGQ0ODc1MzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5YjE5ODJlOGRkNzQ4MTE4MTQ2YjM5YTJkMDA2MmY0MDgxZTM0Nzc5Yjg2NzVjMjM0YzRmYjEyNGRjMzkzOTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ4MjJkZGYzNGU5MzdmZWI2OGJlNzQ2YzVjZWRjZjNiYWQ2ODVkN2E1MjBmMjhjODg3ZTYwNjg1YmZmMzZlNTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e7637490d6ba4e32b18fcdc8c5baefb0",
+      "statement": "The delegation result's summary is the subagent's final AIMessage text and artifacts is a sorted filesystem listing of the zone's artifacts folder relative to the session root.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L180-L182",
+          "version": "repo-lines-v1:sha256:830ac7a7c1c803dde257a3f6529653ae64b08f010a5a1e6b8ff8d3f09e07991c:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGM3NGU3NjUwZTdhNTdiYWEzMDJkYmRlODA5ZDZkYzNjY2UyODMyMjMyNzg4Njg4MzU1OTNkMzc4ODg2YzM1OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjE0YmM2MGQwMzFlOWZlNzVjNGRlODAyZWVlNzllYzY2OGYwYmVlNmQ1MTcyMTYwMDViZWJlMTZhZGY0MmI0MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGIwZGRjNjI1NDE2OGM4MTJkOTc1ZmMzYWNiYTlhZTA5OTVmMzgyY2ZkODJmZDc5YzFmYzdiZDAyYzg5MmEwZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzY4MTM5MmYzMzA5MzBhYzdkYzBlYzkwY2RlZjVmMTkzODIyOTgwZTA3YmE5ZGM3ODIzZjhhOGMwNThkYzBhYiJ9"
+        },
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L82-L95",
+          "version": "repo-lines-v1:sha256:99871f876492c10608912e5175abfc06001d217139ef0a13e3e180e1d4249f20:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2NDkyNzI4MWU3OTJhYTIxNzE5MDg3ZjE0Mzc5YzRhY2VhMzZhY2M0YTRjZDM2ZjVjMTMwOTZkZmZmZjZhODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgwYzVkNzc0YzRhYTZhZjA1Y2Y0MzJkY2NjZTFlODVjMmY1ZTdlMmE5YTU2NjNjNTY4YjA1MDMyNGFlNGYwNDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE2ZjAwZjJmNzM0MDlmZDhjNDllZTM5ZTc5OTFhMzg1NDI2MzhhMzU1YmU5MzMxZWQ4YjdkODdmZGFkNGEwOTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ad6dbb9a1f1649038403decf870aed87",
+      "statement": "A subagent exception is caught and returned as a tool result with an error field and empty artifacts, so the main agent's turn continues.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L184-L191",
+          "version": "repo-lines-v1:sha256:0e51749a7d5b8f6c7f4104b0289b1ab5af176ab79598b4fd5344846b5ee33349:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmQxMTRhMWUzYTNlZDUwZjI1NGEwM2ZlZTgxNDViMjIxODk3MmI0NWJmZjIxNGUwMTRjZDQ4NTNkOWQ4ZDhiNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTZiMDQ0OTE0Njk3MjJlODM2M2E5NGU0MDQ0NTM4ZTAxM2EyYTIxN2UzNmIxZTU2OGJhNjBhY2I3YjRjOGYyZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjQyMDRhMGY5Mzg3NjhjNTE5YzRkMjU0ZDFmODMyZjRjYjM4MzdkOTY3OTZmMjBiMWMyY2Y1OWJmNThhM2VjMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTEzNTllYjBkNzVhNmU5NGJkMWI2Yzk1NWE3NzdjNDJhNmUxNjNhYjU1NDQ5OTMxZGM4ZWZjYjhlNWQ5ODBjOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_51c4c03fddb247439156f88107e36615",
+      "statement": "SubagentFactory builds subagents with the subagent-scope pool slice, is_subagent true, the zone as subagent_path, and no checkpoints root.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/_subagents.py#L18-L67",
+          "version": "repo-lines-v1:sha256:a1e1e4075da187fe7d9ad83ec2f891ae691bb6c776cfda0af8f8c38cf6ce739a:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwZGUyNTg3MTk2MTQ5MjYwNzFjOGZiMTlmZDg2NjE1MDU1NWYxYjAxMzU0ZjhjZDE2MDNhMTA5YTdkZGFlNDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFhYWY3NjM3Y2I2ZTdlNWRiODVkNjM0Mjc0NjAxNGRmMDQxY2NkNTU4YTkyMGIyOWViNmFjNzE5ZDdiYWY1YzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxODc2Nzk1MjE5ZTFkMDRhNmIzZTY3YmI1NGQ3Njg2NmMwYjFlNjc3N2RlNjIxOWNmMWExZmY5MDUwNmQ1OGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ebc6d47dbc3844a385c68a781fa12bcf",
+      "statement": "delegate_to_subagent is declared main_only and not a write tool, so subagents cannot delegate and delegation is not gated by Plan or Confirm modes.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L98-L98",
+          "version": "repo-lines-v1:sha256:1d1eded52743046e0664b5180e4379558d3156c9ac2aaf051a1cc637f3228be3:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWQxZWRlZDUyNzQzMDQ2ZTA2NjRiNTE4MGU0Mzc5NTU4ZDMxNTZjOWFjMmFhZjA1MWExY2M2MzdmMzIyOGJlMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWQxZWRlZDUyNzQzMDQ2ZTA2NjRiNTE4MGU0Mzc5NTU4ZDMxNTZjOWFjMmFhZjA1MWExY2M2MzdmMzIyOGJlMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGNjNGE3ZDFjYzc5NmFiYTNlNDY3MjMzMjdmNTE3ZTlmODExOTgyZDI1MGYwNzAyOTg2ZTRiNTc2NGFkOTU4OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzI2MTU3MjU3YjFhMjcwZDU0MzgxMWFmOGEwM2RmYTdhNTRhZWRiMTAwOTM4ODc0YTIxZDViMTYxMGZiMzhkMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_484dd9383bad4367bda2af7ba233657e",
+      "statement": "Event emission during delegation is best-effort and never fails the delegation.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L41-L59",
+          "version": "repo-lines-v1:sha256:398d8837658ca3ec8a45c26f13e1ab9d287646980d4a237b196c7173bb5eaee2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5NjZjZWMwNjBlZTc5ODljYTIyOTgxN2ZhZWYyNjU4YmUzMDU1MWMzNDVhYjMyY2E3ZjNiMWUzMzIwMWM5YmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxYmRkMjRhYmU0MTA4ZDljMWNlM2EzMmQ3MjU2MjU4ZTI5ZmEwMDZjNWUyNTI0M2Q2NWU1MzlkYjY2NWNlMjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjMDY3NzI1N2U2ZjcxN2E4YjNiZDQ0NjFhYjkzMDlmMjE5ZDdjMDM4Nzk5MjVmMzYzZjFiOGRhY2NkNWZhODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhiNzYwZGI4N2UxZGYyM2Q1ZDFhODcwODM4NDVjNGFhNmUzMjEzNGQ1NjI0YTNmNWRlMGNlMDMxOTcwNmQ3YzYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

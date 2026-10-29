@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:94ec67ec94b846578edc1550d94c22f743cc9b0e8b957b2e54eebfeb6aff0383",
+  "claims": [
+    {
+      "id": "claim_d67f66bbbac6415380fba207f06d47e0",
+      "statement": "init_process copies the repository's core/procedures into <root>/procedures with dirs_exist_ok on every start, so prompt edits take effect after a restart.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/bootstrap.py#L28-L46",
+          "version": "repo-lines-v1:sha256:3b6c0ba30ad30bdaa9ea7cb1ce2bff3d6e7e91b4a796b543fe8ee9ecb21f741f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwZDdiZmY4MTViNzMxZDdiZDlmNTYzNzAzN2Q4NGFhMDMwYTc1NzU5NTI5MzY2ZWIwOTBiOGRkY2Y0YTRhYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2YWVkYmJkNGIxOWZkYzUzYjVkZWZkNGFhNmY4NDQwOWJlMzA0M2JkNzFhNGM0ZWZjZjE4MDg1ODU1MTU5NmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU1MWVmOTQ0Yjk4YmM4MzViNjJkMjJhNjA5MjlhZDZlZjQ4ZWZkMjRjNjM1MTg2YzRiYjY1NmY2ZDViOTUxMGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_276e8efb2c9041a9aa865979a2afdf38",
+      "statement": "load_agent_prompt reads a prompt from the materialized procedures root and strips YAML front matter before it is used as the system prompt.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L131-L155",
+          "version": "repo-lines-v1:sha256:fb5c9ada44c78c7f6313806e8a6fc0d364f233f9ee019de8dc88f079f700c95f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmMDllZDExOGQwMDA3NTVjYTRkNGJhZmY5ZDRhNWJlMDhmNzE0MThhNGE1OTU5Mjg2ZWFlN2M1ZGI0ZWViNDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlNzZmNGEwMDExYjIwMGIxODY1NjFjNzEzNmM0ZjE4MTE4OTI3NGVjYzRlMGZhYzBkNTU3MmRmM2RkMGNhN2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJiOTRhZTIwOWE2MDU4ZTJmZDY3N2VhNTUyMmVkMjJmNTU2YjEwZmRhMjYxNjU2NWU2OTJlMDkxNWY1ZjViZTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_702c4c9330b34aa19a549490fdae8b96",
+      "statement": "The main agent always loads main_agent.ru.md, while a subagent of a given type loads agents/<type>/agent.md from the same procedures root.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/bootstrap.py#L30-L32",
+          "version": "repo-lines-v1:sha256:1d1a638188fe3ec50189819980dcf24963c813c9a3e5d7f532f83cfad95f8a4d:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWYwNDA5ODlkNDQzOGIyNmQ1Y2U4ZDJhNmU0MDJhNTRhOTgxOTcwYzAwNGVlMzIwNTRlYTQ4OWJkMTViNGI4YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2FlMTk4NjkzZDdjMjg3ODNmMTAyNWE5NTcxODgwZTRiNDU4YmYzZTM4MzllYWZkNzFiNGM3YWRlODY4YjkzZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWFkMGZjOWUxZTFhMzcyYTc0NzUwYWI0NTRjNzBmNWJiNmNhZGJjMGEyMTJiYTFhMWI0NmM5ZmYzODg2NTdhZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjQxZWYzMzUwOWZhOTBiMTM0YjIzNWJkMzg4MmViODA4MzhjMjVjMjg2ZTQwMTFiZmNlY2UwNGU0Njg4NmRjYyJ9"
+        },
+        {
+          "resource": "repo://core/agent/tools/_subagents.py#L13-L15",
+          "version": "repo-lines-v1:sha256:83801366febaf838d1771d3528f4406ef2517a26a4e527da0f0b9a273bab72e5:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWI2MDFmNTk1Y2ZiZTFkNTcyYzg4OGQ3MDI2ZGFiMTljODg2MzExNzlkZDU2NTU1YWQ0ODQ4YTczMzNhZTBmNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTMwM2VjZGQ0YTRkMTBmMTljNzNmZDQyZmQxMjQzN2ZkMzM1NGE4MjY4MTYwNWRhNTI1NWE5N2EzOTA2OGRiYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTVjYWZkOWU5OTEyY2U2MDM2OGU1Njc5ZTY1ZGMyMzBkYTAyYTRhZjU3Mzk1YTYxYjkzNjA0MzM5YTEwODhlZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTViNmU4NzA2YjQzMDQ3ZjJhNmRiNjdmMTMyNjM4NTk1NjA0ZTY3ZjM2OTY2ODc2Y2UwMTU4ZjAwNTNlNmJkMSJ9"
+        },
+        {
+          "resource": "repo://core/agent/tools/_subagents.py#L52-L67",
+          "version": "repo-lines-v1:sha256:991434c11c3a7056c46881eb2381a183223a8dbe1b01b9b30ef5f251b6032d14:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1YThlNDMyOWU0MTAxYjRiNDljNmQyZjg3MzI2Mjc0OTY0NTdiMzY1NTRkNDFkYTI2ZjI1MGVjM2NhOGIwZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwZGUyNTg3MTk2MTQ5MjYwNzFjOGZiMTlmZDg2NjE1MDU1NWYxYjAxMzU0ZjhjZDE2MDNhMTA5YTdkZGFlNDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM4OTJiNDUwOTAyM2M1ZTIxMTBmOTc0OTYyYjhjYTRmOWM1YTM4MzNhOGZkMTFhMWMxNTYxZWRiNmFiYmEwYTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxODc2Nzk1MjE5ZTFkMDRhNmIzZTY3YmI1NGQ3Njg2NmMwYjFlNjc3N2RlNjIxOWNmMWExZmY5MDUwNmQ1OGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b02cd5d436f54a96803d0472e7043c51",
+      "statement": "Delegating to a subagent type with no agent.md file raises a DelegationError telling the model to use types listed in its prompt.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L124-L129",
+          "version": "repo-lines-v1:sha256:94c1b07f027740d3255e9497581cbb6e7b364149427ed8a1e9c9f51c52153dfd:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjk0NzQyNDYyODhlNzQ0M2M0YTkzNzZlODI5OTFkYjBjZjljMWM5ODExNThiYjAzOGQ3YzgyYTkxYTI2NjExNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGYyZDM2OTg1MGM3MDM4YjQ3NDFmMmU1MWJlMThkYzE0ZDVlMjNkZThkN2Y5NDk5MTkyNjlhODhhNDM5YzFhNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGE4ZDQ2ODdmMDM0Y2E0ZmQ0MjdkY2EyMzk3NWFiNDA2MGNmZjU5MGYwZWM2MTllM2Y2OWQ4MDI3YTcyNDU4MCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_116f4400f7fd45c88330c50c4ec18be1",
+      "statement": "The Russian main prompt is organized in XML sections role, environment, tools, delegation, working_method, constraints and response_style, while the English copy lacks the delegation section.",
+      "evidence": [
+        {
+          "resource": "repo://core/procedures/main_agent.en.md#L6-L97",
+          "version": "repo-lines-v1:sha256:ee23db7db6899c69a81498485a03e992f6a3c217c8c35b444e6415a3df2bcb93:eyJzZWxlY3RlZExpbmVDb3VudCI6OTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4ZjhmZDQwNWYwNTRiOWYzY2M4MTJiZTMxN2NkY2UxMmEwOTE5NzQzMjhkZjkxMWYzMDRmNzRiNDhjMjc4YzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlYmI1YzJhZWM3MjQ1OTYzNGE2NDk2ZTUzYTc0NWE4ZTcwYzNhM2VjNGUyMzYzNTg2OWU2OWZiMmM2NWQ3M2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjNmQyOTI2NTM4MmQ0NDkzZjVkZjM3NTUwODRhMmQ2MjZiNjY4YThkODZlNGY5OTc5YjBjMzA1OWZmMWUzZTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://core/procedures/main_agent.ru.md#L6-L119",
+          "version": "repo-lines-v1:sha256:dd7ef025094fe6c38ac6c6ee82c2f140cd5d3cddffae30d4ced2e003d3ee4c2e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmOGY4ZmQ0MDVmMDU0YjlmM2NjODEyYmUzMTdjZGNlMTJhMDkxOTc0MzI4ZGY5MTFmMzA0Zjc0YjQ4YzI3OGM5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4ZWJiNWMyYWVjNzI0NTk2MzRhNjQ5NmU1M2E3NDVhOGU3MGMzYTNlYzRlMjM2MzU4NjllNjlmYjJjNjVkNzNjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJiNDAxOWE4Zjk2Nzk0Y2NhNzljOWRiM2ExMDIyNTIzOTM0NTAwOGE0YmM5NzU4NTc0NTkyNzgxOThlODg3ODgxIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_7741500a10434c808ff4853486a3668f",
+      "statement": "The main prompt's delegation section lists only default-subagent, described as a technical placeholder, and instructs the agent to read artifacts, author edits itself, and promote files into workspace/artifacts because subagent zones are not checkpointed.",
+      "evidence": [
+        {
+          "resource": "repo://core/procedures/main_agent.ru.md#L80-L94",
+          "version": "repo-lines-v1:sha256:1dcff099015c0bc18cf2ae43301860d8ecd23833cc22d295c0070630f64c810a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYWM5OGJmYjQ5YjQ1ZmY1MDkxNWVjOTQzNGI4YjZhMTAwZDEyNDkzOTU3MWIzMDdhOWRlN2ZkODQ0M2M1MWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyNTQxNDAwNzE0NDQzZWJiZGNlNThlMjE2YWJjNTAxM2EwNDQxOTg1Y2VmMGUxYmZhZDVlY2Y0MDQ4NTY1MmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlZDJhM2Q3MTlkMzI1NDg4MGYyYWUxZWEzZjY4Yzg1M2MxZjY4MjBlNGE2YmFlNDJkODA3M2Q2NmQ2NzU2MzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjNWRhN2MyNTBmYjIzNGY2MDllOGRmYmMyYTA0ZWYxYjA3YjQzNDk5NjUwNzYxMzc3ZjdmZTljMzAxZmUxY2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_886b8017d9c843abb9e947f04a6aed64",
+      "statement": "default-subagent's prompt gives it a cold context, its own notes and artifacts folders, read-only access to workspace through the workspace/ prefix, and asks for a short summary as the final message.",
+      "evidence": [
+        {
+          "resource": "repo://core/procedures/agents/default-subagent/agent.md#L1-L48",
+          "version": "repo-lines-v1:sha256:dce4abd82953f50da3c89031a16ea9cd8fd6121488af27548bf9638063b8047a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1MmQ3MTExMDNkNTBhNDM3ODMwYzZmYmNkMDRmYjRiYWI0OWEwZjgyZjZkMjZkMWM3OTFjNmU4NDg4ZGQwOTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlYmI1YzJhZWM3MjQ1OTYzNGE2NDk2ZTUzYTc0NWE4ZTcwYzNhM2VjNGUyMzYzNTg2OWU2OWZiMmM2NWQ3M2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

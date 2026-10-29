@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:dac2239d73318be63e13a34616672b57898544ef8873bcffcbf0e6ae2ed5cf76",
+  "claims": [
+    {
+      "id": "claim_bbde3005d0fd40e1bfad3ba748cfe76b",
+      "statement": "The eval conftest disables DeepEval telemetry, skips collection when DeepEval is not installed, and marks every test in a feature subfolder of tests/evals as integration while modules directly in tests/evals stay offline.",
+      "evidence": [
+        {
+          "resource": "repo://tests/evals/conftest.py#L1-L27",
+          "version": "repo-lines-v1:sha256:286192d3699360ca8dbdef1bf974d9d4ba8ad828ec05ae07b159bef64fd45b37:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlOThkZDY4MmNlOTc3MDIyYWY4NmYyMTRkODliYThlNTc0MDJjMDQ5MzFmM2E5NzA2YzMzMmMyM2YyZDE5ODAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkNzJjMGQ0ODRiMjE3MmEyNDJhNWQzNzAxNWE5ZWUzY2E5OGMyNjc4ODM2NjA5OTEzY2ExZGYyNTY3N2Y3MzgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d30e1017e77645ecb8378e63396c62e3",
+      "statement": "ScenarioRunner copies the golden's start workspace into a fresh .runs/<scenario> folder, builds a real main agent via init_process and build_session_agent, runs one turn in act/accept_all, reads tool calls and the final answer from messages.jsonl, and writes transcript.json.",
+      "evidence": [
+        {
+          "resource": "repo://tests/evals/harness.py#L45-L140",
+          "version": "repo-lines-v1:sha256:f14f1f26b623d6aab3712b3fc7a54c9e67012cd594c1d12a0f8917932837f167:eyJzZWxlY3RlZExpbmVDb3VudCI6OTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2ZmJhZTBiOTFkNDRmYzBkNDlmNWRlNjkxZGE2ZmM0MzFmMjYwMTM0YmY3MzFlMGUyMWY3NjQ4MDk0MzM0Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkZDI0NDU4MmI2ZmIwM2QyM2I4NDE1YWJlY2QzNDZiMGM5ZjQ2NmI2Zjc1MmIwNjgxODljZTdlOWEyZGMzNTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIzZGYyYWNmMDZlOGMzZjAzYzcxMzVjNmU4YWM1YTljYTU0MzJhYmUwNmE3NGFjYTBmZGQ5YTUzYTAwOGY5ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_63ff8258ab0049cf950473a23db976c5",
+      "statement": "Tool trajectory requires all expected tools in order (threshold 1.0), argument correctness and GEval correctness use the judge with threshold 0.7, and WorkspaceStateMetric compares files with normalized line endings while ignoring hidden service folders.",
+      "evidence": [
+        {
+          "resource": "repo://tests/evals/metrics.py#L110-L178",
+          "version": "repo-lines-v1:sha256:fd5fa31b2bb7a28e7405c1489f32bb86f7dc1f76ecbd172067d7951086883974:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRmYTQ0OTgwNjU5NWY2ZDYxZjlkNzljOTE0MWVlYzAyY2RjNDUyZGI0YmNhZmY5YjYyMTJkYzkxYjBiNGYwYmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5ZDZkNDg2ZTczODljYjA3NjgzMDEwY2VkZDU1ZTI1OWQ2MTBmNDg1MzJhMDVmNjQ1MmQ3ZWZkZTM0YWY0MzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f2e0a84105c54cfb8c361200867fc8dc",
+      "statement": "The judge model comes from EVAL_JUDGE_MODEL with no default, read from .env in the current directory; judge() raises if it is unset.",
+      "evidence": [
+        {
+          "resource": "repo://tests/evals/metrics.py#L24-L32",
+          "version": "repo-lines-v1:sha256:e0bd6fd4dbe00c766dc21f74095cb1dcde874c762545baa544a64f3528ee5bcc:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYThkMDQwNGY1ZWNhMGFhMWUwYWUzMzEyNGQzMTRjNTk5YTEyY2Q0ODg3OWM4ZTZlNTFjZGNkMmY3ZTIwODczOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTdkNGZkOGIzZDA2YzY0Yjc3NjhlMjViYzY4YjUwMzM3YTdkOWIxYWE4ZTA4NGI2NzlkZTZkNjRkNmJmZjI1ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2ZlOTFiYzM3ZmZkZjU4MjUxOGIxNzI2YzgxNDc5OWQ3YjU3MDAxZjY0ZGZlZTYzZGQwYjNiM2ExMDQzYmMyYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjJkMGZmOGRjMzZiZTcxN2MyNDIxMmI3ZjExZDU4ZDIyYmNjZTBmNTQ3MmNlYTIyNzBlYmFkM2RkOTM3ZTkyZSJ9"
+        },
+        {
+          "resource": "repo://tests/evals/metrics.py#L98-L107",
+          "version": "repo-lines-v1:sha256:7e79eaa150228832031d638bbf763d9c4925dbf41f1734a621d7d14d279de030:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIzZWRmYTI3ZTAxNGE2M2UwNTk2ODFhOWY0MWJjMTg1MTBhMTIzZGM0MWE1ZTQ4YWQwZTJlNmQxN2FiYjNlYjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjNDc0MTU1NDk3Y2IxY2E4NDM1ZTViOGYzYjVlYjM0MWYyZWNiZWVmZTdhYWFjNzYzMWE5OGU1ZGMxMjcyZTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjZmU2MmNhOGVlOTAwMjBlNzc2MDM4MjhhOWFmMGI5NGEzZjk2YjY4MGQwOWU2NzBkYTEwNzlhMDQyMWQzZjMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7cbb1c0e1874445babaf04d09ce62939",
+      "statement": "OpenRouterJudge requests OpenRouter usage cost on each call, raises when the response lacks a billed cost, and refuses log-probability raw responses.",
+      "evidence": [
+        {
+          "resource": "repo://tests/evals/metrics.py#L35-L96",
+          "version": "repo-lines-v1:sha256:c9752e90acdd1affdc500c67dc7deac5c21fe55d0d7630747e553a8ba4b0162a:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlZWExZWJkNGJlMmRmMDNiYWU0NDc5NjFmNTg3YzFiY2NjNTRlOGY3ZWZiMTRlYzgzYmRjMzFiM2I0NjU3ZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYxODMwMTFiNzVkZDNlNjcwMGU5NzdmM2M4OGE5OWIyNTM2OGM3NzlmMzcwMzQ2MjEyNjNjMjM5MTRjYmQ3ZjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE4MzQ4MjE3OGQzMTA3N2MxOGI5MDc1MTFjMDVkMTExMzljNjViYzIzMDRkNTVmZTdiNmMxNjAwMjc2Y2ViYWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_92bdfdc6711a41ffbae1fa8e4091bad2",
+      "statement": "Scenario tests build judge-backed metrics before running the agent so a missing judge fails early, and assert that the run produced no error events.",
+      "evidence": [
+        {
+          "resource": "repo://tests/evals/text_editing/test_text_editing.py#L29-L44",
+          "version": "repo-lines-v1:sha256:10a7f9d39fec26dc334cda581f9ae856c86102433856b213b516e588b97d6cbc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMGEyNWE0YWFmMTQ0ODllNzE5YTg0ZmNkNzIyZTRmZDhlMTJkODRhNjFlZGZhZmRkYjYyMTNmZGYyMTI1YTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0ZjBhNGY2Y2RmMjFkZDk3ZTIxOWNjNDk2MzY5ZThmOTZhMTk5N2JiZmQzNWEwZTI5NTIyMDAwMGY3ZTNmNDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5OGIwNjNkOWI0N2U2NTM3OTYyNTU3MmNjZTE5NzY2OWQ1NzY3ZTEyYzE4YmUwNzU2NTJiOGNkOTgxY2U4ZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8c3be06661ea47b295f9955aec1a01e8",
+      "statement": "The truncation scenarios require the agent to continue past a cut grep or read output via the spill file or an offset read rather than answering from the partial output.",
+      "evidence": [
+        {
+          "resource": "repo://tests/evals/truncation/.dataset.json#L1-L30",
+          "version": "repo-lines-v1:sha256:ccd4fb27c42ed1edd3a958928080246605f096a01892b7d9a0ff781fdcab9838:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1ZDJiMTkzNDkzMTY5MTY2OWNjMzVhODc2MTk1MTgwMTUzMzYyMTNkZGEwYTYwZmUxYjA5ZjliOGUzZTk5M2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NDE2ZTA5Zjc4YmEzMTZjMDMyNTY4MjEzYjg1NWVlNzU2ZTQxNTY1ZDkxOGYwOTUxOWM4MWZkNjIwZjQwNjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:59670425a9d06f51830a3ea9125f906c2904dc8626c3829186382b29b29c65cc",
+  "claims": [
+    {
+      "id": "claim_f7f2868ff990478cbff10ac2e0f39e9f",
+      "statement": "create_app configures root_path and CORS from ServerSettings, registers the sessions, turn, workspace and dev routers, and mounts devfront/static at / only if that directory exists.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/server.py#L67-L100",
+          "version": "repo-lines-v1:sha256:1f5b3db834c0a6cc9ac284f77fc9ee47f9973509dd2267dd89c99a83566371e1:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3MTgyOTc0NzkyNjRjNGIzMTA4MWJhMDE4MDUzYmQ5ZDE0YjcyM2JjYTY3ZTA3NzI2MDdlZTRiMjE1ZDU4ZjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkNjdiNDY2Mzc4NzVjM2JiN2Y5MDNiMWRiODczNGI0YTI5NjY4NWRmNGRiZTY2YTRmNmNlZjdmZGM0MTE2M2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEzNTQyMDYyODMzNTk1MmFiOTViMWY5YzkyYjhkZGViYmY1NzIxMmZjZmIwOTY0YWViZTY4MmQ2NWY3YmMwMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEyZWQwZGIwN2U1NGJhYTIxNjEwNGQwMjZmYjczZDQzODJjNjM5NzlmNzhjOTI1NGVhMGQ1ZDc3ZjJkNzUxNmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c5951e3191734ec78ab6bbe1a646a11f",
+      "statement": "luna-web runs uvicorn on core.app.server:create_app as a factory with host, port and reload from configuration.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/server.py#L103-L120",
+          "version": "repo-lines-v1:sha256:1557d9455fa8ddef12fa428a23a382f49ab586bb009221ed0d88db9479df8967:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1Yzg0Nzc1OGQzMjFjMThjZDRhMWQyMjI0MjkwNjIwYmY5OTdiMDQ1NzU0OTYxYjdkYjRiYTk4NDZjODQ2YTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlZmFjOWE2YjY4ZDA5NDRmZDMzNmRjOGYzOTM4YjhhMTVjZGY2YzQ2ZWJiODViNDk4MzViODIxNGNhMDE5NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://pyproject.toml#L37-L39",
+          "version": "repo-lines-v1:sha256:f438455d1d0b6d0f02e30363723ba7f4d92a74df07363a63e2d5cfecfda88bcb:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGVhYjRlYzYzZGU1MTdkYTRjZDhlNWM4MzA3ZmIyYzc3MzdkMzkxOTBhYjY5ZjMyYTVlOWVmODFlYTQ0MTZkZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWE5NzI5OWJkYjljNWFkNGNmZTJiZTcxYTJkYWI5YWYyMzZlMDUyNjk0MjNiOWM3YjU4OWVlZGEzOWQwZmU0YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWY2ZWI4MWI0OWM5ZmFmMmRjZjMzNjYzMWEyZDY1MWViMzNiYjZhNWRhYWQ2MTFkMDljZWVmYTI2MmRiYzFiOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2FiZjE4ZTk0OTUzMzJiNzM5ZmY0MWJiNDFjOGM4YTFiOGJmYTJlYzgwZjRiZGNhZTlmZTZhYjkwYjk2YmQ4MCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_726ddee7a352487bba67a208b8b2848b",
+      "statement": "session_paths depends on get_session, so a session id is validated against the registry (404 if unknown) before it is used to build filesystem paths.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/routes/_deps.py#L19-L39",
+          "version": "repo-lines-v1:sha256:ffad031164fe5548b64325c66689158173f028c7c10763e399bd34cd00f211ec:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2NTEwMzJiMGU4OWVhNmRjMGNkZDllZmRhYWQ2NzViZjQyMzI0ZGJkMjZkMWM2NjFmNjgzNmE3YzVlZDU1MDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5ZDdiZDJlMjc2OGQ4YjYxMTIxYzg0NjQxZTkwZmVhZWYyZGUyZGY5NTliMDc0YmFkOGM2NzY0YzU1ZWNjZTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3ZTg0YjViNWRiYzU3YWUwOGNiYjY2MTBhYjBkYWNiOGIzNTYxMjIwYWEzMjYzNDcyODRkY2FjNDk4Y2Q3OTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bdad0e2dd50444d4ae187fda5a95b248",
+      "statement": "POST /sessions/{id}/turn starts a background turn and returns 202 with a turn id or 409 when busy; hitl/respond returns 404 for unknown or foreign hitl ids; mode changes are accepted at any time.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/routes/turn.py#L18-L71",
+          "version": "repo-lines-v1:sha256:e2a3a18d8f61626f45d677dfc80cd934fa70591565a00810f16cdd48dd0500c8:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2OWNhYmU5Y2JiYmM5ODk4YWYxZGExNTlkOTVhMjU4NjU2ZDI5ZWY2NzRjZTU0NTU4OTI0MjI4ZjNkOGM3NWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0OGY4ZTBmZjEyYWE3ZTAyNmIyYWJlZjllMzJmZmU2MmZlNTE4OThkMDlhNjRlODZmNzk5NDNiOTZhY2QyMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwZmJiZDllM2M4YmNlZDk4MDQ1MmJmMGViOTQyNTNhM2IxODkzNGI0NDkyOTM0MTc5YzhlOTBjOTM3NDM1YTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cc9eeaf98bef4195976724466c3b5861",
+      "statement": "Attachment upload and delete return 409 while the session is busy, and WorkspaceManager errors map to 422, 409, 413 and 404.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/routes/workspace.py#L51-L125",
+          "version": "repo-lines-v1:sha256:741d96740fb0b211ea4d4920731aa8a2b8a4f9bf856a5b3ea9fae4c7515e01b2:eyJzZWxlY3RlZExpbmVDb3VudCI6NzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2MWYzM2MxMzI1NjlhNzQ5NDZiMmZjZjU0NmNhM2M0NDI1ZGEwY2E1Y2Y2YjY4NmMyNjA5MGZhYTlkMTEyYjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmOWQ0OTcxMjQ4ODliMjY1MzkzOGQ0YWY3NThjMzRkOWE3OGQ4NzM5ZDlhNDhjMDQ5NzI4Y2I4YjE0N2ZhN2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmMzI0YTI2YzJhMmM5ZjBlMzk5MjI2YjJjMzY5ODY2MTVlZjM0NDNiM2E0N2QyMDBjNjc4ZTdiY2QzYjkyMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a8625289b55f4f068d08a8f29e17b31f",
+      "statement": "The fs/file viewer reads UTF-8 files up to 1 MiB resolved against the session folder (including .runtime), returning 413 for larger files and 415 for binary ones; fs/tree covers workspace and subagents but not checkpoints.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/routes/dev.py#L23-L24",
+          "version": "repo-lines-v1:sha256:b8573baf0bb20fcaa9d4d143d0491beacf90a8569c3dfb07c8e7f286c85b592e:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWE4Y2YxMzcyYTQ2OTk0YTgyOGQzZGUwMWJjMWY1OTZkZjBmMzE1NzJhMWUxN2RlMjg0YWJmZmIzNGEzNjIxMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTBiZjI1MmE2OGNhZmFhYmE5NzI3NjYxMTYxNjkwOWFjZmMxZWUxYzllYjdiNzFjYjkyODIzOTBhZDUwZDM5NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmE0ZjhhNmViYTZmMGU5NTYyZmMxZDM3ODQzMTQ4YmMwZjZiYmFiNGE3ZTQ4YTBkZjQwMjdjMDY4MmQ2MGJiNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGMwMzIwNjlmOTE3YzVlZTYzYTkxNmFhMWY4NTdkNjc0NjcyMTQwZTJlNDNhODJjY2Y2MDNjNzMwM2FjOGRkYSJ9"
+        },
+        {
+          "resource": "repo://core/app/routes/dev.py#L44-L142",
+          "version": "repo-lines-v1:sha256:a4bd7d16618f3801a4b33ed8d9f69cb52cd5e06d4cfac1843f957bb1f75b1600:eyJzZWxlY3RlZExpbmVDb3VudCI6OTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhODZiMjM1ZmY4ZDE4Y2FiODZmMTE5NzQ2OWNjZDkyYTM0YTE4OWYwYWNmYzJmNTQyOWM1MGM4ZWNkN2RhNDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVjZmRlM2ZlYTA4ODc2NWFkNTdmYmU0YTQ5ODJmMjI1N2U3MmQ4NGQ3ZTFkOGVmZjZmMTUyNDA3MGY1NWZlMjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI3YTczNjg2ZWE2NTg0MmE2ZGNkZGEzZDIyZWNlMTM5OTQ3YzZhMWY1ZWU1ZTgwOWQxNDg3MGRkZTNlMmFhNDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a9f07dae78f547208f552ad25437f30a",
+      "statement": "The SSE stream emits one frame per event with namespace, mode and normalized data, and sends a ping comment after 30 seconds without events.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/sse.py#L128-L158",
+          "version": "repo-lines-v1:sha256:5ecbb2007de3a142eedcea142ec84e781471b31ae2b2d3f9f9f784271dea617e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1M2RlMmYwNjQ3NTkyNDYxYmMzMjkwZmEzZmUwNGM1ZjAwZDRlMGJmNzUyMDVkN2JlYmZjNmM4OTAxOWU5N2UiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmZTJmOGM3ZGJkNDViNjQzMzVjYzA5MWFiZjc0MmExOWE1M2NiYjNkOWJiZTI0YzdjYjY5MjBkZTc1MjQ4YTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ3NTE1NzZhMjc3NDdlYWMxZWZlYWU4MzNmMTA5YzE4Y2M3NjRjYjNhNDZiMzc3NDE2OTAyNmQ3NjE1YmJiMTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://core/app/sse.py#L19-L19",
+          "version": "repo-lines-v1:sha256:bf571cfe925cf7d3e093ee687f2705eef86dc44c5dae83189244aa3c7548d2c2:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmY1NzFjZmU5MjVjZjdkM2UwOTNlZTY4N2YyNzA1ZWVmODZkYzQ0YzVkYWU4MzE4OTI0NGFhM2M3NTQ4ZDJjMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmY1NzFjZmU5MjVjZjdkM2UwOTNlZTY4N2YyNzA1ZWVmODZkYzQ0YzVkYWU4MzE4OTI0NGFhM2M3NTQ4ZDJjMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2FiMWI1NzY3MjJkN2NiMDllNzkwMjhiMzQxZWZmNzM0ZTYwNTAxYWQxZjk3MTA4MmExMDI5ZTJmMjY4MjFhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzRiMWIzMzExOTU1NjViNGM4ZWVkYmQyMTA5ODNkMzcxY2E4YzI5OTM5Yzk0MjVjZDk3YzU0MjUzOTlmZjlkNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_02b0cfabc21046ddb4eae86137f94f80",
+      "statement": "SSE normalization converts model chunks to text/reasoning/tool_call_chunks, serializes update messages with message_to_dict, normalizes nested subagent_event payloads, and falls back to the original data if normalization fails.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/sse.py#L22-L125",
+          "version": "repo-lines-v1:sha256:3a289591c8689617f8e7ed7110969ea96823ec868937a7d88d230c918444c08b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI1Y2VkMTlkMjI1OWYwMzAzMTM5Y2Y5MjNkZmUyNTYwNmQwYjE3MjlkZDIxYTBiY2IzYWIxZGJiM2JkOTA1MzMyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJjY2Y2MTY1YmIwMzNiZTU0YTIxNThmOGIwZTU3MmQ4NmYyYzU1OTg0MzU0ZGIyNzQzZmVjYTljYTIyM2I1ZDBkIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI0MjFmNjYzY2NhZWQ5ZmY4YWViMjRmOTFmZmI0ODg0MmVlMWI3NWExNTcwYzljMWFiNzM0Y2U4ZTY5MTAzZmJlIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0NDk2ZWQzODMxMWFjOTIwZjRkMjA5ODM0NTIxZWVkM2QyY2Y1N2MwYzllMTRiN2M1NzExYzZjMjZhNjBhYzc2In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_8a3a1131633c44e1af191488e717a1b8",
+      "statement": "TurnRequest declares an attachments field that the turn route does not use.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/routes/turn.py#L18-L25",
+          "version": "repo-lines-v1:sha256:9071abb7a5b548a316348ab2df51a997f167536d5a78635ed6aacd7c6f6a65d7:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzY5Y2FiZTljYmJiYzk4OThhZjFkYTE1OWQ5NWEyNTg2NTZkMjllZjY3NGNlNTQ1NTg5MjQyMjhmM2Q4Yzc1ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjI2ZjQwZGE4ZTY0ZmY5NmQ0MjBhM2JhOWUwNTAyMmU3NmM1ZTY5OGFmMDE5ZDU4MTVlYzA3MzQ2MjFiYjlmYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDQ4ZjhlMGZmMTJhYTdlMDI2YjJhYmVmOWUzMmZmZTYyZmU1MTg5OGQwOWE2NGU4NmY3OTk0M2I5NmFjZDIyYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjgzNGE3NGYxMjA5MDQ4YmI2MjdjMDFiNjEwYWMwMWEwMzlmNGM3YzA2NjJiNTczNzA0NWRmNjFjYTgyNjZlNyJ9"
+        },
+        {
+          "resource": "repo://core/models.py#L36-L38",
+          "version": "repo-lines-v1:sha256:91d7a454089c3521dc547f8859e8d8c041e147f8a587f5ac45fe2cae120ba975:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmU5NTMwYmM3NjRhYTYxMDRhYTUzN2JkZGMxNDkxYzJjYzhiMTBlZGQ4NDZjNjU5YTRlZWM4NmU2ZmM2NTI2MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWVjNGY1NTAwZTM5ZjczYzJhZDVjYzdlN2UyODhkZGEwMzc0ZTk0ZWUwMzg3OTRiYjgxZTJhZDJkMmJhNDc1ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTBlYmFhNWM5ZjQyMjRhNzk2NDQzYTE1MzViNWZjNWE3M2E4YjA0YmI2NjdjZmY1OWM1YTFkNGUyODAzMDE1YiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

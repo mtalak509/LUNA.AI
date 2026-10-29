@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:924165f3d14c19831f1d699fb093b637ccc25b4cd7b531d17a45e0df8963116e",
+  "claims": [
+    {
+      "id": "claim_479a1ccaf31f4c79bf16ae9d7844595b",
+      "statement": "The luna-agent package requires Python >=3.11,<3.12, packages core* and cli*, and installs console scripts luna (cli.app:run) and luna-web (core.app.server:run).",
+      "evidence": [
+        {
+          "resource": "repo://pyproject.toml#L37-L39",
+          "version": "repo-lines-v1:sha256:f438455d1d0b6d0f02e30363723ba7f4d92a74df07363a63e2d5cfecfda88bcb:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGVhYjRlYzYzZGU1MTdkYTRjZDhlNWM4MzA3ZmIyYzc3MzdkMzkxOTBhYjY5ZjMyYTVlOWVmODFlYTQ0MTZkZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWE5NzI5OWJkYjljNWFkNGNmZTJiZTcxYTJkYWI5YWYyMzZlMDUyNjk0MjNiOWM3YjU4OWVlZGEzOWQwZmU0YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWY2ZWI4MWI0OWM5ZmFmMmRjZjMzNjYzMWEyZDY1MWViMzNiYjZhNWRhYWQ2MTFkMDljZWVmYTI2MmRiYzFiOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2FiZjE4ZTk0OTUzMzJiNzM5ZmY0MWJiNDFjOGM4YTFiOGJmYTJlYzgwZjRiZGNhZTlmZTZhYjkwYjk2YmQ4MCJ9"
+        },
+        {
+          "resource": "repo://pyproject.toml#L5-L10",
+          "version": "repo-lines-v1:sha256:bf1e77a931887f7e421281dcccf4497c88eb3004748fd5324cbdd72a28e06585:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzAyYTgxYzM4MzZlZGVmMmQwYmExMWQyMzUzZmI2ZGFiYzc3NzE1MGE3Y2E4M2VhMGQ5ZTlhNzAzMTNmZWFiYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGJhY2Q0ZTFiNzQyNDRmNTBkMzQ0MzUxYmU5YmJhNGU4OGEwODY5ZGE1ZjMxOWNjZTE3MmM5Y2Q1ZjZhNjY2MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWY5MjE3YTE5NmE1NzNiZTI0YTQwYzE0N2NlZjcwMjQ1OGM4NTYyYWE3ZmI3NWI5YWNmNGFiYWMwNjI2Y2UyNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOThjZWI2NDA1OWYzM2Q4NmMzYTE5ZmRkNDdmMWMwMzc1NGJkOWJkOWFhOTdlZWFjOWYzNDUyYTdlMTMxODI3ZiJ9"
+        },
+        {
+          "resource": "repo://pyproject.toml#L54-L55",
+          "version": "repo-lines-v1:sha256:9ae7d10800d2e0d74534d71edc50f874e46c8f7a78440031d1517f1549e19c74:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWRmYWFhNjJjNGFjMDYzOWI1NWJlMzBhOTUxMjllMzFjNDg4ODdiZjRjNjJiNmJlNTNmNzI0M2MyYjlkNDkxNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTIzMWZkMmI1YjA0NDQ5MzI3ODljNWFhNjdhNGZkMDIzZWNmZjdkZjZhNTVjZjYyNzM0ZjAzMzM3M2VlNTQ5NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDAyOGVmMzliODU0MmMzZTk0ZWFlZmY5MDM5MmZjM2Y3MmQxODAxNWNjZjk3NzE1MWZjYWQxMmU0ZDRjNTJiYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4f79570d5b664281a3307d92afcd0d1c",
+      "statement": "ruff and black use target py311 and line length 100, ruff selects E, F, I, UP, B and ASYNC, and mypy disallows untyped defs.",
+      "evidence": [
+        {
+          "resource": "repo://pyproject.toml#L57-L73",
+          "version": "repo-lines-v1:sha256:98b846e80d7293cd2954aaf344694a6861ec3f5fab972d0cbf36ee5a927d59d7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwMGU2YmU0YzFlYWZlMTUzZTA5YTg4ZDMyZDRkNGM4NjJlNzM4MjkyNGM1ZjJiODBhMTcxYWYxMGE1YzAwMjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA5OWFkNjg0NGU2NjY3NDlmYTEzYzVlNmRjOThiYWQzMjkxNTlhYTg3NTg5YzI4MGJkZjBhMGRjOThlY2Q2OTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkwZmNiMTEyOWQ2ODRjNThiOGY0OTY0YzBiY2QzN2JjMjdjODBmY2VjZmZiNzFiY2EwOWRhZDRkYjg2MDk3YTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_11fb8eea49da43a89017bdd4e399d46f",
+      "statement": "pytest runs in asyncio auto mode with importlib import mode and excludes integration-marked tests by default.",
+      "evidence": [
+        {
+          "resource": "repo://pyproject.toml#L75-L87",
+          "version": "repo-lines-v1:sha256:b7a6cf098eb1036ba83a217926bb060d73e2c653999389f47a9de04c05ab86dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NDE2ZTA5Zjc4YmEzMTZjMDMyNTY4MjEzYjg1NWVlNzU2ZTQxNTY1ZDkxOGYwOTUxOWM4MWZkNjIwZjQwNjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU5ZTE2ZGM1YTVmNzFmMTRlNTE1YWQ1OTg5YTE1YmU3YTBlYzkwZjgyMWMzNTlhNjE0ZWUwZGE2ZGM4MWU3MTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a7cbad3981c246db9726106a32de1c2b",
+      "statement": "The Docker image is two-stage: the builder installs the package from pyproject and core/, and the runtime stage copies core/, scripts/, core/procedures/ to /procedures/ and devfront/static/, and runs uvicorn as appuser on port 8000.",
+      "evidence": [
+        {
+          "resource": "repo://docker/Dockerfile#L13-L77",
+          "version": "repo-lines-v1:sha256:9b4abf9a9466de0463b329407842962a5ecb32d22dc47419f3d7693572119e58:eyJzZWxlY3RlZExpbmVDb3VudCI6NjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwMzkwMDMwMGFmYzc3ZjgwZDA5ZDE0MDZkYWJkMTg3MDEyYTNhYWEzYjY0YWZhYjRkODJhYTc0N2Y3ZTE2OWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiOTYyOGI0OGQ4MzZhMTcyYmE2Mzk5MjU2ZTkyMTZjNDI0ZWVmZGEwZGU1MzI4M2U1MTc5ZjMyYWRkMWRjNWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNlZGE1ZDBkMTA4ZWI5MmI1ZDk2NWE5OTdiZDAxODk0ZWJhMjc4YTY1MTc1MDY4ZWYxYjUxODdhYmExYTQ0NTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_322603f4e5324053a3cd08e3d245614a",
+      "statement": "devfront/ is git-ignored while the Dockerfile copies devfront/static/, so building from a clean checkout requires that folder to exist locally.",
+      "evidence": [
+        {
+          "resource": "repo://.gitignore#L8-L9",
+          "version": "repo-lines-v1:sha256:7e77ae7a4739ec4d17460ddb4dd698e08e4abaa25d957aa49a1e55d8b589a067:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWM3NjY0YWQ5NWI4NThhNjU0NWRlMzIzNzlkYjhhODAxZTRiNDg4OWU5MDQ2NDI0ZGRmZmEyMjEzZjg0YmY0MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWFlYzg3YWU3MDc3N2RjMmY1ZjkyYzM3NThhYTEzZTg2NjdkYjE5NTU3OWZjNWJlMzA2NTU5NzQyOTRhZGJjMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDcxOGVmMzY0NDNiMjg4MTJlNDNiMTVkYjQ2ZjJiOTNmMTAwZjNmOTI4YzEwMTAxNDEzYjNjMjU3ZWRkMTJiYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzY2MDUwYmMxZTU5MDc2NzM5NTU5MTEyNzc2NGVlMTg5ODI2MGY2ZmNkYzEzZWMyNjRjZTc0MDY0YzE5NTg1YiJ9"
+        },
+        {
+          "resource": "repo://docker/Dockerfile#L62-L64",
+          "version": "repo-lines-v1:sha256:a0ac01dc4595b7ac15eed3856ed793d9ddff647c2f887bdc7fd8676c23a3c067:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTc2MTI0MzRiMTcyYjRlZjBhOTI1ZGU0MzQxNTQ4YWI4YTlhMzNmMTJlYmUwY2UwZjc4MmM1NzVjOThiNGVjYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjlkZjQ1ZGRlOTdlYzVkZjg1ZGJiZTBiNDU3NTI5MzQxZWViZmVkY2I2ZmJmNjUwNmI1OGZiYTI2MGRlOTE5NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGQ2ZGY4N2ZjNDYxZWU3YWMwMzRkNmViZmRmYjJmYTkxNWYxNjI5NDRhNzhjYjU0YzJhYTk3NmQ5ODc4ZWZkMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjQ4NzEwOTkxNzRmY2U2ZTUyOTc0NGM1NzQ2MDdhN2Y2ODEwYzYzNTc5Y2ZkOWI2ZWQ2YTEyMDU4YmIwZmQ1YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9c0992351bce49c89f7c9117af12da23",
+      "statement": "docker-compose builds the image from the repository root, exposes port 8000 and supplies configuration through ../.env.",
+      "evidence": [
+        {
+          "resource": "repo://docker/docker-compose.yml#L1-L19",
+          "version": "repo-lines-v1:sha256:a9b7ddade63acda5532448a15d8f320e1f478fde290df7ea0fbaf8cd3a7b34c6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFmMWFlNjE0YTJhODk5NzU0MTM3YjkxYjFhMTVhNDVmNzZmODQ1MzFlZjM5Y2NlM2Q1YmNlYmNmNDQ4ZTVhNmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxZWE3ZTRjMzVjYmQ2NzljZmUwNGZhMmEzNDNjMzVmOTdmMmRmODZjZDAzNmM5NDU2MjA1ZTk4ZjAwNzE1N2IiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1ec06a16e7c345cba5575efee3eb4742",
+      "statement": "The CLI banner version is read from the installed luna-agent package metadata, falling back to 0.0.0+dev when not installed.",
+      "evidence": [
+        {
+          "resource": "repo://cli/banner.py#L1-L13",
+          "version": "repo-lines-v1:sha256:473d70b1a9759894e5b5afa992c9ad77d59809a250a2255b219d9fcb0b238620:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwNzgyMDgwNDQ2OWZiYjhmOWUxMjM0NTM2YTg3OTEzOWFiZmQ2YTlmYjQ5ODc0YTNhODM4ZmUzMjM2YzViZjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA2YTFmMTNmZTgwMDIzZjVkODYyZTNkNGIxNTkyNWMzZGE4ZDVlN2FkMjkwZjJkN2UzNWIwYmE2YmRiZTFlYmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8299db4fc10f477eb34ee5ee864ae68a",
+      "statement": "Releases are manual: pre-flight checks, version bump in pyproject, CHANGELOG move, CLAUDE.md update, a chore(release) commit and an annotated tag.",
+      "evidence": [
+        {
+          "resource": "repo://CLAUDE.md#L164-L185",
+          "version": "repo-lines-v1:sha256:9f1130004ff163ffde6d4a7de9448c79625065f6d765bea646894163387925e3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlkMzgyMmU2NGRlZWFkM2I0ZTQ5MTMwZGZhNmQ3MWRkMGViNzMwYmRmNDRiOTM0M2Q2MTkzOWY0MGQ5NmI4NDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhMzQ0MGU1OTgyYmM0NGQ1Y2MyNTA2ZmQ3NDc0NDA2NzY2OTJmNDQ4ZTk4MjQzMmI2Mjg5ZWU2ZjQyZTZmMzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBkYTM1YTU1Nzk2YWEzYWIwOWE5MTM0ZWJlZTZmMzdkNDQ5NjlmMDk2MTIxZTg0ZWY3MzljZmVhYTM5ZDM0NTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE2ODAwZDYxZWIyN2E3NDgzZDNkN2JlZDZlZDY0NGQ1M2E5MTJjMjQ4NjMxN2RmNzQ0ODQzYTUxODY1YmM2MDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_71c715d5655a422b8e6bbccf5f7e3323",
+      "statement": "Project documentation lives in openwiki/, is updated through an OpenWiki run before a pull request rather than edited by hand, takes its scope and voice from openwiki/INSTRUCTIONS.md, and excludes private material through .openwikiignore.",
+      "evidence": [
+        {
+          "resource": "repo://.openwikiignore",
+          "version": "repo-file-v1:sha256:abfc910d29188d1bde8ed4d887be64ee4b63300b073248b7752f7b697dcec048"
+        },
+        {
+          "resource": "repo://CLAUDE.md#L187-L202",
+          "version": "repo-lines-v1:sha256:e844308a217d359034381d3eb5047f4dd3c92f20f041e9aec19ea312ae79ca40:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2MmFhMzI0NDcxOWE3MTE2ZDIwMDE3ZWRiNWI5OWM4YmNkMTMzOTdhM2Y5MWFiMDljYzVhMWQyMmI1NTM3ZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVmMTgwZjljMTI2OTAzYmNjMzMxYWE5NTQ1NmU0OTQ0NGE3ZDRkMDExZThhMmE4M2Y1ZGM4NzAyMzkxODEyZDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZhOWEwNWI3NzFmYmJmYjkwMjdjYzU5N2JjM2ZlYTg4Mzk4ODJjY2E1NDQ2NzhiM2NiYzBkOTc5ZDUwYzM3OTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhZmI5NjA2ZjViMGQ4ZjYzNGIyNjAzNzhkNmVjZTI1M2I1YzE0NDdhOWJmMWQwNDkzNDk0NDBhOGI1ZWJmMDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6fd6b95070ca4bc09642d28819019a5c",
+      "statement": "The transient OpenWiki run state openwiki/.run.json is git-ignored.",
+      "evidence": [
+        {
+          "resource": "repo://.gitignore#L49-L50",
+          "version": "repo-lines-v1:sha256:d13b355b4a4c0d6a260fcb366eb532595c1b9b701614d76127bcb20fae2cf115:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzRhNmFlNGVhOGZkZGE5MzcxMWIyYzI0N2RjMDEzOGFlN2ZiMmFjMmY0ZjQzOGMwNDZhYWM0NTBlNzExZTI3NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmRmZTU4OTY5MTk5OTdjYTI1ZGQzOWJiZGQ4M2IyNzQ3ODRhNDhmOGQwMzVkNzk1Y2MzMmE4MDYxNjk1NTNkMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjAwYTBlMTFlNDZmYzgzYWQ0ODJhODNhMmIxODdjOGE4ODUwZWZlOTE2YjYyM2IxZDdlZmQzMmQ2MmRhZDUyZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzIwMjhjNTU0NmMzYjRmYjVmM2VhYmYzMDZlYzcyZDRmNTUwMTc0NDFkMTk3MDQ5ZGI5NGQzZjA2OWEwZjJkNCJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T18:35:21.080Z"
+  }
+}

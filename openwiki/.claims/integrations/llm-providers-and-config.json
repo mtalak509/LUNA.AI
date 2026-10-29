@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b54235f6a2b25512df4607222de9c15aeccd39f422bb06b5b527870da4b3358d",
+  "claims": [
+    {
+      "id": "claim_b3f4039f4f1f44298fe2cea6e6e45893",
+      "statement": "InfraConfig composes prefixed settings groups (server, logging, gpustack, openrouter, embedding, ollama, qdrant, http) read from the environment and a .env file located at the repository root, with unknown variables ignored and the instance cached once per process.",
+      "evidence": [
+        {
+          "resource": "repo://core/config.py#L13-L39",
+          "version": "repo-lines-v1:sha256:eef02c1e368a516df97f67b2c9afd3a52c1d3aec5815c5ae30560d8975c62674:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwNDk4ZDc1YTM4ZTI1Y2IzM2M0ZjQ3YzI3NGIyYWIxZGJhYjZlOTU2NzFlNGM1NTJlN2M4NzFkMmEwMWRlNzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3ZDM2ZTU2YmFmYTA0YWZjNTgxNDg0M2U2YTkxNDA2MDJkOTFlNWZjMDQyNGE1YmM0YTg3NWFiNWNmNzcwNWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE3NWViODQ1MmI2Y2JhOTg2ZWE3NTBiNDgzZWRhNWM5YTUyYTNlZGU1NzBhZTliYjc2NjZlZmJkZmNlYjg5MzIifQ"
+        },
+        {
+          "resource": "repo://core/config.py#L157-L198",
+          "version": "repo-lines-v1:sha256:1e70174c562054cf58642f091cf2546a26532cb24bbb6603593915f55369c17d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2Mzg5YjA2YjViNTA5OGMyNjNlM2U2YWVmYzViNjI4OTU0MDBmMzk2ZTg2ZjRhMjQyNTIxMmVjZWIzNTE3MTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzYWIyZmNmNjMzMGQ4YWQ3ODI5MThhNzcwNjY2N2ZlNzljZTI5ZjcyMDk4ZDU5NWZkZDU2MzIzMTIyZjc3OGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxZDcwZDBjMzgyNjk2NDc1OGU2N2JmMzdlNWMzZDA2OTdmYjIyMzQyYWRhZWY2NzE3YjFlYWI1YWMwMWExZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cc2d4d7774b448e795283e7c8e683941",
+      "statement": "LLM_PROVIDER accepts gpustack, openrouter or ollama with openrouter as the code default, and RAG_ENABLED defaults to false, which adds rag to disabled_features.",
+      "evidence": [
+        {
+          "resource": "repo://core/config.py#L177-L192",
+          "version": "repo-lines-v1:sha256:b65fc275d1ed000d96cf4a766803cf4ab24cad316310a6b1c935d369098bfd32:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3NjUwY2QzNTk5ZmU1YTc1YmEzNjkyYjU0NGY4NDA1NTRjZmUxNzA4MDQ0M2E2NDcxZGNkMWQ4NTNhYTAzMjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmOTI1OTU5MjVkNDZlNzM1Njc0ZmQ0YjFkNGM5NTg4MDI2MmNmYzEzZmI3YzE0YTRmOGRjMGI4MGUyZmRjYzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiMDJlMmJmNzBhNTQxMWFhMmJmMDhmZWRiYmI3YWNjZmYwYzkxZmIyNzVhZjllNDMxN2VmMTA3NWY2MDM1OTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxZjhjMGE5ZDVmZDlmOTM1ZmVkNWE0MmIxYzliNDBjNDY0YTEwOTYwOWJiMTAyZGEzNGZlZWJmZDg0YWI3ZjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ee74c939bf764b96a11d22550803ba45",
+      "statement": "build_chat_model returns a ChatOpenAI for every provider with temperature 0: OpenRouter and Ollama use Chat Completions (Ollama with /v1 appended), while GPUStack uses the Responses API with output_version responses/v1.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L78-L128",
+          "version": "repo-lines-v1:sha256:bf3fa437f6e9d93de0506d15e6ec0a37601226405cdea4a12d7b31c2e092d62d:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlZTMxYTBjOWI2Y2M0NTczODdjZTRmZTk2NjljZTM2NzUzNGUwODBlNWJjMDhmNTY4YTRiOWE4YWZlY2MwNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZmNDU4ZWFkNDYzODZlMzU3ZTIzM2YyNmZjYjNjMzY2ODkxN2FlNTI5NmE1MzE1MTBiMzg3N2RiMTNmYmMxZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZkZjAzZWY0OWY0NDlhMjM5MTA0OWYzNmE5MDEwYWJlNDMwZDQzZDVmODJkMTFiZDg1YWZkMmZhNzIyMmNiZDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bbfd09c66ba74adfa39d5db635482cbe",
+      "statement": "The reasoning stream patch wraps langchain-openai's module-level Responses chunk converter so vLLM response.reasoning_text delta/done events become reasoning content blocks, delegates all other events to the original, and is idempotent.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/patches/langchain_openai_reasoning.py#L18-L88",
+          "version": "repo-lines-v1:sha256:e168ab312b0cae271057d6cb2d2c3d443d725d1a8e6c942810c9381707505126:eyJzZWxlY3RlZExpbmVDb3VudCI6NzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2N2Y5OGU2MGZkNDY3NWZjY2Q3MzZhMDA2NTcyNjk5Y2NlNDhlOWUyN2NhODViNzA3MjA4ZTI5NDE1MWM4OGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3Y2I1ZmY1YzEzMzZiMjk2Y2RmOThiMWQ1OGNjZTUwYWU0ZTc5YzM1OGY4MWZmZDgyZDZlYmFkNTI4YjY5YWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIzOGI5OGVjNmUyNWIzOGVjOGQ0M2ZmMDZhZDNlMmE0NGFkMTZlY2ZkMDhjYzhkNTA0ZTVmMTIwZjk1MjczMDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb0870fe8ef743799ea57a8067ec8402",
+      "statement": "The reasoning patch is installed at import time of core.agent.base before any chat model is built.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L73-L75",
+          "version": "repo-lines-v1:sha256:cf4b3292dc7d000e36f445c798d0242496f9173485bfe391b12b886ac13f49b1:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzk4MWZmN2FkZGI1ZDJkYjAwMjY4ZjFjMTQyZGQ2M2ZlODI5YTkyYmU3YmNjODE2ZmM0NDY2YTg3MzdkZTRhZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2E2NDYzYjEwYTFmYzEyNDQzM2FjMjRlNTY5NTBiYzA1MTI3NWI1N2U5MjI0MWE2YzhlNzk1MTYzNzQ0YTA5MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmRkYjhiYThiNWJhYTIzZGNkY2RiNTMyOThkZDEyODJiMmIzN2Q0MzMzOTdiYWEwOTBjYjFlZTA2OGEyZGQ2ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjJhNDQ3NDVhMDRiMGUxY2RiYWUzZmVjMjVlMTI2ZDIzNmNjMjI2ZDJlM2RlNDYxM2EwYjg4YTIwZmQwOWVkOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_90ae74f4f5b54efd9dc3a00af8f2fbc8",
+      "statement": "The SSE layer extracts reasoning text from streamed chunk content blocks into a separate reasoning field of messages frames.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/sse.py#L21-L59",
+          "version": "repo-lines-v1:sha256:6c823d115c70e9dfc9e09821039b7d6293b4d88978dead97013377f9e68d20b2:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0MWZkNzMyOTY3MTc1NDIyZjk3YmFlZWI0MTFhMTU1YzQxOGU0ZWQ1NzFiNWVmYTc0ZTRlODUzNTVjMzM4NjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE3ZTljMTEyMjRkMThkYzY1ZDgzMTIxODVkZTRlMGQ5Y2FkYjNhZTdmNTJlOTNkYmFlZjUzOTc5YWRhODI4NjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZkYjI4Yzk1ZTQ0ODE2MmYyN2IzYWM1NjY5ZThmMjU0NTllMjkyMzViZTIyOTFhZGMyNzEzMzkzYzQ3YzAxNGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_463ee855efab47ce8870adb0a4458966",
+      "statement": "ServerSettings reads ALLOWED_ORIGINS as a comma-separated list and exposes a fixed session root that is not read from the environment.",
+      "evidence": [
+        {
+          "resource": "repo://core/config.py#L22-L31",
+          "version": "repo-lines-v1:sha256:dfecd8081417aa33a45c2d973971012cc756fd9ea906a325c4867e51f8c876b5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3ZmIzNjI2YWRmZDkxYjI1NDEwNGY1Yzk4Y2QxZDFiOTIwNzQzZjI2YWZhNzIzNzM1MWQ1Mjc4Y2I5MWUzNDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViNzY0M2UyMTNkZTVmMGQyOTZiN2ZmYjZjOWZiMDA3MmIwZTZjNDIxYjAyZTg3YjAyNjI2ZmYwMmQxYWNjMWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFjZDBmZjg2ZDIxOTk2YzYzODAzMjM0NWEzMjIwMzQ5NjlhNmI4NmZhZWM4ZGNlZWEyN2FjMzIzOWZlM2QzNzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRjNmE0Y2ViYjZiMzI0ZjJkYjFjYjc2N2RmZDczODVhYWY3YmNjNmQ5MDkwOWFiYTE0OGUwNmU0MzMzOTgyYTEifQ"
+        },
+        {
+          "resource": "repo://core/config.py#L54-L68",
+          "version": "repo-lines-v1:sha256:21bedc0d401cca1377e8268187937505e97634f1c6283cb1877249549b8cad02:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2NDA0NDI2MGFlZTE1NjUyMDNlYzRlYTExM2EyNTA1MGMyMzRlMmRkZTUwZmJlY2RhNTU3MGFlOWE2ZjVjMWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExYTNiOTM5MGFiMDRhMWQ1NDE1ZmZmOThkNWU0ZDFlM2Y4NzRmZjVkMzMyMzFiM2MxZWRlODM4NzUyZTY2OWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViZmJkMzM4ZmYwOGQ4NzJiMGIxMzI0ODk1NjJkZjg5MDY1NTQ3YTRjYzYxNjEwNmMwZTFhN2NhZmM4YzU4Y2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0NzJkMmI1OTA0OTFhYzk2Y2NkMjdmOTE3NWIyNzQ5OWM3NDk3NzBiN2ZkZDZiYjE0ZGE4Nzc3OGQ2N2ZjYzIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

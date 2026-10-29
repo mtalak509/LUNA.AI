@@ -1,7 +1,7 @@
 # Planning
 
 Development ideas live here, next to the code. This folder is the decision log. It is not a
-description of how LUNA works today (`docs/`), not a release digest (`digests/`), and
+description of how LUNA works today (`openwiki/`), not a release digest (`digests/`), and
 not a record of what already shipped (`CHANGELOG.md`).
 
 ## Layout

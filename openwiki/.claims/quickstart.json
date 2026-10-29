@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:0fcf2045eecfb0bd795ae6ec7d9834ce895555818143fd702e0595bae75f581b",
+  "claims": [
+    {
+      "id": "claim_c81e2bf0d2fd40e4a77df0d51e70109e",
+      "statement": "LUNA installs two entry points: luna for the CLI REPL and luna-web for the HTTP server.",
+      "evidence": [
+        {
+          "resource": "repo://cli/app.py#L90-L99",
+          "version": "repo-lines-v1:sha256:5ddba3192e6e4a32be8c240283779b54e86e3897e6b48a2021ca4699b6f7174d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1Yzg0Nzc1OGQzMjFjMThjZDRhMWQyMjI0MjkwNjIwYmY5OTdiMDQ1NzU0OTYxYjdkYjRiYTk4NDZjODQ2YTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhYTgzNmE3NmMxOTZjNjg2ZmRhMjZjNzIyZGQ0ZDFkMTRjYzA1ZmMyOGRlZjVkZGM5YWE0NWRhMDg1MTcyMDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5NjMzNWNiNmQzY2E5YzM3YjIwODZjZGE5MjFiNDc3Mjk3MWRhODA3NGVhZDRjYjNkY2UxMzBkMzYzZTllZGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://core/app/server.py#L103-L120",
+          "version": "repo-lines-v1:sha256:1557d9455fa8ddef12fa428a23a382f49ab586bb009221ed0d88db9479df8967:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1Yzg0Nzc1OGQzMjFjMThjZDRhMWQyMjI0MjkwNjIwYmY5OTdiMDQ1NzU0OTYxYjdkYjRiYTk4NDZjODQ2YTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlZmFjOWE2YjY4ZDA5NDRmZDMzNmRjOGYzOTM4YjhhMTVjZGY2YzQ2ZWJiODViNDk4MzViODIxNGNhMDE5NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://pyproject.toml#L37-L39",
+          "version": "repo-lines-v1:sha256:f438455d1d0b6d0f02e30363723ba7f4d92a74df07363a63e2d5cfecfda88bcb:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGVhYjRlYzYzZGU1MTdkYTRjZDhlNWM4MzA3ZmIyYzc3MzdkMzkxOTBhYjY5ZjMyYTVlOWVmODFlYTQ0MTZkZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWE5NzI5OWJkYjljNWFkNGNmZTJiZTcxYTJkYWI5YWYyMzZlMDUyNjk0MjNiOWM3YjU4OWVlZGEzOWQwZmU0YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWY2ZWI4MWI0OWM5ZmFmMmRjZjMzNjYzMWEyZDY1MWViMzNiYjZhNWRhYWQ2MTFkMDljZWVmYTI2MmRiYzFiOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2FiZjE4ZTk0OTUzMzJiNzM5ZmY0MWJiNDFjOGM4YTFiOGJmYTJlYzgwZjRiZGNhZTlmZTZhYjkwYjk2YmQ4MCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8af37edcdc6140928f9fd561eb7ec752",
+      "statement": "Each agent turn runs a create_agent graph built without a checkpointer while LUNA keeps the message list itself.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L209-L236",
+          "version": "repo-lines-v1:sha256:2978261524bdb2acb457372744417b3270a7d4b71ad280f260550fc89f9348b3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0ZDhiNWZjMmM4ZjIwNTk3OGYxM2VkNmQwNWY5NjVhODkzYTkxYjliMTExYTc4MDVmZjg4NzYxN2NkOTAxOGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0NWUzMmJiOGFiM2Q1ZThiMTdmMTlkMzcyN2YxZTFhYTM5MmZkNTY5YTM0MWE0NzA5NTJkMzgzNTRhN2IwNDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_636f84441c1649c68d763a3df5c723ad",
+      "statement": "The server wipes leftover session folders at startup, so HTTP sessions do not survive a restart.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/server.py#L28-L55",
+          "version": "repo-lines-v1:sha256:005fff583372ac7aca69daf822e35cba4ca308fb4789cfd0707b4f47e1f1dfc0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1MTMzNmZhMjA0N2U3YTY3YWRmYWRhMDgyMDFlYjc3NTgwYjU0Y2Y1NWFlYTVlNGEzZWYzMmMxOGYwM2ZjMmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2YmJlMzIyYTdiNmUwMjAzMWE0YWI2YjU5ODM0ZTlmY2I4MTViZTI2N2Y3OTI0MTc5NTFiNjRjOWY2ODViODQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiN2Y4NTc4NzhlYWQ1ODExODAyYjM3MjMwNDE2ZTAzMzE2ZmY5MDk1ZjRiNTkwNGFkOGRjZWEwM2MwNzgzNjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEyMTNmOGY5YjEwN2QyYmRlYmNjYzJjZDYyZWIwZjM3ZWI1OGU0NzFjZjNhMGI0MTVkZTkwOGYwOThjY2Q3MGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5503f79a1c8d4c0faea3ad9d100d9f60",
+      "statement": "The main agent's runtime prompt is main_agent.ru.md.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/bootstrap.py#L30-L32",
+          "version": "repo-lines-v1:sha256:1d1a638188fe3ec50189819980dcf24963c813c9a3e5d7f532f83cfad95f8a4d:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWYwNDA5ODlkNDQzOGIyNmQ1Y2U4ZDJhNmU0MDJhNTRhOTgxOTcwYzAwNGVlMzIwNTRlYTQ4OWJkMTViNGI4YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2FlMTk4NjkzZDdjMjg3ODNmMTAyNWE5NTcxODgwZTRiNDU4YmYzZTM4MzllYWZkNzFiNGM3YWRlODY4YjkzZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWFkMGZjOWUxZTFhMzcyYTc0NzUwYWI0NTRjNzBmNWJiNmNhZGJjMGEyMTJiYTFhMWI0NmM5ZmYzODg2NTdhZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjQxZWYzMzUwOWZhOTBiMTM0YjIzNWJkMzg4MmViODA4MzhjMjVjMjg2ZTQwMTFiZmNlY2UwNGU0Njg4NmRjYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4f3073e978f2416ca111fd73402f4455",
+      "statement": "The server mounts the web UI only if devfront/static exists, and devfront/ is git-ignored.",
+      "evidence": [
+        {
+          "resource": "repo://.gitignore#L8-L9",
+          "version": "repo-lines-v1:sha256:7e77ae7a4739ec4d17460ddb4dd698e08e4abaa25d957aa49a1e55d8b589a067:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWM3NjY0YWQ5NWI4NThhNjU0NWRlMzIzNzlkYjhhODAxZTRiNDg4OWU5MDQ2NDI0ZGRmZmEyMjEzZjg0YmY0MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWFlYzg3YWU3MDc3N2RjMmY1ZjkyYzM3NThhYTEzZTg2NjdkYjE5NTU3OWZjNWJlMzA2NTU5NzQyOTRhZGJjMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDcxOGVmMzY0NDNiMjg4MTJlNDNiMTVkYjQ2ZjJiOTNmMTAwZjNmOTI4YzEwMTAxNDEzYjNjMjU3ZWRkMTJiYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzY2MDUwYmMxZTU5MDc2NzM5NTU5MTEyNzc2NGVlMTg5ODI2MGY2ZmNkYzEzZWMyNjRjZTc0MDY0YzE5NTg1YiJ9"
+        },
+        {
+          "resource": "repo://core/app/server.py#L92-L98",
+          "version": "repo-lines-v1:sha256:8cd0cfe75520f054e2f90abf81168a8f10a71d6c0a9a73d35350d1985e937c62:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjMzYWYwYWE2NmY0MjNkYzM0MDM5MTQ1ZGVlZGRiNWJlYzkzZTM4ZTY3ZGIwMDIyNTk5NDdiNzYwYmQwMDg1MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGE5NzJkYWYzM2VhMzM2ODU1NDQ3ODQwNGM3ZWM2MWUzYWEwZGNlZDVmMjMwZDQ0OWI4YTFlMjUzY2I1YTFhZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzJiMWIyYzg2Mzk0YzVkY2E2YzA2YzdkNjA1ZGNkZDY3YjQyYjg1NTAzNGQ2OWY2NGM4YTgyYThhNDc4MzdhYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmRmYjI5YzQwMjU2Mzc5NzA0NjhiZmJlMTA4MmNmNjZkZWYzMzhkNGU0NWYzNTNmYWJiYjlmZWI3ZDhjZjBjYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_d8fbec2e3c184f6f8ae0bdc1dab00b7c",
+      "statement": "The CLI's own menu, help and status texts are English while core tool results and error messages remain Russian.",
+      "evidence": [
+        {
+          "resource": "repo://cli/commands.py#L20-L32",
+          "version": "repo-lines-v1:sha256:e7ffcf95ecb4f2efe01d2b9f2ebca5d686c9659a1949233a56193b1b72b5537c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0MDA5MjI5MDVmOWNjYmIxNjM2OWYxMzM3ZDU1ZWM4YmJhYzAwODVjMDFlNWI0NzU5MDYwNWZiMTRlYjJmYzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJmNDBhMzQ0NDIxNWRhOTYyYzZhNmExMTkyNjdjNTNhZmJmM2FkNzk5OTE3Y2I3ZjhmZWY3NDVjMjAxYmQyYWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkYzM0YjZlZTkzMDA4MzZjNzRkN2M4ODFiZDdlODgzZjgwYjdlOWI0Zjg5MGYxZTQxZDQyOTY5NjU3OWJiMzEifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L24-L24",
+          "version": "repo-lines-v1:sha256:8c0f013e65df30537f7022f744d6f2fae0d5964c443215dc52995563b99ff4ed:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGMwZjAxM2U2NWRmMzA1MzdmNzAyMmY3NDRkNmYyZmFlMGQ1OTY0YzQ0MzIxNWRjNTI5OTU1NjNiOTlmZjRlZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGMwZjAxM2U2NWRmMzA1MzdmNzAyMmY3NDRkNmYyZmFlMGQ1OTY0YzQ0MzIxNWRjNTI5OTU1NjNiOTlmZjRlZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTZmNGQ2MzY0ZWZiODUzNTMxMDYxZjc2NzRiNGZlOWMzOWQ0MTZhOGUzYmIxYmNjZDE2NGVlMGUxMTBjNmU4NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWQwYmJkNGM5YmQ5ZDM2NDVlOTc5NjQ1Y2MyNzEyODNmMzEwYjk2NTJkZDRjNjQxY2RmOWY4NThlZmVlZTRkMSJ9"
+        },
+        {
+          "resource": "repo://core/agent/tools/fs_paths.py#L52-L83",
+          "version": "repo-lines-v1:sha256:1f0161d32c8cfa5a198616485846bc01b41579204566957f24f07cbc6a80f639:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwOTk3NGVhNzExNjI4MGI5NmE1YWUyYWYyZjdmNDQxMGVlZjFkMzBlOGNlNDMwMWEwMTE0ZDgyMWRmNTQ4NzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjOTVjMTkyMTZlZTA0MDIzYzhjYmQwY2NjNGE2YzBhZGVjNzA1OTM1YzFlMzQ2YWM2ZjVjYWQzZGNhMjZjYzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAyYjI1NzhkODVmMDU0N2ZhOTE3ZGE3YjE4ZDIwNzg5OTE4MjlhNTM4MmM3OTEyOGJlMTZmNmYxMDg4ZjdhYjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1NTNiNjkyZWM0YThhNTIzNmQ1NjBkNDBlMmQ1MjE1ODk0ZWM4MmZlYTY5ZDQ1ZDQxMWMxMmQyY2Q2MTRkYjkifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T18:35:21.080Z"
+  }
+}

@@ -1,0 +1,7 @@
+# Local, private or non-public material: never read into the wiki.
+notes/
+specs/
+tech-debt/
+docs/tech-debt.md
+.env
+.mcp.json
