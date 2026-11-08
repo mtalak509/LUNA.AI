@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
@@ -6,6 +7,10 @@ from langchain_core.tools import ToolException
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 DEFAULT_FOREGROUND_TIMEOUT = 120.0
+SHELL_STATUS = Literal["running", "completed", "stopped", "timed_out", "failed"]
+SHELL_REASON = Literal[
+    "user_stop", "turn_cancelled", "session_closed", "output_limit", "launch_error"
+]
 
 
 class ShellArgs(BaseModel):
@@ -102,3 +107,28 @@ def prepare_run_args(
         timeout=timeout,
         creator=creator,
     )
+
+
+class ShellTaskView(BaseModel):
+    """A snapshot of a session-owned shell task."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    task_id: str
+    command: str
+    cwd: Path
+    creator: str
+    created_at: datetime
+    status: SHELL_STATUS
+    finished_at: datetime | None = None
+    exit_code: int | None = None
+    reason: SHELL_REASON | None = None
+
+
+class ShellResult(ShellTaskView):
+    """Task metadata with an optional page of captured output."""
+
+    output: str | None = None
+    next_offset: int | None = Field(default=None, ge=0, strict=True)
+    eof: bool | None = None
+    has_more: bool | None = None
