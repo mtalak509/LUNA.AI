@@ -14,3 +14,4 @@
 | 010 | Fewer round trips in grep, edit and ls | seed | own |
 | 011 | Only verified facts go into decisions.md | seed | own |
 | 012 | Read PDF, DOCX and XLSX | seed | own |
+| 013 | Choose how much tool activity the CLI shows | shaped | own |
