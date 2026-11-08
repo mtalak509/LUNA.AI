@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9c14a885892fa9528a844477f64354c52c3f9097de81e26f8fafb6654c95c06e",
+  "claims": [
+    {
+      "id": "claim_873d90a357724b52b1988bb3fbe2b9ff",
+      "statement": "knowledge_base_search returns previews with only id, score, description and tags (or a nothing-found text), and knowledge_base_get_reference returns the full point by id; both are read-only, tagged feature rag, and use the fixed collection knowledge_base.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/rag_tools.py#L26-L85",
+          "version": "repo-lines-v1:sha256:00bf9fdc8d11c4d85a521d7b0a09d866c2f2c01adace2ef5342916c90caf9479:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1ZGE1YTM4ZTZlNTY2MmFiM2JlN2M4OGJhZjI2MDgzMDQzN2VmNjIyY2VlNTUwMmZhMmM2ZTU4NzBjYmNhOWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3Y2NlODMyZWE0NzRhM2JjYjdmY2RlODUzYThlZGNjZmQ1MDZmMjQxMzlkMTExNjZmZDcyZGI0NWYyN2RiMjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2ZmRmNjQzMzYzYWY2N2M0MjhiZWQ1ZjNlNzRhMjhhNTE3NGNhYTVmOTE5YzBjNjhiMWY5ODEwMDMyMzkyNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMwNjAzMDRiMGUxMDA4MTM2NzM1MzZlMzI3NGNkZGRhMTNkODJhYWIwNzYwZmVkYzI4NzEyNGNkYmQzMzgzMGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6ef041709a6a4733b21d918cdd97755a",
+      "statement": "RAG tools wrap UpstreamError from the services into RagError, a ToolException, and a missing reference id also raises RagError.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/rag_tools.py#L32-L44",
+          "version": "repo-lines-v1:sha256:73763f84c2c109dc0e5607a10e86a1035e461c6a4ecc372793ac5bf8edd5bf07:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRlMWMwZDQzMzc1YjM2OTA0YmE0Y2IzODExMWI5NTc0ZTA2YzY4MzFjNTAzMzEyNjlkNzEyZWU4M2Y0N2IwYjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2Y2Q3YmNmYjYxODNmNzQ2OTg3Y2U5ZTJiODI2ZjJlMjMyYTkwZGMyMWM0NmFlNzk2NzJmMmM1YTJjZjZmNmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM1NThkMDUwOTg0ODEyMDM3MDJlMDVlZDY3ODk0ZDFhYmNiMTdkYjE1Nzg1OWVlOGQ1ZWY4ZTFhZTM2M2YwYzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU1YmU0OWFjN2I0YjQzMDAyYzk4NWNlNmM5OWNlMWNiNzdiNmI3N2FmYzUxOGQyMDBmYWJlMmU3NDdjZDNjYTAifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/rag_tools.py#L83-L85",
+          "version": "repo-lines-v1:sha256:a62f66cf39eabef689379e64e78956d2edae0b0460d3d865638a3dbd567f23be:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjg4N2U3NTY5OWQ5NWQ5NTM0ZjYxYmEwZjgyOGZmOTlhMWZmNmI2YzlkNjJjZWM1MGYyY2MzMjFlM2UwYWJkYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODdjY2U4MzJlYTQ3NGEzYmNiN2ZjZGU4NTNhOGVkY2NmZDUwNmYyNDEzOWQxMTE2NmZkNzJkYjQ1ZjI3ZGIyOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmRlOTM3MzUxMGFjMDM0NjcxM2Y4Y2M5ZWRkYjgzNjIyM2ZkNTc3ZGE3OGQ0ODQ2NGFjZjMwMDIzYTk0ZDc3NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzA2MDMwNGIwZTEwMDgxMzY3MzUzNmUzMjc0Y2RkZGExM2Q4MmFhYjA3NjBmZWRjMjg3MTI0Y2RiZDMzODMwYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_44ee2754eb034ba1bb636a72b6e4dcbf",
+      "statement": "When RAG is disabled the clients holder is built as Clients(rag=None) without constructing embedding, Qdrant or RAG services; otherwise it builds EmbeddingService from EMBEDDING_* settings and QdrantService from QDRANT_* settings.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/_clients.py#L25-L85",
+          "version": "repo-lines-v1:sha256:45b4c8ece434d0ca8c89a0e2b6333d0461ac1816a68932efb493baba44780b1c:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwZTMwYTZkZTIzMDJmNzRiNmY3Mjc3MGQ4ODc4ZmRkNmQxOGJmMjIzMjE2YjkwOTViZTAyNTFkZTE3OGVhNmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyZTI4ZmY0MWI3YWUyNTdmNjMwODBiMjY3NzEwNDkwZTQyNGFlYzgxMjU0OWZkM2FiMGM5M2UzMDg5NjBmZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwY2UzZjI0YWI0N2MyZjVhOWQzMzdmMzc3ZWQ4NTczZmE1NjU4NDA3NjQwMmYxYWYwNTRhM2RlZDYxOTQ2MmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d83582aed3a743d7b036e16be73e8582",
+      "statement": "RAGService.search embeds the query and returns Qdrant hits as id, score and payload; get_reference fetches one point by id.",
+      "evidence": [
+        {
+          "resource": "repo://core/services/rag_service.py#L48-L82",
+          "version": "repo-lines-v1:sha256:23624b51daf40787a53bc8eac2015b300205af82fce4d8dd4fd338856166ce90:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjYzQ4Njg2MmE4YmZlZTQzNTRlMDRmN2YyZTg5MTA1YzBmNmM1N2YzY2I5YzQ0YjJlNmNjODQ3YjRlMjc2M2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4MTA4MGEzNzM4MjIzOWUzZDM1ODBiYzliMjNjMzBjYTY1NWM2MWVkZWVkMzg5NTczZGMyMTVjMTRlZDNjNzgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMxMDUwOGVkYTRlYjQyYjI3MDZiMWM5YjI1NzYwOTAyYzczZjZjNWE5YTc0NzY2ODk2MjgzNzU5MmFlMGEwOTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxMGUwYTM5ODZhZjIwY2IzOWNlNTM0ZGVmYzU5OGZlN2I2ZTVmYWZmMDRmNzNjMjA5ZWEyMGY0NWI5OTY4MDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a605035a89f44d9198f48625523678d5",
+      "statement": "EmbeddingService calls a remote OpenAI-compatible /embeddings endpoint, caches vectors per text, sends only unique misses, and reorders results by index.",
+      "evidence": [
+        {
+          "resource": "repo://core/services/embedding_service.py#L20-L78",
+          "version": "repo-lines-v1:sha256:a4fd0e566cbebbb576be2f7c16b7a022a2fea8b8ab8c8e3ae14d396be1284cad:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMxNzhhOWU3ZmQ5ODc5NmM2MzNmOTA3YjJiNjBiY2JhNzQ0YmIwODRlMTY4YjU4NTQ3ZmZhNGI1YjI1YWUwMTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyZjhhYjE2NTg0NjMwYjE0MzNiZWMyYjQ3ODJiMmIwYzIyMDkwODFhMGIxNDA4ZjRlYTA0MDEzNTVlMzU5OTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU1OWFmYTM4YWY5YTMyY2UxMmJkNDU1NTM3YTE3M2NhZTEyYjNjMGRhYjc1NzQ1OGUzMDVjMDM4Yjg2NDQyMjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkNDEzNDBjYzIzOWExNTljZTliNjAyMmU5ZjYzMjI4MzJlMmVhZDc2Y2FlOWU0NzU0ZDIxMGViOGZiNmQ1ZTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4f0833a951594eca937311bd1fad4962",
+      "statement": "fastembed is declared as a project dependency but no code imports it; embeddings come from the remote endpoint.",
+      "evidence": [
+        {
+          "resource": "repo://core/services/embedding_service.py#L1-L10",
+          "version": "repo-lines-v1:sha256:44ea45379d23fb54e291588aedbbabaeaee29392daa93bb2fd081d047dba92af:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1YjZlODcwNmI0MzA0N2YyYTZkYjY3ZjEzMjYzODU5NTYwNGU2N2YzNjk2Njg3NmNlMDE1OGYwMDUzZTZiZDEifQ"
+        },
+        {
+          "resource": "repo://pyproject.toml#L33-L34",
+          "version": "repo-lines-v1:sha256:189d40f3ab9719f6473bc625f11a5415f4b058dbe6a0b47a09f9e04978929014:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDRjNzAwZDRjZDUzZDg3YzNkZmM5NGQxMDc3NGY1N2I3ODAxZTQ2ZGQ2YTVlMWU5NWYwYzVhMmEwM2Q0MjMwMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDM2YmU1MDMxOGYwOTNjYWRmYjJkMzZlNTYyMGIxNmM1MmUzNTNkMWVlYmE0MjEzODE0OWI0NzcwNzg2YjFmYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmI4ZjQyMTI1NGZiNmY3OTA4ZGI5MWNhYjA2NjJlNTMyNTQ3NGEwNmQ2MGJhYWEwMTU1ZjY5Y2YzOTA1YmIwOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTQ4MTY0NTEyN2U0MTFhYWQ2ODkxMzZmMGEzODJmMzYwODAxMTM2ZjlmZjczNzJiNmMzNjFkYTk5NmI0ODM3MyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a59b7d1ce1864f5f8f7d7eae1e3521f9",
+      "statement": "BaseHTTPClient retries only UpstreamTransient errors (timeouts, transport errors, 5xx) with exponential backoff, maps 401/403, 404 and other 4xx or non-JSON bodies to non-retried error classes, and creates its httpx client lazily.",
+      "evidence": [
+        {
+          "resource": "repo://core/clients/base.py#L76-L186",
+          "version": "repo-lines-v1:sha256:89bbc26fc076ad64454f08857fe3c005529098eadd87d3466c5dfa8fc572b458:eyJzZWxlY3RlZExpbmVDb3VudCI6MTExLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwZDllMTM5Nzg4MTRmMWI3YzMzYzIyMDVjMzAwMDk1YTBlNDI3MmE0NTgxYTVlYzJhODE4OTk4ZmEzZGIyNTBiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIwMWJhNDcxOWM4MGI2ZmU5MTFiMDkxYTdjMDUxMjRiNjRlZWVjZTk2NGUwOWMwNThlZjhmOTgwNWRhY2E1NDZiIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI1YzUxOGQzZDE0NTllNTRkZTYyNTk3Y2MzNjJmYTBhMDAxYTFjMTE5ZjIxOTU2Mzc4NzRkNDZiNmQ1ZWY5OGVjIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI4YTA5MDg0OTgyN2E4NTMxYTI1NGU0NmI0YjMxYzI4YjliNmNlODVkODRjMjlhYWExMDJkODEzZjJkNGNkMTEwIn0"
+        },
+        {
+          "resource": "repo://core/clients/errors.py#L37-L64",
+          "version": "repo-lines-v1:sha256:66846a55aaa83e1cedd47301233f60a44f1fe120548669b3c4a7e0b6b4c11eb0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1ODJiNDEyZTJjN2M1MjA2OTMxZjNiNzczNWNjMjUzNjUxYWFkMThlYTVkMTkxNjFhNGY5MGRjNmQ0N2RhM2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhNzU4YWMxY2Y3ZWFjMzZlNzgwYzliZjI3NDg3M2M5MDM5NzgzMDY3Y2ZlODlkNzBjMTJiM2NjYWVlOWE3MzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYxZTU5ZmZkNzU5NjBlYzc1NjExY2MwNDkwMmNmZTFlNGIxOWRhZDBkN2NiNzc1Y2NiODQ5MzRjODM4NDYzODQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

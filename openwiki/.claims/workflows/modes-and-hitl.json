@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:4b93d8184040fe511cd3c787e61e41de6169ab67f23b3ad765659e6a7475e5ca",
+  "claims": [
+    {
+      "id": "claim_d89d297e7a614724a3b1640990499570",
+      "statement": "HitlRegistry stores pending futures keyed by hitl_id and tagged with session_id; resolve raises the same HitlError for unknown ids and for ids of another session, leaving the foreign entry intact.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/_hitl.py#L31-L69",
+          "version": "repo-lines-v1:sha256:5fd86b7c45303b98ba941bf7c05df9cb3adb07e88bdaecfb4dae78d905010888:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1YzQ1ZGYyMzBlNzlkMThmMzZjMGNmYmQ3ZDQyMTQxZDkzYjBmOTA3NmY5ZWU3NjAyYjRjMmIzMDllNDM1YmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhYWU4YTBjYTc2Zjk4ZjdiN2RjNzk4NDk1MWQ2M2U1N2RiM2M2NDU1NzljYTUxYmFkNmE1MzlkNjE0ZWRiYmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQzYjg0YzAxYjgwZmRmYTJlYTBjY2M4ZjM2NmM0NWVjZTE0ZjVkNmM4ODU3Y2I3ZDhmNTk0YmZkYTZjY2YzNzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJjNzVmNDVjZDM5Mjc0MzFjM2I1NTYzNmJjNDBjZjUzMDEyNmJlYTZiMjM0MzUzN2U4NTViMDM0YTRhYWExZGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7e2be084eeda4ab79c0e5760fd0f148b",
+      "statement": "request_human registers a future, writes .runtime/hitl_pending.json only for main-agent questions, emits a hitl_confirm or hitl_question custom event with hitl_id, namespace, kind and payload, awaits the answer, and in finally removes the registry entry and marker.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/_hitl.py#L101-L155",
+          "version": "repo-lines-v1:sha256:7443112f1684f854fcb059064ab9cb998d99274ed9242fa148549796bf537a8c:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlhYWUyODE4Yzk3MzIxZjg2NzNlY2EyZjljN2E4MjM1MWZjYWI3Mzk5YThiZWZmMDQ2ODkyMWU5OWU0YzI0ZjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhZDE1MTlmMWFjMzE4MGYyMWU1MWQyOTk4YTVlYjBjNTI5MzliM2VjOTU0ZjFmY2Q0YzM0MDE3MGEyMTNmZTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA4MzJhNTQzM2Q1NGRmOTk0OTdmYzY3NzA2OTU3NzE3Nzg3ZDYxZmZhMDZiMTcxYTAwM2I0ZWE3MGY2YzdlZTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cb9c13c147824a4cb181058a564e5293",
+      "statement": "The pending HITL marker file is written and deleted but not read by any runtime code.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/_hitl.py#L124-L155",
+          "version": "repo-lines-v1:sha256:dc7d0ecae1982e907bdd3053e9668248f907c21cb204529c39b11930a80e455e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwMjk4YzkxNTQyNzIyYjc3Y2MzNTcyODk0MjEyMDI4OWJkOWJiYzg5YTYzNzk2ZWJjYThiYTU1ZDhjNjhmZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhZDE1MTlmMWFjMzE4MGYyMWU1MWQyOTk4YTVlYjBjNTI5MzliM2VjOTU0ZjFmY2Q0YzM0MDE3MGEyMTNmZTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY3ZjZkZWEwOGQxYzhmOGNmMDkzYWZhYWQzZmYzZjdjOGIxYzFmMTExMjk3YTQwYjJiYjgyOTJmMTZiYTcwOGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/_hitl.py#L28-L28",
+          "version": "repo-lines-v1:sha256:f05a4d646a7771967459ca4917fb022784a9726ebf5b2556db2dbdc92340493f:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjA1YTRkNjQ2YTc3NzE5Njc0NTljYTQ5MTdmYjAyMjc4NGE5NzI2ZWJmNWIyNTU2ZGIyZGJkYzkyMzQwNDkzZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjA1YTRkNjQ2YTc3NzE5Njc0NTljYTQ5MTdmYjAyMjc4NGE5NzI2ZWJmNWIyNTU2ZGIyZGJkYzkyMzQwNDkzZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2FiMWI1NzY3MjJkN2NiMDllNzkwMjhiMzQxZWZmNzM0ZTYwNTAxYWQxZjk3MTA4MmExMDI5ZTJmMjY4MjFhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGFiOGViMDBmMmNhNTQ5MDM3OGU1OTNmMWNmNTI5M2U4OWNkNTc2NjJjYWFkYjNkNjk2NTE2ZWMyZjNlNDcyYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_66fd11eb9d574ed0a0e79f4aa9d85fb5",
+      "statement": "ask_user is a read-only tool available to all agents that returns the answer as value with source user.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/hitl_tools.py#L31-L67",
+          "version": "repo-lines-v1:sha256:e3ec5f3fa69dfa8fd988e7dd6a15eecfaf7e9de3249d486637e443d97b550526:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwOTM0OGQzZDljYTFmODIwMDY4ZGRiZWJhZjc5NjI3NGUxYTczY2FlMDNkZWY1MThhM2RjYTFjYjE5YjdhNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhNGYyYzQzNGU2NTU5MzBlN2Q0ODhkMTYzYzBlOTM5ZTFiODJmOTMwNzAzYzFlMDJhZDllYjllMDNhOTRmZTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjYjFkYTJiZWIzNWI2YzhkNmU1ZDMwOGU0MjE4MzM5NGQ5N2ZjMmY5ZTM1MjVlMGJiMjEyYzJiMzdjNjc0YmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlZjNjY2RiZjIxMzAwZTA3ODUyZGUwYmMxNWM3ZjA3ZGE3NGYwOGI5MGNlNGNjMmY3MmQ2NmNjNGRhNDYzM2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d10a5e0687e149a88c7f1f92da05f32a",
+      "statement": "select_from_options validates 1 to 10 options each with id and label before parking, and returns the response merged with the source tool name.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/hitl_tools.py#L21-L21",
+          "version": "repo-lines-v1:sha256:c20d8abb97b490fe0a97f073e53d25436609ff8a32d285f8f7c5e8b69b86e412:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzIwZDhhYmI5N2I0OTBmZTBhOTdmMDczZTUzZDI1NDM2NjA5ZmY4YTMyZDI4NWY4ZjdjNWU4YjY5Yjg2ZTQxMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzIwZDhhYmI5N2I0OTBmZTBhOTdmMDczZTUzZDI1NDM2NjA5ZmY4YTMyZDI4NWY4ZjdjNWU4YjY5Yjg2ZTQxMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTAxYjIyMmE1N2RmNzQzOWY5ODIzZTFlOTEwZmIwZjM0NTcwMDJhNmYxZWFiNmI3ZDgyMjIxZmUwODI4ZTBmOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjlkMWRkNzdhYWEwNDEyMzljOWYzYjUyY2Y5Nzg2YTA4NDhiYzM0OTc4YjdhNTYyMzNmZmZkNGZhZDRjNDU4ZCJ9"
+        },
+        {
+          "resource": "repo://core/agent/tools/hitl_tools.py#L70-L129",
+          "version": "repo-lines-v1:sha256:6e8233fcff6cf2b136a270d521038041e7f659adb35995bf88545635bd0bcc54:eyJzZWxlY3RlZExpbmVDb3VudCI6NjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwOTM0OGQzZDljYTFmODIwMDY4ZGRiZWJhZjc5NjI3NGUxYTczY2FlMDNkZWY1MThhM2RjYTFjYjE5YjdhNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmOGZlOTQyY2IxYWJjMzdmYTA3YmJkODEzOGQyMTQ3MWM1ODk5N2FkMzA1ZTNmZDYyZjAzYWFkNjcwNGQ2ZDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyOWQwYTJiOGYyNmIyNmE0NTZhZjRkNGIzNWNjZThhM2M5NGIzZjZjZmU3MGIwOGUyYjFhOTg2MWU4M2IxNTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_101dea252b034fedb4d72a328ecbad1e",
+      "statement": "AgentSession.resolve_hitl resolves through the process registry scoped to the session, and the HTTP hitl/respond route maps HitlError to 404.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/session.py#L132-L139",
+          "version": "repo-lines-v1:sha256:1b03b1f0a80144276567bc7e3f041a170bfeb18c428f6e63d5d60c8971b824c2:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDljYjc0NTAxYzRjNGQ1Y2NkZTM4ZDliYmY2YWQzNWYzODQzMDdmYWZiNGYzOWIyNjc3ZGM3ZTdkN2E1YWYwYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTYxNzQxNDI2NGM5ODNlOTQ0MzUyNGNhMjA2NjQxZWQ2MmJjMTIzYjliOTJlZWVlMDM3YTA1MmRkYzJmMTViNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2M2OGZhNmQ3YzcyYjgxNDNmODNkNzc3ZTNhNmEwM2RmMWY5ZGYzYzU2Y2I2M2QwYzc0NDAyZjQ5NDgxNTU0ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjU0YWZhY2VjYjI3ZjVmZTQyZGUwZjdmMDY4ZDM1MGMzYzE4MjRjYzgyMTA3ZWM0YWJiOTc2YTE2ZWI1YzBlNiJ9"
+        },
+        {
+          "resource": "repo://core/app/routes/turn.py#L28-L37",
+          "version": "repo-lines-v1:sha256:17b383bb693e79df8939cf4353831473fb4649a9b644ef156b61cb7dc984bc3b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2MmM5ZTQwYWMwMjQ5Zjc2YmI1ZmJiM2UwMzk2YWU5ZGU3NjdhNjM0N2Y3YzJhZTFhZDA4YzNmMGQ2YzQ3YTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3ODk1NjhhODhiMWNiMjczMDI1MDA2YzUzMmMwYzY0NzAzNTY0YTI5YjkwODU4MmYxYmM5YWZmMDI1M2E2ODQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFkYWJhYWJiN2QzNGU0YTUyYTAwMDlmZTk3NzdjNzNkMDMxZGYzNjY2Y2EzNmRhMTVmODY4NDkxODg1MGU2MjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEyNGMxNWRjZDA3NjY3NjJiNDMyYWFiYmE2NmY1NWJlZDg0MjliODBlZTZkZDM4MTUwMzVlZDBhZmMyNzQyMmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fcc0665277604c409e849e9f76b62d0e",
+      "statement": "New HTTP sessions default to act and confirm, and mode changes through the API apply to the next turn.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/session.py#L154-L156",
+          "version": "repo-lines-v1:sha256:01a9d998f3828971632e1eb11fd08f332e90482a4da747b210e6b96ab6b87640:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWM0NGUzNWM1YWI0NGJmNjAzOTNiMDBlMmE4ODFjZjk5Y2I3NjBiZjRkZmMxNzdhMDcxM2YxNDFmMjc1NGUwZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmQxYTJhODM1MDlkMmI0MDQzYTRhNmU4ZGEyNmY0ZjMwOWRmZGY3ZDRjOGNjNjVkYWIwYzZmNGIwMzQ2ZmQ4YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGRjMzA0MDJmMTljMDg3Y2YzYTZjZjRiOGM0Zjc2ZmEyYzRkMzVlYTAwODVkNGQyNTgzMTEwM2JkYTEzZTJhMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmMxZjAyZmQ3ZWMxZDQ2MmMwY2I4MThiOTQ4ZmZlNGY3MTViMmMyYzQzMjYzMGMyMzJkZmUzNGQ0Mjc0M2ZhOSJ9"
+        },
+        {
+          "resource": "repo://core/app/routes/turn.py#L55-L71",
+          "version": "repo-lines-v1:sha256:ba0cf6e641595a81526efa82fe2f375a41ea3c2aa29c4a6f1415fdcb45da986b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhZDZiMjFjMjEwYWMzMmExOTdkOTI3ZjFlM2Q5OWQxOGIxMWM1ZGZiMTUwYmUxN2RmMGUwYTc1MjA5N2JiOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwZmJiZDllM2M4YmNlZDk4MDQ1MmJmMGViOTQyNTNhM2IxODkzNGI0NDkyOTM0MTc5YzhlOTBjOTM3NDM1YTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b9fcd6506ef84aea8013483d80c35cd4",
+      "statement": "The /health endpoint reports the number of pending HITL questions across all sessions.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/routes/sessions.py#L16-L30",
+          "version": "repo-lines-v1:sha256:42a8c2e7da6158d3ac262a4719b31fcd38f31a26b11be2d604ef93fcef3418fe:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4YzA3NThmZmY3MTI3OWIzODBjMzIwOTE5ZGNkM2VhYzkzMzA4ZjY5MzgyZTY0NWQ3Zjg4ODliOTkzMzk5YTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0OGY4ZTBmZjEyYWE3ZTAyNmIyYWJlZjllMzJmZmU2MmZlNTE4OThkMDlhNjRlODZmNzk5NDNiOTZhY2QyMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhYWQyMWI2ZjA2OTY5NjRlMGY0ODZlNTUwODU1M2U4NWM2Y2UzMzE0YzA1NzdjZDJhZjFkNjI3OGZmNDA4N2QifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

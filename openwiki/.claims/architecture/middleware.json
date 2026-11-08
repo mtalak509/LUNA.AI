@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:588d16f912d115a6d5972df96ad1864dec1b60b0de99653a4e14cc55302b7b62",
+  "claims": [
+    {
+      "id": "claim_593cface45da43718cd8a5882915ff47",
+      "statement": "Every BaseAgent uses the same middleware list in the order ToolErrorMiddleware, PermissionMiddleware, DecisionMiddleware, ContextInjectMiddleware, with ToolErrorMiddleware first so it is outermost in the tool-call chain.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L272-L274",
+          "version": "repo-lines-v1:sha256:12f72c369b7b794c1af765aa0186ffb1d85b8cb9cbb5cccae7b7ef6a54b22283:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTU3ZTUxOTcxNjg5Zjg1ZTI0MGNjZWZjY2RiOWU1MDFlZWFmNDI5Y2Q5N2Q5ZDE1OTY4NzcyYzhkNmRlODYwZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzVlNjc4YmIyMThmMmJiOTg1ZWQ1YzhiOWExNjkwYzliMGM0YTE0MWY4M2NjMmFhNzdmNDIzMTNhNDkwOWI1OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDkzNjM1Njg3YWRhNTFmOWJlZjljNmQxMmJmNTIwYWZhYTE2MDExMjE1NWQ0Yzk0MjcyMjgwZjMzZWY2NDkxZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzY5ODNkMzZiYzExNjA5NWViMGVhMzk3ODEzYjY3ZjUyNTNlODRiYjVhZjE5NmExODJjYmZiMDRiMTAzNmI1OCJ9"
+        },
+        {
+          "resource": "repo://core/agent/middleware/tool_error.py#L15-L26",
+          "version": "repo-lines-v1:sha256:78c05cd632e301ba6011eb7dabe36a5145804b705cb20fc3982b0a57b8b7445d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU4MmRkOTg2MmQ0YjY1YTRjNGMyZTEyMTRiNTliZThkNjUyZGE5OGNkNGM1MDZiN2YxZTBjYmEyMzliZmUwOTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiN2Y4NTc4NzhlYWQ1ODExODAyYjM3MjMwNDE2ZTAzMzE2ZmY5MDk1ZjRiNTkwNGFkOGRjZWEwM2MwNzgzNjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZhZWM5OTQwYWQ2NGNjNjJmYWYzZWQzYmMxYmYxZWE3OTQwYWUwMDU2MGEyNTA1YmIxOGM2NmYzZTRmMDc0ZjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ab3def5acabb4d489c1a7dc645ee4446",
+      "statement": "ToolErrorMiddleware converts any Exception from a tool call into a ToolMessage with status error, logging ToolException quietly at debug and other exceptions as warnings with traceback.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/middleware/tool_error.py#L27-L45",
+          "version": "repo-lines-v1:sha256:7b59d8db3f8e96e575b7acf28e231beec8b7e3afac2c905577c1923752cbdaf1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzMmNhYzcxY2Y0MWQ0MjIzYzBkZmYxMDU1YjNiYTUyZGFlNTdjOWIwNDJiNDkwMmU2NTAyMTMwMjVmNDVjYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjZTg2ODliZTQyMjM3MDk4YmUwMjEwNTQxNzIyMTExM2Y2Y2ZhZDk1YWViZjZkMDMyYmY0YWE4NGYyMzM2ZTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmOTQzNTM1Y2E1ZjMxYzM0YmE3YjNiN2MxZDgzNGQ0N2Q1N2M3YWM4MTk2ODg0YzlmYWIzZGM0NDJiZjNjOGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e099abcb8957453ea40de45284c14a7f",
+      "statement": "In plan mode PermissionMiddleware removes is_write tools from the model request and short-circuits any write tool call into an error ToolMessage without executing it.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/middleware/permission.py#L28-L57",
+          "version": "repo-lines-v1:sha256:7540b7b39a94cf18de5dc17fc89671f44e6954223860abfca95e8dde7c9fbab8:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMGU3NjliN2Q5ODVjMTZkZjcyN2U3OWFlY2Y0ODY1NTBhMWQxMzMxNTE0MTRjNzE3NTg5ZGVjZmUxMGE1MzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmZjJmNzNkMmRlZmFjYjBlZDMyYTE3ZWNiY2I0MWQyMWNhYTBmOWQ0YWEyMjFiZjFlNDMwM2JjNmZmZDlhYjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE1OTg2MWY1NmVhNDViODYwMThiYmE4YWNlOGQzNDVjZDBjYjVmZjQ1MmVlNTc1YzhlMGY2NmQxMWY4NzI5ZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a30974d532c9499ba08521aa929c4935",
+      "statement": "In confirm mode DecisionMiddleware parks every write tool call on request_human with an action description built from the tool name and arguments, returning an error ToolMessage when the user declines; non-write tools and accept_all mode pass through.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/middleware/decision.py#L26-L57",
+          "version": "repo-lines-v1:sha256:ba5f37281800858bce7331719439629f2607cc4a9b1f6bcbf6f5575a2dc10992:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzMmNhYzcxY2Y0MWQ0MjIzYzBkZmYxMDU1YjNiYTUyZGFlNTdjOWIwNDJiNDkwMmU2NTAyMTMwMjVmNDVjYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxZWE2M2E2MmY5MjFhY2ZlOTFhMTcyMzExMDkyMjljNTkzZGU3ODMxZjAxYWZkYWZkNjA1MWM1MjYxNTRjZTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAxZWRiYjcyZDAwYWQxZGI1NDE0YjEyZDAxNjE2MmMxYjhiYjhmODJmODJmMzc0MDZhZjJkZWUwODBmNzVmNGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c2f4cedc7ed04fb2ab38de4b63cf2cd7",
+      "statement": "ContextInjectMiddleware applies only to the main agent and appends one HumanMessage wrapped in a working_context envelope containing XML-tagged provider sections at the end of the model request.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/middleware/context_inject.py#L86-L131",
+          "version": "repo-lines-v1:sha256:d7b91ac67d3349cd610750b129feeb38fb54159fa52e442b53915a3dac095e0c:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3M2QxMWVlZjU0ZmNhYWYxZDY4YTQ5YjI2ODA3MTQ5NTIzOGI0ODhlYTZmMTA4OTQ3MDA5ODNjOTA2NmE3ZGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxZWE2M2E2MmY5MjFhY2ZlOTFhMTcyMzExMDkyMjljNTkzZGU3ODMxZjAxYWZkYWZkNjA1MWM1MjYxNTRjZTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhYTFjYzlkMDA5NmQ0M2Y5YzA4YmRkOGExYWU4OTVjNDhkOTBmNDM5YTIyNmM4NmQzOWY3N2I2YTUyYmQ5ZTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b0317e9467d8477a900b3088bfbf29b1",
+      "statement": "The default context providers inject notes/decisions.md as project_decisions and a current listing of workspace/attachments/ as attachments, with an explicit empty-directory notice when the directory exists but holds no files.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/middleware/context_inject.py#L35-L81",
+          "version": "repo-lines-v1:sha256:4cffb3fc419afb33bb70f2bb52330f735d5898ecedeaa43706fa785628c573ee:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViNmRjMDU1YjQ2ZDVkYzc5Y2Y0ZjkxYjY4ZTM0M2UzMjMyMGJjOTBjMTFiMzEzN2Y0ZWNkZjhmOTMzMTg1YmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgzMTMyYjI0ZjA0ZDI3N2NiNDhmZmExM2ZiODAxYjJhYmJjYzc3YWM4OTIxZTBkZWJjOGVjMGVlNGRiNzA1MjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2OWUwYjE5ZjZjMWNkNmMyY2FjMDVhNjk4Y2VkZDFhZGEyNDkxNzI3ZmI4N2U2ODgwNWZmYjA4ZTY4MmU4ZGIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

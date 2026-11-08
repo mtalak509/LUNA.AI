@@ -1,4 +1,4 @@
-"""`python -m cli` → запуск REPL."""
+"""`python -m cli` starts the REPL."""
 
 from cli.app import run
 

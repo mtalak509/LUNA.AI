@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:cdce077d334959bc6e2e11274f8a1226ef0f23f7205d2a7ff7d245f6623ed49b",
+  "claims": [
+    {
+      "id": "claim_26e96a011457455ebfcb6d1a98805325",
+      "statement": "CheckpointManager refuses a checkpoints root equal to or inside the workspace, and a snapshot copies the whole workspace (including .runtime/) into checkpoints/c<NNN>_<slug label>.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/checkpoint.py#L45-L84",
+          "version": "repo-lines-v1:sha256:9b4b7817d7ed839e7189a858b39a48e0e24cbf45184658a6ae750e06311c09fd:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhNDY1YTJlMDMyYjBlYjc3MzllYjdlYTJkNzUyMDliNGJhOGRjNGQyZjRhM2NiNmQ0YzgzYTI1NjQ1NmJlYjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkYTRiNGEyOWZiNjYzOTgzZDk3ZjZjOTQxZGY2NGU1OTZmNTgzY2JjZWIwZTQzMzI3NmNkYjA0NDBlY2MyY2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlZDIxYWQyMTJkZDIwMTQ3YmJmYTdmODk3NDAyMzQ4ZWY2NWVhZmIxMDJmNzNhMDU3OTdkYjQyOGM3NzJhY2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1ZDcxY2NhOGE5YWRiOWM4OTI4YWQ0YTNlM2VhZTI3NjFmYmIwZmE2NzcxNTVjOTc0ZjY5NDM0ZDU0Yzg1ODAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e84c493c5b644d7e94fce352ffe81a96",
+      "statement": "The next checkpoint number is derived as max of existing snapshot numbers plus one from listing the checkpoints folder, not from a counter file, so numbering stays monotonic after a restore.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/checkpoint.py#L105-L137",
+          "version": "repo-lines-v1:sha256:cc880f08972a514d5ee6a7a798f65456ee2b117430cbb3de3f5b5b4e7ff59d68:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2ZDlkNDNkYWM1NTYwN2FkOTk5MGI1ZTUzZTdkZDhhOWU2MTM2MGIwMDc3YjJhZWMzMGFmNTcyYzAyYTU2ODAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0Yzk2NjBlZTFmMzdjNmExYmRmOWYwMTQ3YzQxMmI3ZjBjODMzM2IyMTMxZTRlNzBkMGVhZWQ5YmVlZTgyYjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhN2UwZDQyMmY3YmRkOGY2NWY1MjMzYzdjYWU5MTY4Mjk2ZWQ2YzdhNjdhNzYyOTcyOTdjYTE4OWE3NDFmYzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkNGVjZjgxMDM0OWI1Yzk0OWQzZjk1MzdhNWI3NGMzNzQ5Mzg2YjgxNGQ1MTgxNjQyM2FlOWZjMWM2YTkzMTkifQ"
+        },
+        {
+          "resource": "repo://tests/agent/test_checkpoint.py#L109-L121",
+          "version": "repo-lines-v1:sha256:afb8bdd67e1b2a1e141531a167fab883fabe7020fb88960c06d0369102949cfd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyNGFmYzkyZjZhMzg5MzQxOTA3ODRjYTk1YTY3NWI1OWJkOGI0MTE4MjZiNGFjYTZkOTA2MjJjMmE0NGQzNGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlZTI4N2RhOTlmNjBmZDQyOGVhNTQ5ZDJlMTViNDM2NzIzNzdjZjg1ZDk2NjFlMjQ3OTkyMmMxZDE4YzVmMjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRjMDcwOGVkMzI3ZmE1YmRmMzhlZGMzNDIxMDYwZTVlMGExMTRmMjljZjQ5Mjc2ZjdiZTk2YjI0Y2RjMmZlODMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a5148353b47346d3bf9866718b960645",
+      "statement": "restore deletes the workspace and copies the snapshot in its place without creating a new checkpoint or deleting later ones, and raises ValueError for an unknown id; history rehydration is left to the caller.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/checkpoint.py#L88-L101",
+          "version": "repo-lines-v1:sha256:2b9f4b108d4cc93f524e909993e1105d788a07347fff4ead64e2b7d3f0588919:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNWQ1ZTA0ZTE2YmZlMDYyYTI2YTY2NzBiNzYyODE3ODI1NGJhYzFhM2YxN2JlOTdkODhkZGMyOGUyYWY3NGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlM2ZjNjMyY2ZlMzMxYmIwZjJiMzA2NzM2ZTQ2YzllNGQ0YWQ5YTlkZTU4NWQ0NzUwZDcwM2I1OWM1NzRkYjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE1ZDcxY2NhOGE5YWRiOWM4OTI4YWQ0YTNlM2VhZTI3NjFmYmIwZmE2NzcxNTVjOTc0ZjY5NDM0ZDU0Yzg1ODAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhN2UwZDQyMmY3YmRkOGY2NWY1MjMzYzdjYWU5MTY4Mjk2ZWQ2YzdhNjdhNzYyOTcyOTdjYTE4OWE3NDFmYzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2de6dc8d5b3e46abb081f1cbe8d3fb1b",
+      "statement": "@with_checkpoint snapshots only after the wrapped tool returns successfully, is inert when the runtime context has no checkpoints_root, and logs rather than raises when the snapshot fails.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/checkpoint.py#L143-L203",
+          "version": "repo-lines-v1:sha256:b7286e83b6cf5ea18defb521bf121eb6f43a7591e6b47bc47eb4c4cae465cf84:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzY2IxNmM3ODkxMjJjMGQxOWQ5NTg0YTJjYWQwOTc4OWVhZWQyOGZlOTgwODMxM2QzOWNkZDYxNTE0ZTA0NTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4NmIzMzlhNjJkOTUxZGZhODlmMmQxMzZjODE5N2IzMDMxNGM1MWQyNDlhNmJlYzM4ZDJhODEyZmI0ZGI4YWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU3ODlkMmUyOWM2ZTI4ODVmY2M3OTg3NTFlMzExOTAxZTBkYmJmODVjYWI1MGQ5YWEyMDZjOWU4MDE2NTkyN2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9f8a5aa403ae4a5fa3ad43d047863b50",
+      "statement": "delegate_to_subagent takes a best-effort snapshot labelled before_<type>_<uid6> before the subagent runs.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L141-L142",
+          "version": "repo-lines-v1:sha256:2a2269e1e08648d8f869ea7caa2adef746dd9200eae9a72a8a02aceb2f013220:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2Y1ZWRiZDEyNzVlNzc0ZDFkNzY4Yzg2Nzc1MWNjN2ViNjk2N2IyYzZkZTM1NjNlMGI5MDRmODU0NjQ0NzhhZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjI1OWU2MDM5YjE0NWVlZDk5YmYxMzhlODZiODZjM2M4ZDI5NTZlODI5ZDc5MmFkMjMzNTVjYWRhMmY1OWJkNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2Y2N2M5NGEyNmIxZDc5Y2FkNTdiN2VjZDY4ZTlmM2YzZjk2NzQ3NDlhOTU2YWFlODI2NTNjYzFiMjM3MTA1NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDk5MGFhNmRmMTdhYTM1ODQ2NDBkZmUyMTRlMWQzNTc5ODM2ZDM4YzZhNTU1MGQ1OWY0NDljYTYyZWI3NzE5ZiJ9"
+        },
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L62-L79",
+          "version": "repo-lines-v1:sha256:0ed70202be216ae8d0e3cdf0e2127785294725f3f5a03b86d0c30fb226627568:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkZmZlNWE4MWUzNmJkODdjN2JmOGU5MDU1Yzc5MmQ3ZmFkNzI3YTRhMjg2OWEwZTRiNDU3ZTQwOThmZTY0MmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlY2RmNjM3MmExNjU5NzBjMmU0OGY4MDIzOTAxZDg3NGVjMWJmNmYzZWFiZjQyZThlYmU0NjdhNzA2NmUwNGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjMDI5NzhiNjY1ZDg1NmMyYjBmMjQ4OWMyMzdkZWFlODAwYWI0YzYxNjkwMjIxMWU2YzVmN2Q3ZDgyOGQyZWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVkMzA0ZjdkMzA1NWYyMDExYWZkNjdiYjVkOTZhZDEwZGIxYmI2NzQ3ZDlhOWFmZWY4ODg5YTc5MmZhYzZkNmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1beac435bf1e4393a46615f081615d3f",
+      "statement": "WorkspaceManager takes a snapshot after each user write or delete because these writes bypass @with_checkpoint, and returns the checkpoint id or None on snapshot failure.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/workspace.py#L225-L271",
+          "version": "repo-lines-v1:sha256:164ebe3a04aebbd85d8fc4c0813477822d628a2c0367128a57788f7b3db0a2ec:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwZTI0ZDAwNzYzNDhjY2EyZTk2N2U5NDcxYzViYjBjNmI3ZjI3MDFlOWUxMjQ3NzA1MjA3YWI3Yzk1YWE3OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyMDc4MzkyZmZlOTM1MTNhNGNlYzA2MjQ2ODZhOTcyM2Y4MzgxYjM4YTNjNjBmYWQ0NmYzYjEwYTc2NjVlN2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU2Mjk1YzYxZTQ3OGNjZWQ2ZDAxYjkyYjM1ZTYwMmI3MjUxNGUwYzM1NjY0MTJjYWM2MmY2ZTkxODE0N2M2ZjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_10e6d15cdcc54d828a1c72f558a804fd",
+      "statement": "The HTTP restore endpoint rejects busy sessions with 409, validates the checkpoint id against the cNNN_label pattern and path separators, confirms the folder is a direct child of the store, restores, and reloads the agent history.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/routes/dev.py#L177-L210",
+          "version": "repo-lines-v1:sha256:fc18170c75c2717f78238a1acf125142267d89900992a0930b512ae2fedd6ac6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3YjQ2NDBjMGVmMTZkZDNiZTZhMmYyOTMyYjQ3NGI0YzVlODFkNTI1ZTE0NGNjNjA1Y2Q2MzNjOWJhODZlMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5YzNmZmNhMTM2YjNmOWU4MDkxYTIzZDhhNDM4YTg0NGM3OWZmNjNjYzA5NDM4ZmMyMzU4M2I4ZWVlOWY0NGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhODJlYmU5ZWQ0MDdjM2E2YmE0YjAwMzQyOTJiYWE1MmMxMWNlNWFlMjg2MTA3NDAyZGU0NzkyZWVlY2FjZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://core/app/routes/dev.py#L27-L41",
+          "version": "repo-lines-v1:sha256:1c25aedd33c6fc702445c9c0b0105a838a72f0baa9c45d5112f4362aa864756a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmNjFjYWI2OGQ2MGNiN2E0OTMyYzNmZjRmMWFmODliZjQ0MDIzNmIxOGI4MTU1MmFhMGNmYWFjMTU0OGQzMGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiZGQ4MDE2YzBhYzJlMjRiNjExNWY3NTIwMWIyNTgxMmY3NzU3Mzk0N2UyNDZlYjljOTBiYzU2YTkyYWVjNjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI4OWUxNDQyZjgyY2M3MDEyOTMyYjM2ODAzMWFkYWQ2ODVkZjI4OWNiMjlhYzcxNWYxNGU0NWIyMWNjOTBlYmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI3Nzk1NmI1MTQyMzFmYmQwYzE0OTM5NmYxN2E2YTJjNTczYmI3MGQ4YzNlMzRhNTc5MGRiOTY0Mzg1M2NkZDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_258c2b77c5e64c739f87ba157dd0f113",
+      "statement": "The CLI /undo command restores a checkpoint and reloads the agent's working message list from its store.",
+      "evidence": [
+        {
+          "resource": "repo://cli/commands.py#L127-L138",
+          "version": "repo-lines-v1:sha256:eff83d266db6aea0d1af758b34339dfaec518264817465a6c23729281df601ce:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyNzM1OTc0ODlkNjJmOWYzN2U5MjNkYjJmOGVmYWEzMGIwYmZkZDg5ZTg5YmMzYzkwMGM1MjgyYjZlOWYwN2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5N2MzZWY1NDJjNmIyYWI4OTNhNTQzYjgxYzljMzIzZTNkMzlhNGEwMjM3YWNiNDhjNGZkZjk3MTY3YjM4ZWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViNjJlN2NlYWVmOTMzZWM3YTNlZDdjOWM3N2JlN2E0ODc2YTZkYTQ5MjNiYzIyNjQzMjYwZjJhMGUxZjQxNTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4M2U5NDU2NGMxYTQ1OGRlOWQ2ZTg4MjY3ZDRhMDJkZmEwYWU2NDU3MTczMDlhMTQ5NzBhNmJlYzcyNGM1OTYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T18:35:21.080Z"
+  }
+}

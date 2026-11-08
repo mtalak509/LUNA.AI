@@ -1,13 +1,14 @@
-"""Рендер стрима хода в консоль на rich: StreamEvent → блоки в обычной прокрутке терминала.
+"""Render a turn's stream to the console with rich: StreamEvent → scrollback blocks.
 
-Раскладка data по mode (см. run_stream):
-  messages — токен-дельта основного агента; updates — вызовы тулов (model) и их результаты
-  (tools); custom — события делегации (мультиплекс субагента), document_patch и прочие
-  dict-события тулов; error — сбой хода.
+How `data` is laid out by mode (see run_stream):
+  messages — token deltas of the main agent; updates — tool calls (model) and their
+  results (tools); custom — delegation events (the subagent multiplex), document_patch,
+  and other dict events from tools; error — the turn failed.
 
-Всё напечатанное остаётся в истории терминала. «Живым» (rich.Live, transient) остаётся только
-низ экрана: хвост отвечаемого markdown и строка-спиннер с таймером. Устоявшиеся строки
-ответа уходят в прокрутку по мере стрима, поэтому длинный ответ не упирается в высоту окна.
+Everything printed stays in the terminal scrollback. The only live region (rich.Live,
+transient) is the bottom of the screen: the tail of the markdown being written and the
+spinner line with a timer. Settled answer lines move into the scrollback as they stream,
+so a long answer is not limited by the window height.
 """
 
 from __future__ import annotations
@@ -25,12 +26,12 @@ from rich.text import Text
 
 console = Console(highlight=False)
 
-ARGS_WIDTH = 90  # аргументы тула в строке вызова
-RESULT_LINES = 3  # строк результата тула под вызовом
-RESULT_WIDTH = 160  # ширина строки результата до обрезки
+ARGS_WIDTH = 90  # tool arguments on the call line
+RESULT_LINES = 3  # result lines shown under a call
+RESULT_WIDTH = 160  # result line width before it is cut
 DIFF_LINES = 40  # diff lines of `edit` shown before the cut
-LIVE_TAIL = 8  # строк markdown, которые ещё могут перерисоваться (живут в Live)
-RENDER_EVERY = 0.08  # с; не чаще перерисовываем markdown на стриме токенов
+LIVE_TAIL = 8  # markdown lines that may still be redrawn (they live in Live)
+RENDER_EVERY = 0.08  # seconds; markdown is not redrawn more often than this while streaming
 
 MAIN = ("", "yellow")
 SUB = ("  │ ", "cyan")
@@ -42,7 +43,7 @@ def shorten(text: str, width: int) -> str:
 
 
 def summarize_args(args: Any, width: int = ARGS_WIDTH, skip: tuple[str, ...] = ()) -> str:
-    """Аргументы вызова одной строкой: `path='report.json', limit=5`, обрезано по ширине."""
+    """Call arguments on one line: `path='report.json', limit=5`, cut to the width."""
     if not isinstance(args, dict):
         return shorten(str(args), width)
     parts = []
@@ -55,10 +56,10 @@ def summarize_args(args: Any, width: int = ARGS_WIDTH, skip: tuple[str, ...] = (
 
 
 def summarize_result(content: Any) -> tuple[list[str], int]:
-    """Первые строки результата тула и сколько строк скрыто."""
-    if isinstance(content, list):  # content-блоки сообщения
+    """The first lines of a tool result, and how many lines were hidden."""
+    if isinstance(content, list):  # message content blocks
         content = "\n".join(b.get("text", "") if isinstance(b, dict) else str(b) for b in content)
-    lines = [ln for ln in str(content).splitlines() if ln.strip()] or ["(пусто)"]
+    lines = [ln for ln in str(content).splitlines() if ln.strip()] or ["(empty)"]
     shown = [shorten(ln, RESULT_WIDTH) for ln in lines[:RESULT_LINES]]
     return shown, len(lines) - len(shown)
 
@@ -78,8 +79,13 @@ def edit_diff(name: str, args: Any) -> list[Text]:
         lines.append(Text(ln, style=style))
     if len(lines) > DIFF_LINES:
         hidden = len(lines) - DIFF_LINES
-        lines = lines[:DIFF_LINES] + [Text(f"… ещё {hidden} строк diff", style="dim")]
+        lines = lines[:DIFF_LINES] + [Text(_more(hidden, "diff line"), style="dim")]
     return lines
+
+
+def _more(count: int, noun: str) -> str:
+    """`… 3 more lines`. `noun` is the singular form."""
+    return f"… {count} more {noun if count == 1 else noun + 's'}"
 
 
 def _chunk_text(chunk: Any) -> str:
@@ -94,7 +100,7 @@ def _is_reasoning(chunk: Any) -> bool:
 
 
 def _indent(line: list[Segment]) -> Text:
-    """Строка отрендеренного markdown → Text с отступом ответа, без хвостовых пробелов."""
+    """One rendered markdown line → Text with the answer indent, trailing spaces stripped."""
     text = Text("  ")
     for seg in line:
         if not seg.control:
@@ -104,10 +110,10 @@ def _indent(line: list[Segment]) -> Text:
 
 
 class MarkdownStream:
-    """Потоковый markdown: устоявшиеся строки печатаются в прокрутку, хвост отдаётся в Live.
+    """Streaming markdown: settled lines go to the scrollback, the tail stays in Live.
 
-    Markdown перерисовывается целиком (таблица или список могут поменять уже показанные
-    строки), поэтому последние LIVE_TAIL строк остаются «живыми» до конца блока.
+    Markdown is re-rendered as a whole (a table or a list can change lines already shown),
+    so the last LIVE_TAIL lines stay live until the block ends.
     """
 
     def __init__(self, out: Console) -> None:
@@ -135,7 +141,7 @@ class MarkdownStream:
         lines: list[Text] = []
         for segments in self._out.render_lines(Markdown(self._text), options, pad=False):
             line = _indent(segments)
-            # Рамка таблицы и отступ абзаца дают пустые строки подряд — оставляем одну.
+            # A table border and a paragraph indent produce blank lines in a row — keep one.
             if line.plain.strip() or (lines and lines[-1].plain.strip()):
                 lines.append(line)
         stable = len(lines) if final else max(0, len(lines) - LIVE_TAIL)
@@ -147,7 +153,7 @@ class MarkdownStream:
 
 
 class TurnView:
-    """Вид одного хода: печатает события в прокрутку и держит Live-низ со спиннером."""
+    """One turn's view: print events into the scrollback and keep a Live spinner at the bottom."""
 
     def __init__(self, out: Console | None = None) -> None:
         self.out = out or console
@@ -155,7 +161,8 @@ class TurnView:
         self._md: MarkdownStream | None = None
         self._sub_text: dict[str, str] = {}
         self._t0 = time.monotonic()
-        self.activity = "думаю"
+        self._block: str | None = None
+        self.activity = "thinking"
         # One instance for the whole turn: a Spinner counts frames from its first render.
         self._spinner = Spinner("dots", style="yellow")
 
@@ -163,10 +170,12 @@ class TurnView:
 
     def start(self) -> None:
         self._t0 = time.monotonic()
+        self._block = None
+        self._print()
         self.resume()
 
     def pause(self) -> None:
-        """Убрать Live-низ (перед HITL-вопросом: ввод не должен драться со спиннером)."""
+        """Remove the Live bottom (before a HITL question: input must not fight the spinner)."""
         self._flush_md()
         if self._live is not None:
             self._live.stop()
@@ -192,13 +201,13 @@ class TurnView:
         elapsed = int(time.monotonic() - self._t0)
         self._spinner.update(
             text=Text.assemble(
-                (f"{self.activity}…", "yellow"), (f"  ({elapsed} с · esc — прервать)", "dim")
+                (f"{self.activity}…", "yellow"), (f"  ({elapsed}s · esc — interrupt)", "dim")
             )
         )
         tail = self._md.tail if self._md is not None else None
         return Group(tail, self._spinner) if tail is not None else self._spinner
 
-    # --- печать ---------------------------------------------------------------------------
+    # --- printing -----------------------------------------------------------------------------
 
     def _print(self, *renderables: RenderableType) -> None:
         self.out.print(*renderables)
@@ -213,14 +222,27 @@ class TurnView:
         for ln in text.splitlines():
             self._print(Text.assemble((SUB[0], SUB[1]), (ln, "dim")))
 
+    def _begin_block(self, kind: str) -> None:
+        """Separate the answer from tool output with one blank line.
+
+        The blank under the user's prompt is printed in `start`. This only fires when
+        the turn switches from one kind of block to the other.
+        """
+        if self._block == kind:
+            return
+        if self._block is not None:
+            self._print()
+        self._block = kind
+
     def note(self, text: str, style: str = "yellow") -> None:
         self._flush_md()
+        self._begin_block("tools")
         self._print(Text(text, style=style))
 
-    # --- события --------------------------------------------------------------------------
+    # --- events -------------------------------------------------------------------------------
 
     def handle(self, ev: Any) -> None:
-        """Один StreamEvent основного агента → консоль."""
+        """One StreamEvent from the main agent → the console."""
         if ev.mode == "messages":
             self._main_message(ev.data)
         elif ev.mode == "updates":
@@ -232,23 +254,25 @@ class TurnView:
             self._flush_md()
             data = ev.data
             msg = data.get("error", data) if isinstance(data, dict) else data
-            self._print(Text(f"✗ ошибка: {msg}", style="bold red"))
+            self._begin_block("tools")
+            self._print(Text(f"✗ error: {msg}", style="bold red"))
 
     def _main_message(self, data: Any) -> None:
         chunk, meta = data
         if (meta or {}).get("langgraph_node") == "tools":
-            return  # ToolMessage придёт ниже из updates
+            return  # the ToolMessage arrives below, from updates
         if _is_reasoning(chunk):
-            self.activity = "размышляю"
+            self.activity = "reasoning"
         text = _chunk_text(chunk)
         if text:
-            self.activity = "пишу ответ"
+            self.activity = "writing"
+            self._begin_block("answer")
             if self._md is None:
                 self._md = MarkdownStream(self.out)
             self._md.feed(text)
 
     def _updates(self, data: Any, zone: tuple[str, str]) -> None:
-        """Вызовы тулов (model) и их результаты (tools) одной строкой каждый."""
+        """Tool calls (model) and their results (tools), one line each."""
         prefix, color = zone
         for source, update in (data or {}).items():
             for m in (update or {}).get("messages", []):
@@ -256,9 +280,10 @@ class TurnView:
                     for tc in getattr(m, "tool_calls", None) or []:
                         name, args = tc.get("name") or "?", tc.get("args")
                         diff = edit_diff(name, args)
-                        # old/new_string уже видны в diff — в строке вызова их не дублируем
+                        # old/new_string are already in the diff — skip them on the call line
                         skip = ("old_string", "new_string") if diff else ()
-                        self.activity = f"выполняю {name}"
+                        self.activity = f"running {name}"
+                        self._begin_block("tools")
                         self._print(
                             Text.assemble(
                                 (prefix, color),
@@ -273,20 +298,22 @@ class TurnView:
                     failed = getattr(m, "status", None) == "error"
                     lines, hidden = summarize_result(getattr(m, "content", ""))
                     style = "red" if failed else "dim"
+                    self._begin_block("tools")
                     for i, ln in enumerate(lines):
                         lead = "  ⎿  " if i == 0 else "     "
                         self._print(Text.assemble((prefix, color), (lead + ln, style)))
                     if hidden:
                         self._print(
-                            Text.assemble((prefix, color), (f"     … ещё {hidden} строк", "dim"))
+                            Text.assemble((prefix, color), (f"     {_more(hidden, 'line')}", "dim"))
                         )
-                    self.activity = "думаю"
+                    self.activity = "thinking"
 
     def _custom(self, data: Any, zone: tuple[str, str] = MAIN) -> None:
-        """custom-канал: делегация субагенту, document_patch и прочие dict-события."""
+        """The custom channel: subagent delegation, document_patch, and other dict events."""
         prefix, color = zone
         if not isinstance(data, dict):
             self._flush_md()
+            self._begin_block("tools")
             self._print(Text(f"{prefix}[custom] {data}", style="dim"))
             return
 
@@ -294,19 +321,21 @@ class TurnView:
         if etype == "namespace_open":
             self._flush_md()
             ns = data.get("namespace")
-            self.activity = f"работает субагент {ns}"
-            self._print(Text(f"  ┌─ субагент {ns} запущен", style="cyan"))
+            self.activity = f"subagent {ns}"
+            self._begin_block("tools")
+            self._print(Text(f"  ┌─ subagent {ns} started", style="cyan"))
         elif etype == "namespace_close":
             ns = data.get("namespace") or ""
+            self._begin_block("tools")
             self._flush_sub(ns)
             err = data.get("error")
             self._print(
                 Text(
-                    f"  └─ субагент {ns} завершён" + (f" — ошибка: {err}" if err else ""),
+                    f"  └─ subagent {ns} finished" + (f" — error: {err}" if err else ""),
                     style="red" if err else "cyan",
                 )
             )
-            self.activity = "думаю"
+            self.activity = "thinking"
         elif etype == "subagent_event":
             ns = data.get("namespace") or ""
             mode, inner = data.get("mode"), data.get("data")
@@ -319,19 +348,21 @@ class TurnView:
                 self._updates(inner, SUB)
             elif mode == "custom":
                 self._flush_sub(ns)
-                self._custom(inner, SUB)  # вложенный custom субагента (напр. document_patch)
-            # mode == "error" и прочее у субагента — шум, его итог придёт в namespace_close
+                self._custom(inner, SUB)  # nested custom event, e.g. document_patch
+            # a subagent's error mode is noise; the outcome arrives in namespace_close
         elif etype == "document_patch":
             self._flush_md()
+            self._begin_block("tools")
             ops = len(data.get("operations", []))
             self._print(
                 Text.assemble(
                     (prefix, color),
                     ("✎ json_patch ", color),
                     (str(data.get("file", "")), "bold"),
-                    (f": {ops} оп.", "dim"),
+                    (f": {ops} ops", "dim"),
                 )
             )
         else:
             self._flush_md()
+            self._begin_block("tools")
             self._print(Text(f"{prefix}[custom] {data}", style="dim"))

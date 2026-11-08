@@ -3,6 +3,8 @@
 
 # env
 .env
+.mcp.json
+.vscode/
 
 # devfront (перерабатывается — пока вне области видимости)
 devfront/
@@ -26,7 +28,6 @@ __pycache__/
 
 #cursor
 
-
 # Specs and plans
 specs/
 
@@ -45,6 +46,9 @@ docs/tech-debt.md
 # Local session working zones (dev / ad-hoc)
 .devsession/
 .session/
+# OpenWiki in-progress run state (transient)
+openwiki/.run.json
+
 # Live e2e scenario runs (transcripts + resulting workspaces)
 tests/evals/.runs/
 .deepeval/

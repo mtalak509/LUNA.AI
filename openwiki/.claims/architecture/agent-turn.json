@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:22ba905b330fe99bb5954c9326059c8762946d662d5d9e6a7d5a8888eeed0f00",
+  "claims": [
+    {
+      "id": "claim_e26660a374514b8fac3d65e2aba4d016",
+      "statement": "BaseAgent builds its create_agent graph once in __init__ without a checkpointer, and the main agent loads its working message list from a MessageStore while a subagent starts with an empty list and no store.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L216-L236",
+          "version": "repo-lines-v1:sha256:c43ed3a25dc6a06443a9c06ec60f1c9910c2c05c68ef809fe99622022f51dd0b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlY2JiMGM1YjEyNGRlMWU4ZTE5ODllNTJjMzY2ZWM1OWI4ZTE2MjQwYWU3YmU0NTNiYjE4ZGZhNTUwYzYwZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVlMDliZGYzMDI3MTdmMTQ2N2U1OGZkYWVkNjU3ZDg4ZTQ4NWNiM2ZhNDljNTkyN2QyMTUxZGEzZjNhYmJmYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0NWUzMmJiOGFiM2Q1ZThiMTdmMTlkMzcyN2YxZTFhYTM5MmZkNTY5YTM0MWE0NzA5NTJkMzgzNTRhN2IwNDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_45d15135b009484bbd268d0e30b7b425",
+      "statement": "Each turn run_stream builds a fresh AgentRuntimeContext carrying permission and decision modes, namespace, workspace path, agent scope, session id, checkpoints root and subagent path, so mode changes take effect per turn.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L319-L329",
+          "version": "repo-lines-v1:sha256:b0eff4ddfd45edd3bfbda6ceb34593ce5f7b055f20a761df96d932ffe3396c7c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyMWNhOWEyNzAyOTA5NzgzNDUzZDlkMmJjNTEwMmMyZTI1MGMwZTgyZGM1MmRhZmFjMjA0YjgwNTkwNDljYmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ3ZDExNGNiYjhkYjViYWYxYWFlYjEwYzM3OTZjZmU4MjQ0ZWFlY2EwNGViZWUyY2U1ZDJjZWQ1NjBiYjAxZTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZmMjU0MmIwMzVkZWExZDQ0Y2MwMmViYTMxMzE2YzY5NTYwOTk0MjhiNjg5MDdhMjViZjBkZWM3OTU4NDJlMjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_91bcfeab0f5e40b7a00899e933897ed7",
+      "statement": "run_stream appends the incoming HumanMessage to the working copy and store, runs history compaction before the graph, then streams the whole message list through astream with messages, updates and custom modes and a recursion limit defaulting to 50.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L29-L29",
+          "version": "repo-lines-v1:sha256:68ea4a310fb070ae047c30121f1b7ee7cb44dcc9dae5b17c799a1cd28a47d882:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjhlYTRhMzEwZmIwNzBhZTA0N2MzMDEyMWYxYjdlZTdjYjQ0ZGNjOWRhZTViMTdjNzk5YTFjZDI4YTQ3ZDg4MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjhlYTRhMzEwZmIwNzBhZTA0N2MzMDEyMWYxYjdlZTdjYjQ0ZGNjOWRhZTViMTdjNzk5YTFjZDI4YTQ3ZDg4MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2FiMWI1NzY3MjJkN2NiMDllNzkwMjhiMzQxZWZmNzM0ZTYwNTAxYWQxZjk3MTA4MmExMDI5ZTJmMjY4MjFhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWFmOTU5YTg5M2Y3MDgzMjkwYjFjMzVlODI4MmNiZTYyNThkNjdkNzkxZjUzMzg1Yzc5ZTIzZjVkMzU2MmU0MyJ9"
+        },
+        {
+          "resource": "repo://core/agent/base.py#L331-L366",
+          "version": "repo-lines-v1:sha256:82ebdd1575f2f0d2edaeb8c5bd60033345880e0b87cf38a03e085c5fdca2cdbc:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjMjkzNzNjYmY5ODVlODkzZTQwNDI2ZWFlOTg3YmRmM2JjYjYxOGVmMmI4NGUwNDcwODYwMjc4MjU3NTEyM2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjNDlhZmQzM2VkMWIyY2Q4YTk3MjNiMWRiYjYzMmMwZjQ0NWFkMjBkZjU5MmM3YTMwMjMyNGQzYzUzZDA5ZjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJlNmYzNGJjMmIzNjk3NDcxNDUyOTdiNjM3MDMyMTVhNzIwNzI3ZGY2Zjg2ZWZiYTFhOTlkMWZjYTE2Y2M1NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3ZDBmMzkyOTVlZWJhMDIwMWNhNWU1MjgwNTZjOTgxODc3NGMwZjQ3NzYwODk3NWNhYjI3ZjI1YmY2NWRiZmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_302c5928bfd6414bb5106164901c68de",
+      "statement": "Only messages from updates chunks of the model and tools nodes are persisted, after reasoning blocks are stripped; token chunks from messages mode are streamed but never stored.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L168-L192",
+          "version": "repo-lines-v1:sha256:c6d81a350f8f40b653b5ae40300b2a849a014a7d3cb99f029ba426620977ed44:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjNmE2MTYxMThhOWE4NWZmMTRmZDNjYzFmNGRjZDQ2MWZjNDM1YzcxZDAzMDBhYWQ1ODg4ZjBkZjYwNWQ5MDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2ZjdlMzA4MzM5NGE1Yjk4NzgwMjUzZDE3ZDA3ODA3ZGVmOWFhNTU0NDhkNjFkYjczZWMwMTNmMzcyNjYxZDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMxNjMxMWNjOTRlYTYyN2E0OWJlMDVhY2RlMmIwOWIwOGZlMDI5YjJjZjhkYWIyODE1OWQ2ZDE0OGZjYTA0NzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJiYTVkZDM3MzJmMTVjMTYxMzE1ODQxOGMwMmI4NDg3MTJjOTkzZTllZGIzMTAwMTY2ZDc1NjNiN2QyNGQ4YmQifQ"
+        },
+        {
+          "resource": "repo://core/agent/base.py#L372-L397",
+          "version": "repo-lines-v1:sha256:b224b86fa2ed880c0bf6319d925664d33aac9c7aabade1ef1a3b16740f52c240:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiMDI1Yjc3MWQwM2UzMDYxMGUxYTZmZTJiOWY1YmM1ZTVhMDg4ZGE1YjE0NjI1ZjFjNDdiNWFhOWUwZGMwMDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjZDYzNWE5NTM0MGZiODhhNzJiZmVmMmQ2MzEwOWYwNDUyZjNlYjQ3MWEwMjdiOTYwMTQzODIwZmQ4ZjFkNWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZmMGVmMjZjODg4MzVkZTZjMDYzNWQ2MjIzNGMzZmY1NDhiNWYxNGU5MGMzODE4NjFlNzg4OTBkODA3M2U2MjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJkNjhhMDQ1YzdkNDIyMjc3Y2Q5NjkyZThhNTJjZDBiODJiZWM3NDA4ZjFmZjY3MzkzMDVjZTk3MDFmOTVhYmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_30f795dccfb44c16b9eb76908548c006",
+      "statement": "A GraphRecursionError becomes an error StreamEvent, a connection error or 404 model-not-found / no-running-instances becomes an error event with code model_unavailable, and any other exception is logged and re-raised.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L195-L206",
+          "version": "repo-lines-v1:sha256:8977610679e481b3d9e74d3d22e5e76d25a85ea1d6155259db8a3dec9636ab41:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhN2JjNjRhYWEyNDExZDRjMWYxYzEwMzUxM2IyYzNmY2FhYTNjZWE0NjQ5ZTg0Yzg2NWM0NDI0ZDYwNGFjNmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIwYzgzYWViYjYwNTBhMmY0MjgzNGQ4ODhhNWRiOWJlMTVjYmMwODJmNWRlZTE2NjAwYTUzMzBiODA5Y2VmZTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5MDgzOGFiNWY2YmNmZjIzMjBjNjY5ZTBhNmU5MGFhNjA3NDNkYTUwNTlkMzRkNTVhYzhkMjE2MzM2NzQ1ODkifQ"
+        },
+        {
+          "resource": "repo://core/agent/base.py#L406-L428",
+          "version": "repo-lines-v1:sha256:23ad8e1ce5b81157e6c8414185c44192eb8e242c48a4137a7566f6ad885d3cd9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyYmJmMzY2MzQ4MmU0YjJiYjhkMzI3YzM3ZDZjMTdkM2E3ZmQzOWU3NTFmODQzMjJhYmU5ZDBiMmZkYzhiYmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxMTZkMTVjMDI1MzBmY2EyYzkwOTIxYTQ4NTQ1OTFiZWZmNGYzMDVkNTU0YTk0ZDY2NWYwMTA0ODk5YmQ3NmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ3NzZjZDljODllMzg4MDgyYmUxMTk5MTRlOWZmNzVjOTNiOWEwMzQwMmM4MjM0ZjNiZTk4OTcxNThjOTc3MTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8113508613f54b85bd4c628aa2144cbb",
+      "statement": "final_text returns the text of the last AIMessage in the working copy, and reload_history rehydrates the working copy from the store (a no-op for subagents).",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L245-L270",
+          "version": "repo-lines-v1:sha256:156e3862ecdb1cb85707944decddf0f1ef96ea9683010285b0716ced309e4991:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlNjFjMDU5NTQ3MDI2NDJkNzQxNDNhOTY2NDYzYjk5YzhhMDdhNjk1MDBmM2NmNjg1MDk2NjM3YmQ2NzJlZWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYWFhYzdiOTVkNzAzNWMyYTEyY2RjNzMyZTc4YzA3MGQwMDQ4ZDA5Y2I1YzgyNmIxZjdkNmVlZWIxZjY1ZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdiMmI1YTZhOWYwOWIxZDY3ZTBjYWI0NWNhODEwZjg0NDE1YzYzMjMxY2ZiNzk2NjNmNzZlNTRkMjE4ODEzOGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3MTExNmZlYzc2ODJlMTlhZTBjOTU2NmVjNGYxZGJkNDI5Zjk5ZTJjM2EyZWQ3NmRmNjcxZDg1M2JhYWZmNGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e918c6504738495fb981d500ef5a8068",
+      "statement": "AgentSession runs each turn as an asyncio task feeding a queue, refuses a second concurrent turn with RuntimeError, and on cancellation or failure emits turn_cancelled or an error event followed by turn_done.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/session.py#L63-L125",
+          "version": "repo-lines-v1:sha256:eea4af09fbf36df2928ff5a2590306bd92b79ab1c72006d43c3281a56e8af5c3:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmZjM4NDgzNDkzZDMwN2Y4YzQzZWE0MmNlZTY1YjFkYTY5NWM2ODY2YThiMDVhODJiMGExMDMxOTk1YmZjNGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQxMDQyNGJkZTNhZDkxZmY4ZGFlYTgxYTRhYTUwNGIyZmU5ZDM3OTIzZjU5Mzc5MTUyZDU0M2Q3YjRkZWFmNzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5NjQ5OWE1MzA5Y2FmMGIyOWM5OGViODlhNzQyZTE3YWMyYzVlMTA1ZjIxNmQzMDllNDkwMzQ3ZGJhMjkyMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVmMWFmMTVjMmQ2MzA4MTNlOGUzYWIyOGExNzY3MmUwZDNjN2MyZDg5MGVkYzUzYjI0NTkyNTRlMTFkOTc5YjQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

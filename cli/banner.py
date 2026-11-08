@@ -2,9 +2,9 @@ from importlib.metadata import PackageNotFoundError, version
 
 
 def get_version() -> str:
-    """Версия из метадаты установленного пакета — единый источник правды (pyproject).
+    """Version from the installed package metadata — the single source of truth (pyproject).
 
-    Fallback для запуска из исходников без `pip install -e .` (метадата не зарегана).
+    Fallback for a checkout that was not installed with `pip install -e .`.
     """
     try:
         return version("luna-agent")

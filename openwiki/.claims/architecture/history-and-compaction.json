@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e41895eb5c692a483bfc4f227c3b5270dc079690c62d42175b2cb26126507012",
+  "claims": [
+    {
+      "id": "claim_abf1df40a7a943afa5832875c25bade7",
+      "statement": "MessageStore keeps the main agent's history in workspace/.runtime/messages.jsonl as append-only records of kind message or summary, where a summary record carries a head index into the message records.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/messages.py#L118-L122",
+          "version": "repo-lines-v1:sha256:728eabebcac045fda80ab37c76a89961048d54c167142afd06c4259c8dc06bdc:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2Y3YzU1ZjAyMzJmMzEzZWU4OWNlNjRjNDNiYzY1ODkwYjcxZmMyMTM5Nzg2MGI2MGFhZTc1NjZmZmNiYjg5NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWE0ODcxNjU5NjY1NzljMmEzMTU5ODk2YzFjZjlmMzExMDU5OTllZTU2MTA1ZGI3NTFkMDc2YTRkZDZmYzg2ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmQwYjAyYTVjZmYyZGE1NzYwYjQ0MTI4YjMwNjdmZGYzMDAwNTk0ZTM5NTRlMjhiZjQ2ZjAzODIzMTQzZGQ2MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzc1Mjg4ZDQ2N2YyYTU3NTc3ZTA0OWUxMTgzNjUyMGNmZTE2ZTBmMGNlMDViYjQzNGMyNjBlZmVkZjNhZDZlZiJ9"
+        },
+        {
+          "resource": "repo://core/agent/messages.py#L29-L70",
+          "version": "repo-lines-v1:sha256:327a90ff701bba0c88bde593fce0ac235b6da57f216c4256c5d897864bb8d15e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4ZmMyN2NlOTM2MTFhNTkyNmQxNTU5NTk2NTFlMWI5MDBjMWQzMmQzOGRjOTc0Y2E3NDc3Y2UzYzY4NTgwNjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhhZTJhM2I1OGExNTEwN2UzMWJjZGY4ZGEzYmQyODdjYWM3MDI5ODA4ZWJlNDE3ZGFjMWViNTdlMTVjMDQ1ZjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJjYjFhYmY3YmZjNTAxNTdmYTg2YTVmYTllM2NlYTVjOTMyYmVjZjQ3MjI3NzBmODNlN2Y1ZThjNTcwNWE1OTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhMzRkMmFlYjEyMzQ3Yzg2ZjU4NTQ0ODY1OWFiOTVlMTUxOWI3ZDM1ZjdlMmVhOTk4NGU4MDA5OWEwODc2NTQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ae0fd62782c349b1b70fdeb6ae68eab8",
+      "statement": "MessageStore.load returns all messages when no summary exists, otherwise the last summary followed by message records from its head, and recounts message_count.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/messages.py#L74-L96",
+          "version": "repo-lines-v1:sha256:bc70c627cf400ecbc8410a199f6fa29ba814d533d1c30475376931f0522b500a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2YTQ0ZWI3M2ZkMmIwNWQwODU5YWMwMDZlMDBkMGM0NWVmYmNmMWI2ZWFiMjRlNzZhYmVmN2ZkMTM2MTUxODciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiY2NiMzNkODVmZjFmMGZlOTcyNGE1NDZiMGQ2ZmZkNjk3NTkxZTI4NzViMTU2NjA5NDI5YzJhMDZiNDI4NDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFhMzRkMmFlYjEyMzQ3Yzg2ZjU4NTQ0ODY1OWFiOTVlMTUxOWI3ZDM1ZjdlMmVhOTk4NGU4MDA5OWEwODc2NTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzOGZjZWRmYzI1NGY0ZGJiMThlMjNkNjhmOTkwM2RmY2M2NjUwMjQ5MzQ3NmM4YWZiZmNkNjc5MWM2YWM2ZGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2606a501d4bc432b975866cea47a1e17",
+      "statement": "load_ui_messages returns raw dicts for the UI and tolerates only a broken last line, raising on a broken line elsewhere.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/messages.py#L159-L180",
+          "version": "repo-lines-v1:sha256:28f161453f9144d3e79ff0ba9525c07d25d23cbc07ab7f048b496260333cdfd0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjZTE3YTMxZDAzMGNmMmI4MDY0NzAxN2E5ZTZjNjgzMDc0OTkwY2QyZTUxODM4NTk1ZjFlZjI2ZmNiN2ZhYzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjMmFkYWZmY2QzOGFmZGNiOTMwZGVjNWI2ZjUwNGYwOGFmMDJlZDU4YWI2OGEwNTRjMzI5OGJmMWNiNDJhOGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3OGZjNTg0MGU5MzlkY2RiY2ZmOWM5NzA1YjQ4ZGY3ZTllM2QxNjNkMDEyZjYzOTZlYWNiY2MxNWY3MmM4MzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://core/agent/messages.py#L98-L114",
+          "version": "repo-lines-v1:sha256:5adbf2a60a7274d48218dab9d8373bb07b4bf9a6f2ef2da036ecfe998be2942d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4NjcyYWNhNGQ5OTNiZDkyNDc3NjJmZTE4ZTkzN2I2MzQwMWNlN2RmZTViZWY4ZjMxYWZmOTUyYWRiMjUyZjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0NTUyZDkwOWU1OTZmZjFiYTJiNzRlODNmZTRjOTgxZjVjODIxYWMxMWY1NjAwYjRhMDBlMzA4NTVkNDUyNzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkMGIwMmE1Y2ZmMmRhNTc2MGI0NDEyOGIzMDY3ZmRmMzAwMDU5NGUzOTU0ZTI4YmY0NmYwMzgyMzE0M2RkNjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9afd9dea366249b3862578daa26f57f8",
+      "statement": "Strings starting with data: and longer than 8192 characters are externalized to .runtime/blobs/<sha1>.b64 and replaced with a blob:<sha1> reference that is not inflated on load.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/messages.py#L134-L157",
+          "version": "repo-lines-v1:sha256:5408460f05a0cbf9f0a443833975c52270c4e70505dae0b7627b3f7108e46749:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjODJiNThmMGU1MWJmMjE5MTE4NDIxZTgwNTIzNjdlZDg0NmVjZmM3ZDE1YjBkZDY4YzE3YmY2MjUxOGViOTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhOWNiYTc2NTQyMjg5YmRjMTQ4NTczMjExMmZiZTQ4ODVhYTYyZDkwNDgxYzIwYTEzYmU4OGU5OWUxMDRlMzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4YmRiMjM5Y2JiZDdmNTljOTA3MWFhOGUwZmQ4MjQwZWExMzUwNmFlZGNmYWQzZTYzNWI5OTY5MGEwNTk4N2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM2YWE0N2IyYjY0ZWQyN2VkNjY1NGYzMGY1YjA2Njc5ZjE0ZjlmZmMwZDZiNzdhYjBkMzEwNTIzYjUwYjU0NmYifQ"
+        },
+        {
+          "resource": "repo://core/agent/messages.py#L33-L35",
+          "version": "repo-lines-v1:sha256:240a180f703b0baff76f62f0d008e999eaf5b4674615d2bf1ffd9f3b6d681bba:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmIwNDBmMWZmM2RhMmNlNTNmNDc5ODM4OWJiYzJhZjk3MTczY2E5YzBmZDA3M2I1NDQxN2JmNTllNjYxOTA5YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2YwMTY1OWZjNWFmODM5YjViMTJhNDYyNjlhZmMwYjE3NmUwYWFhY2ViNzBjOTI2ZWNjZWJiZTc1OTA3OWZmNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmYzOTEwOGNjNDJlZDI0N2FiN2JkMWUyMTRmYTAyMjE0MjdkOTQxNTMzNzM4MTlmNTFjMGE1ZWUxZWZkZjMyMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzc0OGUwMDk0MDk1ZTk4MzU3ZDM3YzY3ZGNhNzEzNjg0ZjA5N2ZlZTVkN2Y0ZTRkOGU3OGFiMmZkNGNhMTg0NCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2f6f2a72f3b143a98eebf7da0f91f4e9",
+      "statement": "HistoryCompactor compacts only when the approximate token count reaches 70,000 by default, keeps the last 30 messages, summarizes the head once, writes a summary marker with head computed from message_count, and returns [summary, *tail].",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/compaction.py#L23-L59",
+          "version": "repo-lines-v1:sha256:12dd5afa5f4959a886b856183baaa86ec2b51d2aba0b7560d1246364bda11eda:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkMDFkOGM0NWYyMGI5NGJjZDdiMTA0ZTQ0MWQ3ZGExOTk0YzFiOTAwMzQyYjVlYTYwOWM5YWRhZjczNTNhOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkYzY2NjU5N2ZhNWQwYjUyMWEyZmMyNTJjMDFiZWQ2NjUyMGFhZTUxNTIzNTI4YzA1MDM4YWZiNGYxZGM2YTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE3ZmQxN2IwMDhmM2I4ODczZTNkOTAxMDQ3ODUxYjAyMDExZDFiN2M3MmY4MTVmZGIzMjM1ZGVlMWU0NzU0NGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYxMGQ3MzUyMThmN2VjYWFhMzdlZjVjZDQxZDE3Y2YzM2RhNGU0NDk1ZDUwZmY0YWY0N2I0MDliZTliZjJlZTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bca41babbaee45609d2af819c7797cbd",
+      "statement": "The compaction split moves backwards while the first tail message is a ToolMessage so tool calls and their results are never separated.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/compaction.py#L61-L71",
+          "version": "repo-lines-v1:sha256:cca9d79fcdb1b86e137ab1d38ff063c12d82538ed98dd14e19debc68751de945:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIxZmVlZjY2ZDcyZGZhNzRhNWU0Yzg2YmE5ZjFlYzRiM2RkZGUyY2FjZDkyNTZhMDZjMzA0MTBiZTNiNjU4NjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJlMDA0MzVjZTg5YmE5NzIzN2E0NmRjNGIxMGFjZjE4OGQ3MTgxZjhjOTE1Y2NjMTU4MGJiNWFmZGRhZDNhODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBiOGU5ZTQ0NjIzNzhjNWZlZmU4OTg1ZjMyNzc2M2U5NDYzYjYxYTA5Y2RlZmY2NjE3NTNhN2I0NWVhODlmMDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_33158a90cb434e3cb2de1fe4eb145853",
+      "statement": "Only the main agent gets a HistoryCompactor; it runs in run_stream before the graph, and the production summarizer is one extra chat-model call with a fixed summary prompt.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L231-L236",
+          "version": "repo-lines-v1:sha256:a1f15ad0d3af9ece56d3b2ef11780b221dd3a63edd5d583ca2668d91eaddaf81:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDU2MmM1YzA5NzgxYzZhYWJjZGVhNjhjMmFmMjk5NTJmNzRhMTE0NzJkYTRkYTJhMGQwODRhYjYzZWVkMzI0OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjkzNGRhZmZhOTk4NGRiOGJiOTNjMGQ2M2I0MzA4ZjQzNTIyMjExYzM0N2Y1ODA3ZDIzMjk5ODc5NTQyNDQyNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTQ1ZTMyYmI4YWIzZDVlOGIxN2YxOWQzNzI3ZjFlMWFhMzkyZmQ1NjlhMzQxYTQ3MDk1MmQzODM1NGE3YjA0NiJ9"
+        },
+        {
+          "resource": "repo://core/agent/base.py#L276-L298",
+          "version": "repo-lines-v1:sha256:7ae171db97c262b81eb1821e590cc23234abb0dd7a8f4880954634409d55ab1d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4NmI1NGQ2MDMxMTk3YTQxMDBlMjE2YjRhNDc1ZDZiOGU5ZWJjNjFkZGFiNzc4NDc4Y2Y4MmM0ZjVmNTc2MmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxMDEzNjA5MzcxZTNjOTY0ODhhZWEyMmFhODM2ZmJmMzg5YTY3OWQwOTZhOWFiMDQyNTk3MGUwZWUyNjkzMWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI1MzI2NTYxNjYxZGFlNzQ3M2ZhMWFkYjQyOGUwZDcwMjJhOWM3ZGUyOTUyMzA3MGI5Y2YxMDYwYmEwOGU0OWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzNTZiZWQ2ZjQyMzEwYWU3MTNiZTNjZjI2ODc4ZGZjZGQxMGY3NmMyYzE2NjU3NDA0OTJmYzFkNmFkNDRiYmIifQ"
+        },
+        {
+          "resource": "repo://core/agent/base.py#L337-L347",
+          "version": "repo-lines-v1:sha256:14c75880ebb097067437588e97a126f314e21a7c56cfbfc289f4ceabe0245520:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5MTAwODkzNDRkZDFkMzA4YTBhMjVmMzgwMGEzODI2Yjg5MDRjYzc4M2JlZmU0ZDJlZTI1ZDViNGY0ZTI0ZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxMDM0ODFjNTdkMGYwZGMwZjc2Y2QyY2M4YjM2MDRjNGU4Mjk2ZGE0MTIyYWRkMTllODE3NDVkYzdlMzMxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJiMjI3ZTk4MmUzMGM2MjE4ZTgyNmU0NWM1Y2MxMzMyODgwMjI3ZDI3NjBlY2YzYzI3ZjNhNDlhNTU0ZjY5NmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRmYTdiNzU3YzVlYTM3NmZiYWY4Y2NhMDRhMmY4MmVjNGYxMzQwZDNhNDIyYTA5NzNmMjAzM2ViOWY0OTkxZTIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

@@ -31,7 +31,7 @@ def test_attach_copies_file_and_snapshots(cli_zone, tmp_path, capsys):
 
     out = capsys.readouterr().out
     assert (attachments / "report.json").read_bytes() == b'{"a": 1}'
-    assert "прикреплено: attachments/report.json" in out
+    assert "attached: attachments/report.json" in out
     # Same guarantee as the route: /undo after an attach must not swallow the file.
     (snapshot,) = list(checkpoints.iterdir())
     assert (snapshot / "attachments" / "report.json").is_file()
@@ -59,7 +59,7 @@ def test_attach_handles_paths_with_spaces_and_quotes(cli_zone, tmp_path, capsys)
     commands._attach(f'"{source}"')
 
     assert (attachments / "my big report.json").is_file()
-    assert "прикреплено: attachments/my big report.json" in capsys.readouterr().out
+    assert "attached: attachments/my big report.json" in capsys.readouterr().out
 
 
 def test_attach_refuses_duplicate_until_overwrite(cli_zone, tmp_path, capsys):
@@ -70,7 +70,7 @@ def test_attach_refuses_duplicate_until_overwrite(cli_zone, tmp_path, capsys):
 
     source.write_bytes(b"second")
     commands._attach(str(source))
-    assert "ошибка" in capsys.readouterr().out
+    assert "error:" in capsys.readouterr().out
     assert (attachments / "report.json").read_bytes() == b"first"
 
     commands._attach(f"{source} --overwrite")
@@ -93,14 +93,14 @@ def test_attach_overwrite_flag_may_lead(cli_zone, tmp_path):
 def test_attach_without_argument_prints_usage(cli_zone, capsys):
     attachments, _ = cli_zone
     commands._attach("   ")
-    assert "использование: /attach" in capsys.readouterr().out
+    assert "usage: /attach" in capsys.readouterr().out
     assert list(attachments.rglob("*")) == []
 
 
 def test_attach_missing_source_reports_error(cli_zone, tmp_path, capsys):
     attachments, _ = cli_zone
     commands._attach(str(tmp_path / "nope.json"))
-    assert "ошибка" in capsys.readouterr().out
+    assert "error:" in capsys.readouterr().out
     assert list(attachments.rglob("*")) == []
 
 
@@ -112,7 +112,7 @@ def test_attach_is_dispatched_by_handle_command(cli_zone, tmp_path, capsys):
     assert commands.handle_command(f"/attach {source}") is True
 
     assert (attachments / "report.json").is_file()
-    assert "прикреплено" in capsys.readouterr().out
+    assert "attached:" in capsys.readouterr().out
 
 
 def test_help_lists_attach(capsys):

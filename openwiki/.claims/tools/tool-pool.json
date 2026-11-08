@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:55d8c33ecc84584e09c6ac854dd026f3a8b76d63be4356b3dce5ac97242dd472",
+  "claims": [
+    {
+      "id": "claim_940dc48d798a4d44bd192dd963e5de60",
+      "statement": "agent_tool builds a standard LangChain tool and merges is_write, main_only, fs_scope and feature into tool.metadata, supporting bare, parameterized and custom-name forms.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/__init__.py#L26-L100",
+          "version": "repo-lines-v1:sha256:5a384a633bf64a21337df6ceb618eb810f628065e48ddd10bf6ca5bb7aae7273:eyJzZWxlY3RlZExpbmVDb3VudCI6NzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwMjc5MjA5MWZhZWJlYTExNGZlOGI4MjczZDUyNzc2OTNlNWNmNDQyYmQwNjY2YWVlMzY5NmM4ZGQxODg3OTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1MDFiYzg4ZmNkMjgzNTU4NjBiZWI3ODYzM2I3ZjBjNzQyZTE1NDU4MDZjMmIzM2Y4MTg2MGZiZWJlYjY0YjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZiZmUxYWNjZmZmYzY0ODU0YjFmMmI3MzE2YmU0NWMyYjczOTFiZDIyZGRiNWJkY2RhODE2Y2E3MmE5ZWVjOTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlYTlmNTVhNzgzZDdjNWE0NjBhMzdjMTZhOTE1NmJmNTAwM2U3Y2NiYzNkYzBkZDM3NGEyNWQ4ODk2Yjc2MzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ed9c251921be42ce9c51efe54915f5a7",
+      "statement": "The attribute readers return defaults for tools without LUNA metadata.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/__init__.py#L103-L121",
+          "version": "repo-lines-v1:sha256:d30e94b4909ab319ae954a1769ac0a1864d381c03c0f3d953882d5cb9ae0618d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2YTkwNTYzNDhkNzY5NWFlYTJjOTBmYTlhZDFlN2ZiMmY3Zjg0ZWYxODJhM2RjY2VmNjI0ZGVlYzM3YzZiMDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmY2U1ZTMxZjg5OTc1NGJjYTZmNzYxM2FmOGJmYWQ5MDc5YWE2N2Y1NDUzNzMzZjQ0M2YxZmMzNGU0OTNiYjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2MDVjNmFjN2JmYzk3NjEwZjBhN2YyNWFiYmMzNzM2MTY4OWUxYjNlYmJkZDU3MGRiMzU2MTE5YjQwYzllNTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA2NmUxYWUzNTM0NDBmMDUwNjY1MmIyZDc2MzNhMjFjMDhkYmMxOGFhOGQ4YjI3YzNhMzcwMGE2NzllMjFhNmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9df855aee5af4a67adeea78ea605caa0",
+      "statement": "assemble_pool removes tools of disabled features, main_only tools for subagents, tools whose fs_scope is outside the scope's zones, and write tools only when permission_mode is plan.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/__init__.py#L127-L169",
+          "version": "repo-lines-v1:sha256:e39dad6b295e170e55c4516609f9bf610821316021486b0d6d9f62aa739c13b8:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjZGM3Zjk0YzRkOThkZTI1YmIwNTRiZGExYTI1NmRiOTA2YzVlYWI2OWQzOTQ3Y2ZlOTMwMWFkZjI2NjAzZjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhMTFjMDU2N2QwYTVmOWU5YjEzNWY2NWNkMjUzNzJkZmQ2Mjg3NzVmN2MxZWQyNTNmOGJhZDQyZGQyZDY2NjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjNTJhM2IwMmFjOGE0NGE0NjJkYTlmMzcxNTExZjExYzU0ZDUzNmY4NzE3NTlmMmNlMTRmMzBlMGZmNDEwMzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/__init__.py#L34-L43",
+          "version": "repo-lines-v1:sha256:09eb7b7f06ecc688bde7e9f6e8b743665eae6d5a6a84cf38f14aaa9943cf890c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlmYWQ4NGQxZTEzMDMwMThjNjJhNzFkZmRmZTE2YTU1MTg3MTgyZTEyOTJhYjFkN2JiM2E3ZTc3NTVlY2NjOTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkNDBhYjRhNDdhNGExNjZjMGVhMTRmMGZjNzUzMGVmOTYxYjNjMjRmYzUzZWYwM2UwYWQ1YTdiM2ZiZmNlNmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgyYjk4NzE2YjkyNGFjMjIwYWVkYTBmMDhhYTEwYjA4NjQ2ZTA0NWZhMjEyZGRhNDZjNGM0M2JmMDVkYmU4NzUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5e5bc1f4f8d24bc9866404ff4a3088f0",
+      "statement": "Main agents and subagents are assembled with disabled_features from config and no permission mode, leaving per-turn Plan filtering to the middleware.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/bootstrap.py#L74-L86",
+          "version": "repo-lines-v1:sha256:5deff770199902294d0c5ffaaed4c35ca81798bec6a5951bb83cf6930eb2bbd1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5ZTQwYjNiZjhlMGEyNmJlZmIxMDQ1NGY2ZTMyMDVhOWNhYTliYjljZTQ5OGJhY2EyYTBjNjM0ZWFkMmRhN2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0NWQ3ZTZkODQyZmYzOWJiOTRkMGViZmFkOTljMzJlMDg0MmQ4ZWE1MTg4YzY4ZDQ4ZWI1ZTY0OGJhZmExYWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ4ODZjYzNkM2U4YmY5MWNiMDlhNjk3YzMwNDNlNjdmMWNlMjhmYTcwNzg2OTQ1MTU0Y2E2NDcxZGQyYzJjNTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZjNDg4M2M0YTk1M2Q2NjgwNmQ2YTkwZjQ1MGVlZTNmMmZkOTkzZGI5ZDk2MWNjOTJhZTcxNGZiZmQ1MDI5YmUifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/_subagents.py#L52-L67",
+          "version": "repo-lines-v1:sha256:991434c11c3a7056c46881eb2381a183223a8dbe1b01b9b30ef5f251b6032d14:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1YThlNDMyOWU0MTAxYjRiNDljNmQyZjg3MzI2Mjc0OTY0NTdiMzY1NTRkNDFkYTI2ZjI1MGVjM2NhOGIwZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwZGUyNTg3MTk2MTQ5MjYwNzFjOGZiMTlmZDg2NjE1MDU1NWYxYjAxMzU0ZjhjZDE2MDNhMTA5YTdkZGFlNDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM4OTJiNDUwOTAyM2M1ZTIxMTBmOTc0OTYyYjhjYTRmOWM1YTM4MzNhOGZkMTFhMWMxNTYxZWRiNmFiYmEwYTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxODc2Nzk1MjE5ZTFkMDRhNmIzZTY3YmI1NGQ3Njg2NmMwYjFlNjc3N2RlNjIxOWNmMWExZmY5MDUwNmQ1OGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_626e0ba6ce244135bd3b6e02aeef8424",
+      "statement": "FULL_POOL contains read, write, edit, ls, find, grep, rm, the two knowledge-base tools, delegate_to_subagent, ask_user and select_from_options.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/pool.py#L1-L38",
+          "version": "repo-lines-v1:sha256:2202e7a7d68d1bb78c8d90db37a47b8577d02dd63e8f968e14e20ec84437a463:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhY2I1YzA5MzMzNjMyODk0OGYwNzNkYTA1Y2Y5ZWViN2IwMTJmNjQ4NmQ5Zjg5NWRhZDQzYjhhNzk4Yjg5YjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5NDE2ZTA5Zjc4YmEzMTZjMDMyNTY4MjEzYjg1NWVlNzU2ZTQxNTY1ZDkxOGYwOTUxOWM4MWZkNjIwZjQwNjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_05eaf37b7c734211bb82f14f4b68ea07",
+      "statement": "delegate_to_subagent is main_only, and the RAG tools carry feature rag.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L98-L98",
+          "version": "repo-lines-v1:sha256:1d1eded52743046e0664b5180e4379558d3156c9ac2aaf051a1cc637f3228be3:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWQxZWRlZDUyNzQzMDQ2ZTA2NjRiNTE4MGU0Mzc5NTU4ZDMxNTZjOWFjMmFhZjA1MWExY2M2MzdmMzIyOGJlMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWQxZWRlZDUyNzQzMDQ2ZTA2NjRiNTE4MGU0Mzc5NTU4ZDMxNTZjOWFjMmFhZjA1MWExY2M2MzdmMzIyOGJlMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGNjNGE3ZDFjYzc5NmFiYTNlNDY3MjMzMjdmNTE3ZTlmODExOTgyZDI1MGYwNzAyOTg2ZTRiNTc2NGFkOTU4OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzI2MTU3MjU3YjFhMjcwZDU0MzgxMWFmOGEwM2RmYTdhNTRhZWRiMTAwOTM4ODc0YTIxZDViMTYxMGZiMzhkMSJ9"
+        },
+        {
+          "resource": "repo://core/agent/tools/rag_tools.py#L59-L76",
+          "version": "repo-lines-v1:sha256:9080796d47eb67dc147cdbc817513abb96cd0f0300d2f6226f89325c319dfa66:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5NWFjMWU0ZjU3ZGM3YzhkZGNlYjg0NmY4OGUwNmExYzVlN2ExZDA3NWE3NmFiM2NmYWQxNGY2MjE4MzAxNjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5NWFjMWU0ZjU3ZGM3YzhkZGNlYjg0NmY4OGUwNmExYzVlN2ExZDA3NWE3NmFiM2NmYWQxNGY2MjE4MzAxNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0MTY2YWFlZmQzYzYyNmVlMjdlODFhNGZlYTlmYzdjMTNlNTFiZjVhMDEzMWMzOTI0ZGJiNzljNjMwMTMyN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwOTAwN2JhYWNkZGIzODg1NjNkYTU0ODE5ZjQxNmQ5NTBkZWY0OWQzZTMyY2E5YWZlNDI0ZjM5ZjBkMGI4MjMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_36e51b8d56ab44a2b3ba27a4c0a1f7fc",
+      "statement": "disabled_features contains rag unless RAG_ENABLED is true.",
+      "evidence": [
+        {
+          "resource": "repo://core/config.py#L183-L192",
+          "version": "repo-lines-v1:sha256:b5e05b17610d694033a1871a894e2f63cd72ec50d82ffeb37a59ab0ab174e2bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhYmQzMzU3OTE2Y2JhODUzNjAyM2Q1MGZlZTY5ZTAxMGM3ZjZmNTQ0N2I1YzU1M2M5NWY2NjQ5MDI4ODA2ZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmOTI1OTU5MjVkNDZlNzM1Njc0ZmQ0YjFkNGM5NTg4MDI2MmNmYzEzZmI3YzE0YTRmOGRjMGI4MGUyZmRjYzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhZTAwMTJmYzJmZWRmNjM5MzJmNjAzNjkwNmViMDYzYmI5YzYzOWI4YmY0MDI3MTVhNDM2Y2I1OTRhODZkYmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxZjhjMGE5ZDVmZDlmOTM1ZmVkNWE0MmIxYzliNDBjNDY0YTEwOTYwOWJiMTAyZGEzNGZlZWJmZDg0YWI3ZjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ebe09f8f70064d43bdfb810c22f1736b",
+      "statement": "Process-level holders for clients, the subagent factory and the HITL registry raise ToolException when used before initialization.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/_clients.py#L38-L51",
+          "version": "repo-lines-v1:sha256:e9266fbd72209c1380280c8c9d9af7bce08d4c246f65a8156710865b5dc59361:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyZWZiZjBlNzhjYTYyZDM5NjNlNzkyNWVlZDdkZDczNzhiNmI1Y2IyZGFjYTExNmVhMWMwMzNmODU0ODdhZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4M2ZiMjhkM2U1Y2E4M2ViZGI3OTZkMjk5OGE3Mzc1NzIzZmY5NjcyYjRmY2E4NzkzZDcxMGIxOTJlZWU0MzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMxYTBiMzRjYjIyMzUzZjlkNmM1MTU2YzliYWJjNTdhZjNjMjgxYmMwNThlMTE3OGJkOWRiMTYyZWFlOTkyYmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5MjM5NzFmZGNhYjYxNGY1ZGIyOWMzYjkwMzk2ZGY1ZmFkNGIxZWRkYzY5ODRiYzBiY2FmYzg3Y2M4MGYzZDUifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/_hitl.py#L72-L87",
+          "version": "repo-lines-v1:sha256:062c43124a713284a7d64a1418b617d4284f35fdcfbab9f5579832ab9fecf88d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2YjJjZTQ4NWZhMmExZDQ5Yjc5YTkyZDM3NDBmZjg4MjMzNGI4NDZiMTNlOGYyN2Q1Y2UyZDQ5M2I1MTYxMGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmZDY0ZWM3NTJlMGI5OWY1NGUzZDc4YTRkMzYzYTY0YTdmY2U1NDZjYTcwYjJlMTkzMWM4MjI1ZGQzNTc1MjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlmYTIxNTU5MWUyOGU3MzM3ZDAyNWQ0MTkyMDhkNmFhY2ZjNGRmODBlNzVkODFlOGJkMGQxY2JhYTU5NDRiNTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5NzRmNDc1YTBhYjUzZTBmMTEwYTA5ZDY2MjNiMjQ5NGRlZDQxMWI3ZGRmY2YwYjc5OGJkYWMzYWFjMDlmOTUifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/_subagents.py#L85-L102",
+          "version": "repo-lines-v1:sha256:8aaca1d31e9411c60eb90e73bbdf90643c4b2c1bc7ab6d0e07d02c3263c52bec:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlNmZlNTVkYzZiMjMyYzkxNzg4NjdhMGFmNWY0YzNhY2QxYjFiYjc4Nzg4ZmFhZmJlNmQ2NGFlNzkyZjdlNjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJkMGViNTcyZWNjZWYxZmQwZjIwNDU1NmMwM2FjM2Q3ZjhiNGNjMzM1ODA4Y2ExN2U5OTdjYjEzZjY2YTlkNGYifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

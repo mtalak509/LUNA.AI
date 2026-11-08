@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c2904d04c01b39210ac53a655f8d3203783b78f51223cc4eacc830780a349ba0",
+  "claims": [
+    {
+      "id": "claim_09c728e79cfe46f38f016e5ba3a7631b",
+      "statement": "read returns the whole file without a window, or the requested offset/limit line window headed with the shown line range, and rejects offset/limit below 1 or an offset past the end of the file.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L68-L97",
+          "version": "repo-lines-v1:sha256:667f3c7f8f8dd208a2fbc6a6d1287e3dfe37da9dc65da28be11f8c1c01b37ebf:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4OTZiN2U3NWZhMmYxNjU4YzkyNjAwMWUxYzkyMzFmOWY5MjY4ZDU5NTUyMWY2MzE5NWJiOTc5MDQ2ZDBlYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhZDZhMDEzN2Y1MjViMWQyYzk3N2ExZDQ4YjlkZjc3M2Q1Y2ViNWMyZjgwMjI2YTU3ZjQwMGRkYWI0NjNiNzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJlNjJjNjdlNTg0MDY3NzE1ZWZjMzUyNGI0YWI2NTgwMWY3YTExZWEyZmQ2NzVmMDBjODllNjg3ODc1NTg4MjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1NGZhYjk3YWVhODViODliYjEyZWU1Nzg3YTNmMWMyNGZkZGJhYzBkMzVjMmY5ZTYxNTQ5YmI1ZWJjMmIwOGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_da8be69b1950421ea6488e88b1ec897c",
+      "statement": "edit requires old_string to occur exactly once unless replace_all is true, and write creates parent directories before overwriting the whole file.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L174-L211",
+          "version": "repo-lines-v1:sha256:4b1317214999aa49f109cf51c8dbfca3425a86e10f320b0ab9aaffc8e7e21d9d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwYjk1NjY0NTViOGQ3ZjdmYTkyMjYzZGM3MmY4MmRlOWE3ZTMzMzAyYjlmZjQwMjIyYmE3ODIzMWNlODJhNjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5YzMwYWM2NDEyZmI5M2Y1NmM5YTEwNThlMTZjNTg2ZjI5ZGVjMjNkOTAxYzgyNzMwNTA0N2MxZWMwZGMzNmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNjOTRiN2U0NWRlYTgxNWM1NTlhMWExNWUwZGY5MTIzMTMzMjkwOTJmNWQ0ZDQ1OWM1YmEwMjQ4OWQ1ZWY2MTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMyNDQzZjY0OTdjZGQ1Mjg5MzNkYTIzMzM1NzFkNDE2ZDZmMmJiYTQwNzY3NjJhYmUxZDljNjQ0MDQyN2Q3OTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d9fe5ba3431b403596d9c0f14cc8811f",
+      "statement": "write, edit and rm are declared is_write=True and wrapped in @with_checkpoint, while read, ls, find and grep are read-only.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L68-L225",
+          "version": "repo-lines-v1:sha256:d86491e7546dc8b52f727889743349d92779f9f63a8c9ba948a481d017c19318:eyJzZWxlY3RlZExpbmVDb3VudCI6MTU4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiODk2YjdlNzVmYTJmMTY1OGM5MjYwMDFlMWM5MjMxZjlmOTI2OGQ1OTU1MjFmNjMxOTViYjk3OTA0NmQwZWE2IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0YTQzMGJiNzU0ZmIxODlhZjcyYzM2NjQxOTBlYmZmYjJlNjM2NGNjMzU0NDg2YzgxZWZiNTAxMzM0MDhlYWRlIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJiZTYyYzY3ZTU4NDA2NzcxNWVmYzM1MjRiNGFiNjU4MDFmN2ExMWVhMmZkNjc1ZjAwYzg5ZTY4Nzg3NTU4ODIzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_0ce4b9a4bf034069a7bd13c08f278c86",
+      "statement": "grep matches lines with a Python regex over a file or folder, optionally narrowed by a glob, reports path:line: text, and silently skips undecodable files.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L133-L168",
+          "version": "repo-lines-v1:sha256:48a12045b49c2d1b30076d2b5223998312df93d0737c2a52f3136d5170d33e92:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4OTZiN2U3NWZhMmYxNjU4YzkyNjAwMWUxYzkyMzFmOWY5MjY4ZDU5NTUyMWY2MzE5NWJiOTc5MDQ2ZDBlYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0NzBkOTgxOTNjYTZlZGVlMjg5Y2E2ZTRhZGE2YTZhYzg0MjVlZjYzOGE5NTJmZTllNDI2Zjc3MjE0YjAwYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0NGFkMDM1ZTI2MjI2ZmViYWUxZjNmYzI5NWE2MjVlZTUxOGQ4NTU5MjgxZGM4MTc4ZmNmODJiY2U3MGUzYTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlkNmI3NmJlMTJjODAwNTY4ZjNjN2JlNTRhMjc0YTg4NWQyMDcwNDgyYWIzMTFmNWFkZGUwZWI1MTU3YjQ4NDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a4e3f71c93f24c99b7201217d6810744",
+      "statement": "find and grep only consider files that resolve inside the search root and are not under hidden service folders, and ls hides those folders too.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L100-L113",
+          "version": "repo-lines-v1:sha256:604aa0fea9637c8ba35e8dd0baa5d6452c151e33479a7b4e012d5f98777d9a74:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4OTZiN2U3NWZhMmYxNjU4YzkyNjAwMWUxYzkyMzFmOWY5MjY4ZDU5NTUyMWY2MzE5NWJiOTc5MDQ2ZDBlYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyNTRiNDk3NTMzN2VlODBkNjA4NGUzYzVhNzQzNzk1NTk1NzU1MTRhNzdhMTc5NjQ4MTQ5MWFlM2JkMGU3NTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyZDRlY2UzNTUzNjFjOTNmODYxN2NkODRlZTFmNTZiODhmYWFhNjc3MzkwNzA3NGY3ZTAwYjEyZGVlYWU4NzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1NGZhYjk3YWVhODViODliYjEyZWU1Nzg3YTNmMWMyNGZkZGJhYzBkMzVjMmY5ZTYxNTQ5YmI1ZWJjMmIwOGQifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L41-L58",
+          "version": "repo-lines-v1:sha256:9a0c1ecf71b14e85af062f046d30c2a3b1eb17098db3b0b3218325a85dc29868:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwZDViNTFmYThlNmZiYzFmZjE4YTEwNzNhNzE1Y2RkYWYzMzM0MTdmMzE2OTc5OWEwMWVlZmNjZDFmZGUwNTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkYTI0ZGYxZjQyOTNhMmM4NjE0MjJjNzc3NDg3YjYxMDc3Zjk2NmM2NDY0YWUwNmFiMGQ4NzBhMWZlOTZjNDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4YjQ3YThjNjM5YzQ1MWEyNzlmODM4OTZkZDc2YTI2Nzg3Mzk4MGFiMmY5Yjk5ZjE2MjQ5YWEzMDcyMDZiYzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkMGQ0MTgxZWNhMDdjNzc0NjAzZjRlODdkMWVmYjcyODI4Njk2NDdjZjk3MjUwM2NjYjkwNmRlOTM4ZmQzNWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3727e5b4e5e545a3b85323585d357043",
+      "statement": "Tool output is limited to 2000 lines or 50 KB; OutputTruncator cuts on line boundaries and only byte-cuts a single oversized line without splitting characters.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/tool_output.py#L27-L95",
+          "version": "repo-lines-v1:sha256:20c491f22adac2dd8d07eee507dffcdaf82493fb659a69685069a2d384b13a41:eyJzZWxlY3RlZExpbmVDb3VudCI6NjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjMjliOTI1NTMyMTc1ZTcyYTQ4ZjE3MzAyNDg3NmI1MDlmNDg2MjlhNmVkYjQ2ZWEyODFjZThmZTU4MzMyMWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg1NDY5NTY4MDZlM2EzODU5YTAzNThjOGYxOTg5MzFiYTA5YmQxNzdmMGUyNDRmYWIzNzRiMmI2YTgyYmE3MDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhjYWI0MWI5NjA1YzY1MDdlZTc4ODc3MWEzMzgxN2I4OTUxNGE0ZWUzNjFhZWVmMzg1ODZkNTAzNjcyNjhkNTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e1977aea0c574d71a9033eac595058f9",
+      "statement": "@truncate_output saves the full output to the agent zone's .truncated_outputs/<tool>-<id>.txt and appends (head) or prepends (tail) a note with the extent and spill path; a failed save yields a narrow-your-query hint instead.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/tool_output.py#L162-L175",
+          "version": "repo-lines-v1:sha256:734a01aadd6156ec9dd91ecee3f16ef73294f59a00f6c7e87cf67776a5229b99:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxZjcyMjY0MWU2Zjk2NTAxMGU5MmEwYzE2NmI1NDNiYmRjZGNhNzNjODE3NmU0OGFiYzgxNDBlZTI0NTk5YjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0YTRmMzVmOWQ3ODI1MDFhOGIwNDQ4Zjc2N2MwMWNmZmNkNGQ3NmU0ODUzYmUwZWM0NWY5NDgxZTlmYmY1NGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwZDlmNjFmYmEzNzdhZjhmZTczMGRkMjhhNzhhNzE5YjhmZTlmZTM5MDkzYWI5NWI2OTc5OTg0ODAyZTkzNzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/tool_output.py#L97-L124",
+          "version": "repo-lines-v1:sha256:1449a58b83d2390ff9a2de75392d7b6e5f7ce0db728c0f50695b24deb3cbb432:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjNGUwZjk0Nzk2YTVkMmMyNzZjNWVmNGU0NWEyMTIxZmQ0ZmRhYzVkZTYwNTZkNmRmOWZjOTJlZWJkMWJiOGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1MDFiYzg4ZmNkMjgzNTU4NjBiZWI3ODYzM2I3ZjBjNzQyZTE1NDU4MDZjMmIzM2Y4MTg2MGZiZWJlYjY0YjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhiNDMyNTEwMzFjMzFhZWVhZTU0NTAyMzllZjUwOGE3ZTJlNjMyZGFiZDgyMDgzZjA4ODg2ZTYwZDgwNmFkZDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY4ZjBlMDMxYjhjNmQ0NmE0NDVkYzBlZDNhMmE3MTIyNTJhNDY2NGIzZDFkMTZmZmRlZmUwZGQwNGQyYTMwYzAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_773f3e1f7c104d15a2521dd0bed0cc55",
+      "statement": "read does not spill; cut_window cuts the selected lines first and then builds the header and note naming the shown lines and the exact offset to continue from.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L94-L97",
+          "version": "repo-lines-v1:sha256:6f2866e89a1d1d1cbb3ff3d6c3d4fd57e5883731ee45e68c2daf56d6e8f41ab6:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjRlZjYxZDFhOTBjNmI0YmQ2ZDQzOTI2ZjU4Njc2MzI4NjIyNzRkYjg0MWU3M2Q0YjgwMTE5ODQ2ZjBhMTJjOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWFkNmEwMTM3ZjUyNWIxZDJjOTc3YTFkNDhiOWRmNzczZDVjZWI1YzJmODAyMjZhNTdmNDAwZGRhYjQ2M2I3MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDc0MDI5OTY4MWZiNmFhMjU3OWM4YTc4OWQ4ZjA3NWMxMDRlOTFjY2NmOGE3ODUzZTk1MzU2OWY2Nzg5NGMxNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjU0ZmFiOTdhZWE4NWI4OWJiMTJlZTU3ODdhM2YxYzI0ZmRkYmFjMGQzNWMyZjllNjE1NDliYjVlYmMyYjA4ZCJ9"
+        },
+        {
+          "resource": "repo://core/agent/tools/tool_output.py#L127-L144",
+          "version": "repo-lines-v1:sha256:9e8fcf75b1f6ac8e9668347e605b12ca22c72a1aa0e7061bf10edc656dfd0761:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4M2Q2Mjk4MGQ5NmI0Nzc5M2Y3MjA0NDJmN2U2YTk5YTFkZTkyM2M0Y2U1NTUwOWVkYmQ4NzUzYjFkZmRlOTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyNWNjN2Y2ZTEzYTIxZjIzZWE4YTkwNmEyZDZmMTc4MDYzZmQ0NDY0ZmJkODkwZDJiMDAwMTI4YzczMDQ4ZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2MDVjNmFjN2JmYzk3NjEwZjBhN2YyNWFiYmMzNzM2MTY4OWUxYjNlYmJkZDU3MGRiMzU2MTE5YjQwYzllNTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIyYmY5ZmEzYzJmYWMwMTY5MjAxZjU4NzZhODkyNTI4N2NhZTIyZjE5NTk1MjY2NWEzNDIzNzhkODFlNmRkMmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ec6f7ef820564c989c8e3cfbff0a2461",
+      "statement": "ls, find and grep all declare the head truncation strategy.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L100-L136",
+          "version": "repo-lines-v1:sha256:6957bad6ac7e03807f355db672dd425af51f8bd3b3c19e1425348c79b25fca96:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4OTZiN2U3NWZhMmYxNjU4YzkyNjAwMWUxYzkyMzFmOWY5MjY4ZDU5NTUyMWY2MzE5NWJiOTc5MDQ2ZDBlYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmM2Y4ODU3N2E5OWMzMDEwNTJmYjBkNDVhZGQ3M2RkNDg3ZGExZGVkM2M0Njg3MmZkY2ZmNDJiNjk1NDRjOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyZDRlY2UzNTUzNjFjOTNmODYxN2NkODRlZTFmNTZiODhmYWFhNjc3MzkwNzA3NGY3ZTAwYjEyZGVlYWU4NzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg0ODM0ZTE0MWE3ZTI2MDYxODAxMjMzNmM1NzgwMzVjOTRmOTFkN2Q1MzA4MjNkOTg0ZDRhNjA0NzdiM2ZkZTIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

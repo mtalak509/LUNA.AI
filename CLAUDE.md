@@ -63,8 +63,8 @@ before proposing anything.
 - `tests/` — pytest suite (mirrors `core/` structure).
 - `tests/evals/` — live end-to-end regression scenarios (DeepEval), one folder per feature; see
   `tests/evals/README.md`.
-- `docs/` — English narrative documentation (architecture, runtime, storage, tools, modes/HITL,
-  interfaces, frameworks) + the tech-debt registry.
+- `openwiki/` — project documentation, generated and maintained by OpenWiki (see
+  "Documentation" below); `openwiki/INSTRUCTIONS.md` is the hand-written scope and voice.
 - `planning/` — idea cards: the decision log of what to build (see `planning/README.md`).
 - `specs/` — specs and implementation plans, one folder per feature (git-ignored, local).
 
@@ -100,10 +100,9 @@ With Docker: `cd docker && docker compose up --build` (web UI on `localhost:8000
   file blocks `shutil.rmtree`) and CRLF/LF line endings.
 - **Code comments in English only** — and only when they genuinely clarify; avoid noise. Legacy
   Russian comments are not translated wholesale — bring a comment to English when you touch it.
-- **Docs are English, plain-language narrative.** The `docs/` documentation is written in English
-  as connected prose — simple language, no heavy abstractions, aimed at a reader building a mental
-  model (not a spec dump). Keep new/updated docs in that voice. The one exception is
-  `docs/tech-debt.md`, a working registry kept in Russian. README and code identifiers are English.
+- **Docs live in `openwiki/` and are generated, not hand-written.** Never edit generated pages,
+  claims, indexes or manifests by hand. To change what or how the wiki documents, edit the code or
+  `openwiki/INSTRUCTIONS.md` and run an OpenWiki update. README and code identifiers are English.
 - **Clean, concise, OOP-oriented code.** No commented-out or dead code — deprecate (with a shim
   where back-compat matters) or delete; history lives in git.
 - **Modularity by cohesion.** Extract cohesive groups of a service's helpers into their own
@@ -185,15 +184,25 @@ Release procedure (maintainer runs this):
 The runtime version is read from installed package metadata (`cli/banner.py` →
 `importlib.metadata`), so `pyproject.toml` is the single source of truth.
 
-## Documentation pointers
+## Documentation
 
-- `docs/README.md` — doc index + overview + quickstart; start here.
-- `docs/architecture.md` — the big picture: harness around one agent, main agent + subagents,
-  filesystem-first state.
-- `docs/runtime.md` — a turn end to end: think-act loop, middleware, streaming, compaction, checkpoints.
-- `docs/storage.md` — on-disk layout: sessions, workspace, subagent zones, checkpoints, procedures.
-- `docs/tools.md` — the flat tool pool and how each agent's slice is subtracted from it.
-- `docs/modes-and-hitl.md` — Plan/Act, Confirm/Accept-all, and the `ask_user`/`select_from_options` flow.
-- `docs/interfaces.md` — using LUNA: CLI, HTTP API, web UI, LLM providers.
-- `docs/frameworks.md` — how LUNA maps onto LangChain/LangGraph (and what it deliberately skips).
-- `docs/tech-debt.md` — known tech-debt registry (Russian, working notes).
+Project documentation is the OpenWiki in `openwiki/`; start at `openwiki/quickstart.md` (task
+map → page → code). Pages are written in English for a reader building a mental model, and every
+material fact is a Claim tied to source lines, so drift is detected on update.
+
+- **Reading:** use `openwiki_search` / `openwiki_read` (MCP) on demand; verify important details
+  against the code, which stays authoritative.
+- **Updating:** at the end of a feature branch, before the PR, run "Update OpenWiki" (the
+  `openwiki` skill) so the wiki changes ship in the same PR as the code. Commit `openwiki/`
+  (pages, `index.md`, `.claims/`, manifests); `openwiki/.run.json` is transient and ignored.
+- **Scope and voice:** `openwiki/INSTRUCTIONS.md` (hand-written, never rewritten by OpenWiki).
+- **Exclusions:** `.openwikiignore` keeps private and local material (`notes/`, `specs/`,
+  tech-debt notes) out of the wiki. Never put internal business documents into the repository.
+
+<!-- OPENWIKI:START -->
+
+## OpenWiki
+
+@AGENTS.md
+
+<!-- OPENWIKI:END -->

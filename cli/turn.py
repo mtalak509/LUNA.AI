@@ -1,4 +1,4 @@
-"""Проведение одного хода через раннер AgentSession."""
+"""Drive one turn through the AgentSession runner."""
 
 from __future__ import annotations
 
@@ -15,11 +15,11 @@ from core.agent.session import AgentSession
 
 
 class CancelKeys:
-    """Слушать esc и ctrl+c, пока идёт ход, и звать `on_cancel`.
+    """Listen for esc and ctrl+c during a turn and call `on_cancel`.
 
-    Терминал в raw-режиме: ctrl+c приходит клавишей, а не SIGINT, поэтому он отменяет
-    ход, а не роняет CLI. На время HITL-вопроса слушатель снимают (`stop`), иначе он съест
-    ввод ответа. Без терминала (пайп, тесты) — no-op.
+    The terminal is in raw mode: ctrl+c arrives as a key, not as SIGINT, so it cancels the
+    turn instead of killing the CLI. The listener is removed (`stop`) for a HITL question,
+    or it would swallow the answer. Without a terminal (a pipe, tests) this is a no-op.
     """
 
     def __init__(self, on_cancel: Callable[[], Any]) -> None:
@@ -45,18 +45,19 @@ class CancelKeys:
     def _on_keys(self) -> None:
         if self._input is None:
             return
-        # flush_keys — чтобы одиночный esc не ждал продолжения escape-последовательности.
+        # flush_keys so a lone esc does not wait for the rest of an escape sequence.
         keys = self._input.read_keys() + self._input.flush_keys()
         if any(k.key in (Keys.Escape, Keys.ControlC) for k in keys):
             self._on_cancel()
 
 
 async def drive_turn(session: AgentSession, text: str, view: TurnView | None = None) -> None:
-    """Один ход через раннер: запустить Task, дренажить события до turn_done, отвечать на HITL.
+    """One turn through the runner: start the task, drain events until turn_done, answer HITL.
 
-    HITL-событие перехватываем ДО рендера: пока ход припаркован на future, убираем спиннер,
-    читаем ответ и резолвим — потребитель свободен, потому что ход крутится отдельной
-    задачей (в этом вся суть раннера против прежнего прямого `async for` по run_stream).
+    A HITL event is caught before rendering: while the turn is parked on a future, drop the
+    spinner, read the answer, and resolve it. The consumer stays free because the turn runs
+    as its own task (that is the point of the runner versus a direct `async for` over
+    run_stream).
     """
     view = view or TurnView()
     keys = CancelKeys(session.cancel_turn)
@@ -69,7 +70,7 @@ async def drive_turn(session: AgentSession, text: str, view: TurnView | None = N
             if ev.mode == "control":
                 etype = (ev.data or {}).get("type")
                 if etype == "turn_cancelled":
-                    view.note("ход прерван")
+                    view.note("turn interrupted")
                 elif etype == "turn_done":
                     return
                 continue
@@ -80,7 +81,7 @@ async def drive_turn(session: AgentSession, text: str, view: TurnView | None = N
                 try:
                     await handle_hitl(session, hitl)
                 except (KeyboardInterrupt, EOFError):
-                    session.cancel_turn()  # ctrl+c/ctrl+d в вопросе — отмена всего хода
+                    session.cancel_turn()  # ctrl+c/ctrl+d during a question cancels the whole turn
                 finally:
                     view.resume()
                     keys.start()

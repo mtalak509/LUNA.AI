@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e6e0cf2b56ccb18435a46e6a6fcb39094893e26caddb6619c72a4ee059c4df4b",
+  "claims": [
+    {
+      "id": "claim_bbba448faef34b248807851be42b0067",
+      "statement": "Main agents and subagents are both BaseAgent instances wrapping a single create_agent graph built without a checkpointer; the difference between them is only the AgentConfig.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/base.py#L209-L236",
+          "version": "repo-lines-v1:sha256:2978261524bdb2acb457372744417b3270a7d4b71ad280f260550fc89f9348b3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0ZDhiNWZjMmM4ZjIwNTk3OGYxM2VkNmQwNWY5NjVhODkzYTkxYjliMTExYTc4MDVmZjg4NzYxN2NkOTAxOGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0NWUzMmJiOGFiM2Q1ZThiMTdmMTlkMzcyN2YxZTFhYTM5MmZkNTY5YTM0MWE0NzA5NTJkMzgzNTRhN2IwNDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2c775fa1721c407a84d92c3f6208ee5c",
+      "statement": "All agents draw tools from one flat FULL_POOL list containing the file tools, the RAG tools, delegate_to_subagent and the two HITL tools.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/pool.py#L25-L38",
+          "version": "repo-lines-v1:sha256:f6de7ea150eda9cf99aa39556a5479ef53c424732758e324d969084a59ca1c57:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhY2I1YzA5MzMzNjMyODk0OGYwNzNkYTA1Y2Y5ZWViN2IwMTJmNjQ4NmQ5Zjg5NWRhZDQzYjhhNzk4Yjg5YjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhY2JmNzU3MDkyMmU4OTdmMGQ3M2FjMjJkYWUyMTkyODhlZmUxY2FiYjkyNTU1NGJlYWE0YmJiYWI4OGM3NjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5NDE2ZTA5Zjc4YmEzMTZjMDMyNTY4MjEzYjg1NWVlNzU2ZTQxNTY1ZDkxOGYwOTUxOWM4MWZkNjIwZjQwNjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_46a3c96fe0a94775a8af42a1d67c0439",
+      "statement": "Bootstrap is split into a once-per-process init_process (materialize procedures, install client, subagent-factory and HITL holders) and a per-session build_session_agent that builds the main agent under a session root.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/bootstrap.py#L48-L85",
+          "version": "repo-lines-v1:sha256:8d1f49ee8872960c4dc441b670c92484e09817a8a9cca8d88bb1f88b65cadcc6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyMDgwNjBhODVhZmFhZjUyZDE2ZmRiNmE3MTQ2YWQzYzQ3ZTA2ODg0ODIzYWM1OTMzMjM2MDY1ODJmMjA5NjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgzNjY2NWI0MjNkZTM0ZTUwYWUyODRmNThmNzRkMWE2ZTg4NmMwYjBmYTAxMmEwNmVkYzQwODUxZjkwZjNjNmEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_02340b122a5942c3bb37a7d6161f908d",
+      "statement": "The FastAPI lifespan wipes stale session directories, calls init_process once, and installs a SessionManager over ~/.luna/sessions.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/server.py#L28-L64",
+          "version": "repo-lines-v1:sha256:113a040e15f2e3153227f607f3cef6ba7584695e15add94e4f31c277c0b2fbc9:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1MTMzNmZhMjA0N2U3YTY3YWRmYWRhMDgyMDFlYjc3NTgwYjU0Y2Y1NWFlYTVlNGEzZWYzMmMxOGYwM2ZjMmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMDkzZDA5N2U4YTRkNTMyNTM0NjMwNTQ1OWJmY2FlYmZiODVlZTliMjc1ZjA1OWU0ZGY3ODFjYjMxODMwMGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiN2Y4NTc4NzhlYWQ1ODExODAyYjM3MjMwNDE2ZTAzMzE2ZmY5MDk1ZjRiNTkwNGFkOGRjZWEwM2MwNzgzNjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3MDYzZDc5YWEzZTVhN2MzMzdmNThjZDc4YzE2NTc1M2JjNzRiMDEyNDM4M2M2YWEyYTg2NmY0OGFmMGEzOGEifQ"
+        },
+        {
+          "resource": "repo://core/config.py#L42-L51",
+          "version": "repo-lines-v1:sha256:950ef37902755392e237bb240e5f6dc3b27207007e65b69eaf95c72437a3b373:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmMjgyNDkyNjA4ZGQ3NGUzMjlkODRjNzdhNGI0NThlYmU4MmFlMTcyNmE4NzlhM2U2N2FhYjI2Njg3ZTdiNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmZjU3NTlkNmQ4MjRiOTBmNDkwNjRkYjBhOWQ2ZDRlNzJjZmQxNGExOWQ0ZWIxMTJhY2FkMTYwYmU0MmQ2ZTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5OGIwNjNkOWI0N2U2NTM3OTYyNTU3MmNjZTE5NzY2OWQ1NzY3ZTEyYzE4YmUwNzU2NTJiOGNkOTgxY2U4ZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI5MTU0NDhmN2FhYmZmYmZkOWQxOTdlMjk2ODU0ZGExZTNjYjk1NTUyODUxMzE4MTM1ZTBjOGIwOGQ2ZmI5ZGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3f55b63099f94a24b5634bad0fdf5c15",
+      "statement": "The CLI uses the same init_process / agent factory pair for one fixed session under ~/.luna/cli/dev and drives it through AgentSession without HTTP.",
+      "evidence": [
+        {
+          "resource": "repo://cli/config.py#L12-L15",
+          "version": "repo-lines-v1:sha256:bb556bf4c06a4d8ce685ca939d0de359a17d3f9aeb02e3b92508acda1d2d4069:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGZlZWFiYTAxYjZjMzEzY2MyMjI0NTg3NTRlNDkwZWFjMDFhNmM5OGYzYmVlMDQ1YjZiN2M3Zjg2NTZlOGY1ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWMyMDIzZDQzYzdiMGVkNGYzZWZhMGRmZjBiM2YzZTgwNTc5OTI3Y2RlZmEwYjRkY2ZiZTg3ODhhYzQyYzNkOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTViNmU4NzA2YjQzMDQ3ZjJhNmRiNjdmMTMyNjM4NTk1NjA0ZTY3ZjM2OTY2ODc2Y2UwMTU4ZjAwNTNlNmJkMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjU3NzBmNTQ1ZGQ1YmM5MGNiZDJkOWY2ZDA4ZDY3OWU3YjgxMDVhM2ZlNTNiM2RiYjk2NGJjYjY2YWI5OTJiZCJ9"
+        },
+        {
+          "resource": "repo://cli/session.py#L22-L45",
+          "version": "repo-lines-v1:sha256:b40bbf3ff3fccca60628619fbc041ff0a0068f09de17060bd52ea978950eb7f5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlZGZlNmVmOGU3ZmY3ZDk2MDdmZjE5NjYwODBlNzZjZjhlMTNmMmZjNTY4MjVlNzViYTlhZDc1ZTRkZTY2MWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2YzY2YzE3ZGI2YTA5ZDA3MmFhMWYyODIzOWJhZGI5NzJlNjk4OTk4YzY1N2FkNzNiNGE1MDZjYWYwMmFmZDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eba9a1b09cae4b00bc6abd4e38869e08",
+      "statement": "A subagent is launched from the delegate_to_subagent tool inside the main agent's task and returns a summary plus a list of artifact files from its own zone.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L98-L191",
+          "version": "repo-lines-v1:sha256:b5629e36b961d9aafa556b1ed0ba4020323896b367c9e32b7712f06300d0acf5:eyJzZWxlY3RlZExpbmVDb3VudCI6OTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkMWVkZWQ1Mjc0MzA0NmUwNjY0YjUxODBlNDM3OTU1OGQzMTU2YzlhYzJhYWYwNTFhMWNjNjM3ZjMyMjhiZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExMzU5ZWIwZDc1YTZlOTRiZDFiNmM5NTVhNzc3YzQyYTZlMTYzYWI1NTQ0OTkzMWRjOGVmY2I4ZTVkOTgwYzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a2327b1699984624ae484cd1f38c2d9f",
+      "statement": "The project dependencies include langchain, langchain-openai and langgraph but no LangGraph checkpoint package.",
+      "evidence": [
+        {
+          "resource": "repo://pyproject.toml#L12-L35",
+          "version": "repo-lines-v1:sha256:badf9591ce08d1260e765ef4ba21fab23731032081ec95453820278ba9b33d32:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOTVmNWU5ZWRlMDE4MTYwNDNjMDc5N2FjZThkYTJhYzRlOTlhOGE2YTYxMGZhOTg1NzBlZjM0YjkzNTYxMDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NDE2ZTA5Zjc4YmEzMTZjMDMyNTY4MjEzYjg1NWVlNzU2ZTQxNTY1ZDkxOGYwOTUxOWM4MWZkNjIwZjQwNjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM1ZWNmNWQ3NTk2YzQ3M2EzNjMwMDhmZjhjOTg5MDg0NTEyMjE4NzU3NWYyODU1ZWQyMzcyYWM3MGQ2ZTdjOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlNmFkNTNjZGY1NDM5MDFhZTQ0MTExZmY1MmY4MDlmNmNlMWFlZWUwMjI1ZjRhOWJiY2Q5N2IxMGU1OTBlZmEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T18:35:21.080Z"
+  }
+}

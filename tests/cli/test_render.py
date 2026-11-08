@@ -45,7 +45,7 @@ def test_summarize_result_keeps_first_lines_and_counts_the_rest():
     shown, hidden = summarize_result("\n".join(f"line {i}" for i in range(10)))
     assert shown == ["line 0", "line 1", "line 2"]
     assert hidden == 7
-    assert summarize_result("") == (["(пусто)"], 0)
+    assert summarize_result("") == (["(empty)"], 0)
 
 
 def test_edit_diff_only_for_edit():
@@ -76,7 +76,7 @@ def test_tool_call_and_result_are_compact():
     assert "● read_file(path='report.json')" in text
     assert "⎿  row 0" in text
     assert "row 10" not in text
-    assert "… ещё 47 строк" in text
+    assert "… 47 more lines" in text
 
 
 def test_failed_tool_result_is_shown():
@@ -124,10 +124,10 @@ def test_subagent_work_is_framed_and_indented():
     )
     view.handle(_ev("custom", {"type": "namespace_close", "namespace": ns, "error": None}))
     lines = out.export_text().splitlines()
-    assert lines[0] == f"  ┌─ субагент {ns} запущен"
+    assert lines[0] == f"  ┌─ subagent {ns} started"
     assert "  │ ищу файл" in lines
     assert "  │ ● search_files(query='x')" in lines
-    assert lines[-1] == f"  └─ субагент {ns} завершён"
+    assert lines[-1] == f"  └─ subagent {ns} finished"
 
 
 def test_empty_subagent_event_is_skipped():
@@ -150,7 +150,7 @@ def test_spinner_advances_between_refreshes():
 def test_subagent_error_is_reported():
     view, out = _view()
     view.handle(_ev("custom", {"type": "namespace_close", "namespace": "s", "error": "boom"}))
-    assert "субагент s завершён — ошибка: boom" in out.export_text()
+    assert "subagent s finished — error: boom" in out.export_text()
 
 
 def test_document_patch_and_error_events():
@@ -159,9 +159,36 @@ def test_document_patch_and_error_events():
     view.handle(_ev("error", {"code": "model_unavailable", "error": "Модель недоступна"}))
     view.handle(_ev("custom", {"type": "something_else"}))
     text = out.export_text()
-    assert "✎ json_patch r.json: 2 оп." in text
-    assert "✗ ошибка: Модель недоступна" in text
+    assert "✎ json_patch r.json: 2 ops" in text
+    assert "✗ error: Модель недоступна" in text
     assert "[custom] {'type': 'something_else'}" in text
+
+
+def test_gap_between_the_prompt_the_tools_and_the_answer():
+    view, out = _view()
+    view.start()
+    view.handle(_call("ls", {"path": "."}))
+    view.handle(_result("ls", "notes/"))
+    view.handle(_call("ls", {"path": "notes/"}))
+    view.handle(_result("ls", ""))
+    view.handle(_ev("messages", (AIMessageChunk(content="Hello"), {"langgraph_node": "model"})))
+    view.stop()
+    lines = out.export_text().splitlines()
+    assert lines[0] == ""
+    second = lines.index("● ls(path='notes/')")
+    assert lines[second - 1].strip() != ""
+    answer = next(i for i, line in enumerate(lines) if "Hello" in line)
+    assert lines[answer - 1] == ""
+
+
+def test_answer_without_tools_has_a_single_gap():
+    view, out = _view()
+    view.start()
+    view.handle(_ev("messages", (AIMessageChunk(content="Hello"), {})))
+    view.stop()
+    lines = out.export_text().splitlines()
+    assert lines[0] == ""
+    assert "Hello" in lines[1]
 
 
 def test_tool_message_tokens_are_not_echoed():

@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:5cb2fcde3eb3d975b712f84cb8c6a55bfdd32c127e320efbabb9332f6b66c3ce",
+  "claims": [
+    {
+      "id": "claim_a8f095be6f7246a4bfcd7c11ae948446",
+      "statement": "PathScope resolves reads and writes into the agent's own read-write root (workspace for main, its zone for a subagent), gives a subagent a read-only view of workspace through the workspace/ prefix, and gives the main agent read-write access to subagent zones through the subagents/ prefix.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/fs_paths.py#L94-L169",
+          "version": "repo-lines-v1:sha256:2fbb004311fb18b5502a614e4397ab7530636913bc13dfae91eb0273d8141bff:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjZDNlODZkOWZiMTRhMThmOWE1OTBkZjU0ZjFkYjQ4OGQ2OGNlYmZiZWRhM2ZjMDUxOGVmMmVjZTJmOTljZTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhODEyZWNjYmEyN2Q0MGEzYmE2MGEzYTAxMGUwMTA2MzlhOTQ5NTgzYmQ3NTAzMTJjNTMxZWM3NGJkZTA4NzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiNmM2YjYwN2RjMmI4ZjQxOWY2NTcyODRhYjcxNzIzMjFkYTQ1OWI1NjkzODNmZTkyYmNhYzg3MTQ3OTk5ZTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0MTE4MjkwYmNmNTExMGMxNGIwNzRjYTdhYzgyZDA2YmE4Mjk2YTUwNTNjZWNlMjVmY2Q4ZGZmMzA1ZTA0OWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_18bdf8ab351048ff9ba34a4b783f3528",
+      "statement": "_safe_join rejects empty and absolute paths, paths that leave the root after resolve() normalization, and paths whose first segment inside the root is .runtime.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/fs_paths.py#L52-L83",
+          "version": "repo-lines-v1:sha256:1f0161d32c8cfa5a198616485846bc01b41579204566957f24f07cbc6a80f639:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwOTk3NGVhNzExNjI4MGI5NmE1YWUyYWYyZjdmNDQxMGVlZjFkMzBlOGNlNDMwMWEwMTE0ZDgyMWRmNTQ4NzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjOTVjMTkyMTZlZTA0MDIzYzhjYmQwY2NjNGE2YzBhZGVjNzA1OTM1YzFlMzQ2YWM2ZjVjYWQzZGNhMjZjYzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAyYjI1NzhkODVmMDU0N2ZhOTE3ZGE3YjE4ZDIwNzg5OTE4MjlhNTM4MmM3OTEyOGJlMTZmNmYxMDg4ZjdhYjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1NTNiNjkyZWM0YThhNTIzNmQ1NjBkNDBlMmQ1MjE1ODk0ZWM4MmZlYTY5ZDQ1ZDQxMWMxMmQyY2Q2MTRkYjkifQ"
+        },
+        {
+          "resource": "repo://tests/agent/test_fs_paths.py#L66-L83",
+          "version": "repo-lines-v1:sha256:2b9d1d63a402acb138d90fb477e97adf0ede3d8014a3b84ad3bad962fcc39b2b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3YzExMDkxYWE2MWI3YjhlYTkyZjFmNWFiMTMzMDJmODJkNDdjZjNmMTcxMjQ4Yjc4NWUxNGFmMmZmZDBlZWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1YzRiODQwOTlhZjY0NGRmMGQ3YjIzM2E2ZWIwZmVjMTFmZmYwOTFkNWY0ODNhMWJjYzQxOTRkZTc3N2YyOWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmNzA0ZmIyOTQ4Nzc4ZmZhMjU5OTY4NDhhM2RjODgxMmViZmJjNzFiYjJmOWI1MDFjN2RhOTQ1Yzc0MzhiODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxOWY4ZWU3NTcwMmNlNTY2YTY1NTNiMWU3MTc2NDAyOGVlZWJlNjdkYzMxMTQyNjc1N2Q5ZWM3ODA3MzI2N2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6fee3fb23af64643aaea6205362e0952",
+      "statement": "Path violations raise FileAccessError, a ToolException subclass, so they reach the model as tool errors.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/fs_paths.py#L42-L49",
+          "version": "repo-lines-v1:sha256:f2857b1bdd40accd593a30d4131cb6dd48a5a7f905eb16d7983f40dd9336c3cc:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzY0OTVlZTY1YjhkNjNhZTY5OGMwMjQxOWIxMzQ2MDQ3Y2IzNTA1YzQ0NGM4MzM5NDNiZDBkOTg0NjUwMWJmOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZhNzE1MjU3MmVlODRmMTA5MDZjNzRiOWYyYTkyNDM0ZGRhYjBlM2M0MjgxM2IwNGU1OTdlZmNlYzk1MWIyNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjI4MmMxOTRlMDc2NzQ3NDY5N2EyMjk4YjJiODY4YjcyZGU0YzlmZTYwOWRhM2NmYTRlZWM1Y2M2NzliZmI5OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzFmNjc1ZGU0MWY2YWI1MmY3ZDU3YWIzY2VhNGRhNmYwNmM0MTUwNDNiMGQxN2ViMGFkYTUxNTRlMGE3Y2U4OSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_86898479ec194c01b86dc04539b1cb32",
+      "statement": ".truncated_outputs is readable but resolve_write refuses any path containing it, and both .runtime and .truncated_outputs are hidden directories skipped by listings and searches.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L41-L58",
+          "version": "repo-lines-v1:sha256:9a0c1ecf71b14e85af062f046d30c2a3b1eb17098db3b0b3218325a85dc29868:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwZDViNTFmYThlNmZiYzFmZjE4YTEwNzNhNzE1Y2RkYWYzMzM0MTdmMzE2OTc5OWEwMWVlZmNjZDFmZGUwNTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkYTI0ZGYxZjQyOTNhMmM4NjE0MjJjNzc3NDg3YjYxMDc3Zjk2NmM2NDY0YWUwNmFiMGQ4NzBhMWZlOTZjNDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4YjQ3YThjNjM5YzQ1MWEyNzlmODM4OTZkZDc2YTI2Nzg3Mzk4MGFiMmY5Yjk5ZjE2MjQ5YWEzMDcyMDZiYzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkMGQ0MTgxZWNhMDdjNzc0NjAzZjRlODdkMWVmYjcyODI4Njk2NDdjZjk3MjUwM2NjYjkwNmRlOTM4ZmQzNWUifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/fs_paths.py#L146-L160",
+          "version": "repo-lines-v1:sha256:83b00625df88061613949fa00d5639643576af4bfe239eb46cefa6279a8071bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg3YTlkZjFkMzc4ZGUxYTk3ZjQwYmY0OTIwOGM0NGFmN2NiNjY2ZmI3Y2I3MTY4ZWE3YWE1MWI0NjYzYjExZGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzOTEyYmVhODgwZmJhMTQzZTZjZWUwYTU2NmI5MjBiY2IwYzdlZTBmMWEyNDY2NWZjNDEwMzgwZmVkYmRmNGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVjMTUwMDJiZmMxZDU4MTNhYjcwM2MzNjBkZGZkYzFiYzQ2N2U4ZmI0OTE0N2YwZDQyNjY5ZWQ3M2FjNGJmM2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ0YmQyOTkxMzM2ZjVkZGQ1ZWZmYjM5NjYyOTMxYTFjZjMwZGZlMjhkNDM0YmU2ZjUxMmVlY2RjNTlhZWE0YWYifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/fs_paths.py#L31-L35",
+          "version": "repo-lines-v1:sha256:df3b29e09c8e3b6f1e69ee50b3d77713d3f085b415bc7320a4dae2015e2745b2:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTAzZDczMDBjYjVkNDAwZmZmOTU5MmI2NTEzMDBhOGY0MmQ4NjhlZDE1OTVlYTI2YjFlY2Q5MmI5ZGRiZjE1NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzQzYzI0NDc4ODQ3ZDM3OWM0YjBhMGM3NTM1YTY4NmUyNzg4NjI5ZDFjMWZmY2JiZTRmZjg2Y2UwNWI2MTE1MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjE4Yjk1ODQ2ZmZhYzE5NTQ5OTYwNTMyNTlhOGI5ZjhlNGVjMGIxNmVhODI3ZDNmYmNkNjhkNDNlZmZiZTIyMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDA1MWM5NmU3ZGNjMmY3MjEwZTdmMjViM2E4MzRhYTM4NjkyZGFiZDFjNWE3Mzg0NTQ2NDg2ZWRjYWFjOTY1YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dcda339d14924883b9aab99e3cbf28b3",
+      "statement": "The spill directory for truncated output is always inside the agent's own read-write root, decided by PathScope.spill_dir.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/fs_paths.py#L124-L135",
+          "version": "repo-lines-v1:sha256:4c50cbb71d0851fb5338b3aaf408ec560fa8748cdaaac746cefc551d96658250:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzZDAwY2YyNzA5NjRkNDRhMTNkZmFjODc1MmIwOWZjYzQzNWIwZjE5YjMxNmFiY2Y4MWE3YWE2NGJiMTIyZDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1NmRhMzkxNWVjMzUwNDI5MmQ3NGE3ZWNlNmZjZmE5NjEwNDBkZmUzYTkxNjJjMDg2NWM3NWQyMGNjNTBiYzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMzYzdkMDA0ZTUzZWQ4ZWNlNjRkOTZlNmYyYzg5MmEyYjU5M2Y5NDI5ZGZhNDcxZGFmODc4OWUzNDI2ZTU0ZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdmZTE3ZTQ1MGIyODUyYjhhYjVkYTkxODIyMzNmZDAwMWY4M2YxMjhmNmE2MWUzYmI1YmNmNTU2MGE3MDU0NDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_19fe71626620453ab3f8d16de075ab29",
+      "statement": "WorkspaceManager.resolve applies PathScope main-scope write rules plus refusals of absolute paths, drive letters and dotfile names, and confines results to the workspace.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/workspace.py#L134-L152",
+          "version": "repo-lines-v1:sha256:316d1be290f1dfdfba2e891fdda4445d70a1bceb37367fbd45595b57b5611f87:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1OGM2ZTk1ZDNiNTBjMmQ2MDg5Mjk1ODRhYjFhZjc5ZTk2NmYxYzhiNWY4MjczYzY2NzE3ZDllN2VmMzc3YWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiNGRkY2I0Njg1Y2VjMzdmNmQ1MGE4OTMwOGIxYWMyNTVlZWE3MTJjMjg0ZGJhOThhZjg3Yzc4MjAzMGYwZGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM2NmE3YmU5ODdjZWNjNzI5ZGZhM2U4NWQ5N2RkNjAxYmE2Yzg0NGI4ZDU3Njk5NzU2MmJkNjg3MmExN2VjYWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM0MzJhMDJhMWZlZGJlOGNkZmI3ZGQ5MDE2OWQxNzA1NmIxZTgyYTUyYWUzMzU5YmYwNGMxYWRkNjVhMDdiNTEifQ"
+        },
+        {
+          "resource": "repo://core/agent/workspace.py#L204-L223",
+          "version": "repo-lines-v1:sha256:61ed7b94a52069df01aedfe5c3e0e0985d71cc392f0145b2c781e0a879d1f265:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiZGYwNDc5YWZmYjU3NDI3NzVhNTcyNTJlNjY3ZmM0MjdjYjY0YmMyYWNhZmRiNmI2MjUwY2JhNGU4MzI2OTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzOTEyYmVhODgwZmJhMTQzZTZjZWUwYTU2NmI5MjBiY2IwYzdlZTBmMWEyNDY2NWZjNDEwMzgwZmVkYmRmNGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRkNDQwMjEzMjY0MWYxZjA1YmE1YTAyYzY1Zjg2MWE5ZDAyYjEwOGNiODcxNjQ0MjM3Yjk5NWVhZDY0Zjk5ZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZlYjI0ZDI5ZWMxODM1ZjkwNGI3NTk3NDhjNzgyMDk4NDA5ODU4MDRhNTY0NzNiYjQ2NzJkZGE1OTIwY2U2ZGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_28d93aab75e948c8b3fa7e7503e344e4",
+      "statement": "User attachments are confined to workspace/attachments/, capped at 20 MB, refuse overwrite unless requested, and attach_from_host checks size via stat before reading.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/workspace.py#L160-L200",
+          "version": "repo-lines-v1:sha256:abee3f83fec2b52003ca4ae77134ad2ba45e629aaef45547fdf3e25c78fa80b1:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiN2I0ODFjOWY4ZDk5NDg1M2Y4MGRiMWExY2JmYzJkMWIyMDg1NThhOTBlZmFiNTJmYzJhNGI3MGE3Y2ZkZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5YTkxYWJmZWEwYzM3ZjRiZTRkOWVkODYzYWFjZjc0ZjYyNDkzYTFhNjRhMzY1MDBmN2VkNDAwYmFiYTYwZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU5ZmNlZTAyNzZiNDcxNGZiOTM3YzZiMTQ4MWI1NGMwNTE5Y2VjYzg3Yjk5MDFmMDE5NGMwYjFhYTZhMDVhZjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRkNDQwMjEzMjY0MWYxZjA1YmE1YTAyYzY1Zjg2MWE5ZDAyYjEwOGNiODcxNjQ0MjM3Yjk5NWVhZDY0Zjk5ZGMifQ"
+        },
+        {
+          "resource": "repo://core/agent/workspace.py#L225-L236",
+          "version": "repo-lines-v1:sha256:e7a88b65e30d9878a762c244af524c84001359ecb8a599774b2bfd005897e651:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwZTI0ZDAwNzYzNDhjY2EyZTk2N2U5NDcxYzViYjBjNmI3ZjI3MDFlOWUxMjQ3NzA1MjA3YWI3Yzk1YWE3OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlNDNhOWZhZDUwZWY5YjE2Y2U5NGVjYTU3OTY1MTIzNzdlZjhkMzQ4ZTZhMWJlMWUxNzUwZDdiY2EzYjFjOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU2Mjk1YzYxZTQ3OGNjZWQ2ZDAxYjkyYjM1ZTYwMmI3MjUxNGUwYzM1NjY0MTJjYWM2MmY2ZTkxODE0N2M2ZjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA3MmFhODQxMmE3ZTUxMmQzYzVjNTViZmE4YmY2ZDBhNzI4MmMyNGUyMTdmYjYyOGE3MzkwODE5OTg3NzE5NGQifQ"
+        },
+        {
+          "resource": "repo://core/agent/workspace.py#L36-L40",
+          "version": "repo-lines-v1:sha256:56c670cc946a047cf1c2e7613954caa78e7cb577d8fa5c8ccd5d0dd740dea1df:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGQ5ZWI2NWU4MzI1NGQ3NGVhMTJmZDdlODM1YzYzOGMyNDk4MzUyYjk3NGVjYTQ5Njk1YmE4N2QxMTFiNDczNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzEwYWQwZWYzY2M4YzUyMjM1ZDI0ZjI5ZDZmOGYxOTNkZTVlMWQ1YWU0NGZlY2I2OTRiNjM1ZjQwZTE4YTg0OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2FiMWI1NzY3MjJkN2NiMDllNzkwMjhiMzQxZWZmNzM0ZTYwNTAxYWQxZjk3MTA4MmExMDI5ZTJmMjY4MjFhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWVkM2U2ZGY1ODhiMzlhOWVlNmQwMzIxOGIyNmQ2M2RhYjZjYmM0NjRlOTg0NjlhZmYwMTIwMGQyNTUwY2JiYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_06c983a56eb04c72994d5b265671e0e1",
+      "statement": "The file tools are declared without an fs_scope attribute; their zone is determined at call time from the runtime context via PathScope.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L174-L176",
+          "version": "repo-lines-v1:sha256:4ded089ca0862fb1246876a8333de641ef81038f92e92ca986ccde92cbafe9ea:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTBiOTU2NjQ1NWI4ZDdmN2ZhOTIyNjNkYzcyZjgyZGU5YTdlMzMzMDJiOWZmNDAyMjJiYTc4MjMxY2U4MmE2MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTNlNmUzNjBiMmFhNjNmNDkxOGNiODViZjBlNjMyZDQzOWY0YjE3ZmVlODNjMGQ1NDdjZDc4NTE1ZGIwM2Y2NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2M5NGI3ZTQ1ZGVhODE1YzU1OWExYTE1ZTBkZjkxMjMxMzMyOTA5MmY1ZDRkNDU5YzViYTAyNDg5ZDVlZjYxNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDI2YjIyNDcwNGU2OTMyN2Y0OGE2M2FkYjI4YmEyOTlkZWQzNzk1OWFkODM3N2YwMDFiZDNiYzIwODFhMzRmZiJ9"
+        },
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L27-L29",
+          "version": "repo-lines-v1:sha256:61f2f753b88a9a101a5c4d643919723b95767cc541913527fd42a019c155f28a:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2I3MWZlMWUzMmQ1MjEwY2EwMWQ0NmIzOTAxMDMyMmU3YTgxYjg0NzVmYTE5N2JhNWNjYjMwYmMxMGRmY2U1NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTM2NmExOWE2M2IzNTE1NmJjNWUwOTE0ZmY1Nzk5YWE2NDlhYTQwZDIxYzc5NzhhNThjNDVlYzRjZDBiMGY0MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjk3NzZjNjAxNzI2Y2M0MDk2MmZlYmM3NGI5Mzc4YzdmOTJiZjNiMGI3ZjJmNDEwNjVkNWM1NWFmMDc1Y2Y1MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmJhNTBlODUxMjY0NzRkYTRkN2NkNzg0YWRjOGY3ODY1MzY0MzZjMTU4MzVjZjU4N2MzNTIzMWYwNDM4MGFiMCJ9"
+        },
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L68-L69",
+          "version": "repo-lines-v1:sha256:116dd6b08c3f2075552e3ab078ab7d4ee8b748de2b86b5ee1e7223ecf94f87c6:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjg5NmI3ZTc1ZmEyZjE2NThjOTI2MDAxZTFjOTIzMWY5ZjkyNjhkNTk1NTIxZjYzMTk1YmI5NzkwNDZkMGVhNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2VhODQzZTM5ZTg3NzQ1NTVhMTNlOTUwMGJmMzk0N2Y1YjVhNmRmNDBjNTkxNDQwNWM1YTZhYmJmZWJlM2VjNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmU2MmM2N2U1ODQwNjc3MTVlZmMzNTI0YjRhYjY1ODAxZjdhMTFlYTJmZDY3NWYwMGM4OWU2ODc4NzU1ODgyMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDA1MDE1MzQwMzE4MTQyZGIwNDA2NTQ5MjQxMTU3NGVmY2RmMjczMjg3MTZlZjkxMDM1NDZkZmZkNzFjZTg2NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T17:46:46.267Z"
+  }
+}

@@ -65,7 +65,7 @@ LUNA talks to any OpenAI-compatible model, picked with the `LLM_PROVIDER` variab
 
 ## Documentation
 
-Full documentation lives in [`docs/`](docs/README.md) — start with
-[`docs/architecture.md`](docs/architecture.md) for the big picture, then the runtime, storage,
-tools, modes, and interface guides. It is written as plain narrative so you can read it and build
-a mental model of how LUNA works.
+Full documentation lives in [`openwiki/`](openwiki/quickstart.md) — start with the
+[quickstart](openwiki/quickstart.md) for a task map, or the
+[architecture overview](openwiki/architecture/overview.md) for the big picture. The wiki is
+generated and kept in sync with the code by [OpenWiki](https://github.com/langchain-ai/openwiki).

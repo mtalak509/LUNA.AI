@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:872e132225c9310b4639a8f894f2b14669f3622827998d2869de572d1cf2b08c",
+  "claims": [
+    {
+      "id": "claim_4a6c6a278f8948048cc61113cf17a04f",
+      "statement": "planning/ holds one idea card per file with a permanent number, defined sections, and a status lifecycle of seed, shaped, accepted, building, done, parked and dropped, with planning/index.md as the table updated alongside each card.",
+      "evidence": [
+        {
+          "resource": "repo://planning/README.md#L1-L59",
+          "version": "repo-lines-v1:sha256:0c86005fab38f35336ce9a381ae57bf5109a1c56193824ef787a56acc2fa52fd:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5ODZjMDY0NGQzMjMyZDgyOTJmYjBkZTIyMDMxYWNmMjczOWQ1MmFiY2U5Zjg5Yzc4OGQzM2M3YjUxMjVkZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQzYzYzOGEzMjNhN2ViNTRkM2MyNGNkYmVjZTg4NWIzMTMxYjNkZTBiZjg4ZGNkNjgwNGQ2MDAzNjhlYTM0MzYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7b0139967b3548fe9f46921dcddd3828",
+      "statement": "The planning index lists seven ideas, from 001 file tools (done) to 007 running the CLI from any directory (seed).",
+      "evidence": [
+        {
+          "resource": "repo://planning/index.md#L1-L11",
+          "version": "repo-lines-v1:sha256:46f82863666e547896277e5728c13c27ddee0a5c16a0dca580eeb3044ac2f5eb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1OTMwZTA1YTdjNjA0MTVmZDM0NTM5MWMyOWE5YzUyNWU3NDg5ZjU5N2U1N2MyZThhYjUzODNhZGFjNGY3YjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5YThmYzVjNTkyMzE5ZmM4Y2NlNWI4NmY5ZDdiZjMyZDZmOWQxMzJiNTM3OTg0MDY1YjgyZmQ0ZmVhMWFmZTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c458271295974422b2e9fa1e0e81bc1f",
+      "statement": "Parent-release digests in digests/<version>/digest.md are scouting material to be weighed against LUNA's filesystem-first, no-DB, no-domain-schema architecture rather than a backlog.",
+      "evidence": [
+        {
+          "resource": "repo://CLAUDE.md#L21-L30",
+          "version": "repo-lines-v1:sha256:ccf459c41dbe01dcb463320316e9c91d0ac9ad4241686091c128f0e727a9e1e8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwNWMyNjU0MzhiMjgxZGQwNzk3ZjJjZTRiODI0ZWJlNTZlMDA5NjQwOThhMzJmN2JlMDliOGUxNGVkMzQ5OGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3ZGVhMzY5NzRmOTEwMjAwZmRmMzY5NzU2OGZhODEzZGI5NWI4OWQ2ZDFhYTBhYzYwODJmMmRmNzJmOTc3MDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU1ZmYzZGIxMDg2YjBmM2Q5NGQ3ODg1ODJlNjU1NThhMmIyNGI3OWQ5NjAwNTgyMDQ5YmRmYmI4ZTQzMGI4NjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFiOTg1OTJkYWVmM2EwNTBhMmEwOGQwZjQzNmJjYzE3NmUyYzM3NzE1MjgyNDBlMGQzYzNlN2U4ODg5MGJmZDIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dc72a3673cf94aa386f3450dd8876de4",
+      "statement": "Project conventions forbid reintroducing a database layer or a LangGraph checkpointer.",
+      "evidence": [
+        {
+          "resource": "repo://CLAUDE.md#L96-L98",
+          "version": "repo-lines-v1:sha256:99c0f4e27a6454d6e7ee922e844b6f6e39e21f1d873201170253921da0d49b64:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2JkYmRiMjViYTI4Y2E3ZWU1ZjJmOThjYWIwNmNiYjc1MWFhNmJjNzQ4YWIyYjQwMDllMGIzMGQyNzZhOWYzMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjJlODc5NDdiZDc2NTQ2NDdhZGE1OWQ3NDJiZWMxMDJmYjQzNmM4NGM3NmEwYjA1ZmI4ODYwYmRjZjBhNGMwNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWVmMjI5NDhlNWQ1YzViNWE5MjMyNTA2MjJhNGU3NWU4N2EwOGRlMjVkNGY3NmE4OWQ1N2I5YWM2ZmYwODJmYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDU3ZmVjMjE0ZmE0NjZjMWMyNDYyNGI3NGRmZjc5ZjIwMWQzNjU5OTNlMWVhMTE2MDRiNTAwYTA2MjBmMjc1ZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_bb92a25ace5d48159433c42987831266",
+      "statement": "Idea card 006 records that the only shipped subagent is a stub and that main_agent.en.md is a stale copy of the runtime's main_agent.ru.md prompt.",
+      "evidence": [
+        {
+          "resource": "repo://planning/ideas/006-general-purpose-subagent.md#L8-L22",
+          "version": "repo-lines-v1:sha256:7733520b62d35117cba6f87483037744173f8770c7cb0a0a03e11400c7d1b587:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJhYzBhZWIwMTc4ZGVjMWRmNzQ5NGE3OTk2MGM1NzJmZjQzZDU2YzQyN2ZkZmQyZDkyNWNjZjQzYTgzZjU1NWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU5NDQwNzFiYTZlNzY1NmE4ZjQxOTA0YzBhZDQ2YWExMzUxZmY2YWJjOTUwMDg0MzkyY2RkOGM4YmQ5ZWM4ZTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYxYjE3NmI2ZmRlZjA5OGQxZTQxN2M4YTNjOWVhYjJlYzE2ZWQ3N2JmNDU4Mjc4MWE4NjUxNzY3ZWZkOGFlNTAifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T18:35:21.080Z"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:cdf101b8fb112906e3ce66981e96712d901750c45e1c1462831cd119216479e5",
+  "claims": [
+    {
+      "id": "claim_a116e8426a7243f89aeb629984e07a77",
+      "statement": "LUNA's on-disk home is a fixed ~/.luna resolved with Path.home(), not configurable via environment, with the HTTP server's session root at ~/.luna/sessions.",
+      "evidence": [
+        {
+          "resource": "repo://core/config.py#L42-L68",
+          "version": "repo-lines-v1:sha256:2dc1d1c4ab4e0fecf4edfd96c0c57a2e41012666ab8f9c3c92ebf0d7297edac7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmMjgyNDkyNjA4ZGQ3NGUzMjlkODRjNzdhNGI0NThlYmU4MmFlMTcyNmE4NzlhM2U2N2FhYjI2Njg3ZTdiNTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExYTNiOTM5MGFiMDRhMWQ1NDE1ZmZmOThkNWU0ZDFlM2Y4NzRmZjVkMzMyMzFiM2MxZWRlODM4NzUyZTY2OWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5OGIwNjNkOWI0N2U2NTM3OTYyNTU3MmNjZTE5NzY2OWQ1NzY3ZTEyYzE4YmUwNzU2NTJiOGNkOTgxY2U4ZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY0NzJkMmI1OTA0OTFhYzk2Y2NkMjdmOTE3NWIyNzQ5OWM3NDk3NzBiN2ZkZDZiYjE0ZGE4Nzc3OGQ2N2ZjYzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f867b8a8a53b441ca35148071ca92cdc",
+      "statement": "The CLI uses ~/.luna/cli as its process root and a single fixed session id dev under it, with profile standalone and defaults act / accept_all.",
+      "evidence": [
+        {
+          "resource": "repo://cli/config.py#L12-L29",
+          "version": "repo-lines-v1:sha256:e3a6e81071e31047bb34b4dd378b3d50ccc24232b9d5da91cfd28dcfc8756160:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmZWVhYmEwMWI2YzMxM2NjMjIyNDU4NzU0ZTQ5MGVhYzAxYTZjOThmM2JlZTA0NWI2YjdjN2Y4NjU2ZThmNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwMzJiYTJhYWM0YzJkZmVhMTMwZDYzM2Y0YTY1OGU4NWQwNjhmZjMzOGI0NTIxYjQ3MTVlMGQ5ZjBhMDE5ZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU1YjZlODcwNmI0MzA0N2YyYTZkYjY3ZjEzMjYzODU5NTYwNGU2N2YzNjk2Njg3NmNlMDE1OGYwMDUzZTZiZDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_883831509bf8431294ddda32f788c571",
+      "statement": "init_process copies core/procedures into <root>/procedures on every start and installs the process-wide clients, subagent factory and HITL registry holders.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/bootstrap.py#L28-L61",
+          "version": "repo-lines-v1:sha256:950c7dbed0d1ecc729dbe36b57a2acb3b055ac4415b09b354da901c4c3f1603d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwZDdiZmY4MTViNzMxZDdiZDlmNTYzNzAzN2Q4NGFhMDMwYTc1NzU5NTI5MzY2ZWIwOTBiOGRkY2Y0YTRhYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2YWVkYmJkNGIxOWZkYzUzYjVkZWZkNGFhNmY4NDQwOWJlMzA0M2JkNzFhNGM0ZWZjZjE4MDg1ODU1MTU5NmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJmMGYzOTI4Y2E3ZTVjMTkwODBkOWQxNTY0ZDlhOWZiMDM4OThhOWFhOTk5YjlkOGQzN2VmMGQ5ZGY4OTdhOWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dfea088891734d0d970eb97028b00150",
+      "statement": "build_session_agent builds the main agent with the main_agent.ru.md prompt, the main-scope tool slice minus disabled features, workspace and checkpoints under the session root, and creates workspace/notes.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/bootstrap.py#L30-L32",
+          "version": "repo-lines-v1:sha256:1d1a638188fe3ec50189819980dcf24963c813c9a3e5d7f532f83cfad95f8a4d:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWYwNDA5ODlkNDQzOGIyNmQ1Y2U4ZDJhNmU0MDJhNTRhOTgxOTcwYzAwNGVlMzIwNTRlYTQ4OWJkMTViNGI4YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2FlMTk4NjkzZDdjMjg3ODNmMTAyNWE5NTcxODgwZTRiNDU4YmYzZTM4MzllYWZkNzFiNGM3YWRlODY4YjkzZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWFkMGZjOWUxZTFhMzcyYTc0NzUwYWI0NTRjNzBmNWJiNmNhZGJjMGEyMTJiYTFhMWI0NmM5ZmYzODg2NTdhZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjQxZWYzMzUwOWZhOTBiMTM0YjIzNWJkMzg4MmViODA4MzhjMjVjMjg2ZTQwMTFiZmNlY2UwNGU0Njg4NmRjYyJ9"
+        },
+        {
+          "resource": "repo://core/agent/bootstrap.py#L64-L96",
+          "version": "repo-lines-v1:sha256:549559b65109cb2092c90dcb66fc1263849bca52bf6e138d63b71809049643d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwOTgxNjZkMWQwNzIyOTUwOGVjN2E5ODQ4OGNkYjMwNWZmZDllY2U2MmU5YWE2NTAzN2EyZWIzYWMyNmJmMzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjczMWVjNjlmODkyYWRmYjY0ZmE0YTNlZWRmMDYxYjliMDliYmMwYTkxN2ZiY2FkZmZkMjdiYzMwOTAxYmQ4ZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4NmVlYjg3ZjBiNDcwZTRmNDQ0ODBkM2VkM2NjYmU2NmYyOTI1YTYyYmJkZjI0Y2E2MTBiYTk0ZmNkYmY1OTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyNjEyMGI4NWFlYjk4MzQzOTMwYjVkZmZhYzRmYzQxZGNjNWFiNzQ0YmYwZmZkODU4OGU4OWI3Y2Q5YTE5MjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5f5c9119d0ba4505849692fefdc2802e",
+      "statement": "SessionManager.create_session mints a uuid4 hex id, creates the session folder with exist_ok=False, and wraps the new agent in an AgentSession with default modes act and confirm; delete_session cancels and awaits the running turn before removing the folder.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/session.py#L154-L235",
+          "version": "repo-lines-v1:sha256:c716ec59e39a30e1f8cdd02a85b5018ad7a55e2704a53286a43fc6b635230639:eyJzZWxlY3RlZExpbmVDb3VudCI6ODIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVjNDRlMzVjNWFiNDRiZjYwMzkzYjAwZTJhODgxY2Y5OWNiNzYwYmY0ZGZjMTc3YTA3MTNmMTQxZjI3NTRlMGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQyYmZhNmFkYzA1ZTA0MDU0N2YxNTA1MzQyMmE5MzAwY2FmOTYxNjAxYmI3ZmNmYjRkZWEzOThiODJlMzg1ZGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRkYzMwNDAyZjE5YzA4N2NmM2E2Y2Y0YjhjNGY3NmZhMmM0ZDM1ZWEwMDg1ZDRkMjU4MzExMDNiZGExM2UyYTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImJjNmJlNmE1NzYwMTY4MzUyM2Q3NmZhMTUzMjVlNjk4Njk3MWU4ZTU5NmQzOWMxNzI1OGE0NWZhMzdmYTIxODAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_31df1dd9c9464a2cbf334fcfb39d099f",
+      "statement": "AgentSession.events is an endless generator over the session queue that does not stop at turn_done, so one consumer can follow many turns.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/session.py#L141-L149",
+          "version": "repo-lines-v1:sha256:04b2497d5d6c40f08a1a2de861e8e3872f21b3d9f24586395dd21e06315ebbc7:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzkwOGViZWY5NDc1OWI3M2JjYmFhZjY5Y2YxZTlhZWM2MTk1MGQ0MmVlM2FlOTdiYmJlM2UzY2NhZGZjZjkxOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWEzYjFjZjUyM2I0NWY5ZWJkZTVjNmI2OTEzOWMyYTUyOGQ4ZjgwZjgwZWU4NTI5MGI1ZjQzYzk1YzgzNWZmMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTlhOTY2ZGNmNmU0OGEwM2JiNDRhN2JiOGI2YjliYWRkMWRiMTY5YzJhNzExYjhmZjYyN2YyMzVmZWM4NTU1MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTZhNjFlN2U5OTJjODU3MDU2YzRlMzgwMzRkM2I4OGZlNjg0M2UzNzJmZjAxNmVhN2U3Y2ZjNjdkNWRkMzUzZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c3973a06561649ceacb036297ce991e8",
+      "statement": "On server startup every directory under the session root is deleted before init_process runs, because the in-memory registry does not survive a restart.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/server.py#L28-L55",
+          "version": "repo-lines-v1:sha256:005fff583372ac7aca69daf822e35cba4ca308fb4789cfd0707b4f47e1f1dfc0:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1MTMzNmZhMjA0N2U3YTY3YWRmYWRhMDgyMDFlYjc3NTgwYjU0Y2Y1NWFlYTVlNGEzZWYzMmMxOGYwM2ZjMmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2YmJlMzIyYTdiNmUwMjAzMWE0YWI2YjU5ODM0ZTlmY2I4MTViZTI2N2Y3OTI0MTc5NTFiNjRjOWY2ODViODQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiN2Y4NTc4NzhlYWQ1ODExODAyYjM3MjMwNDE2ZTAzMzE2ZmY5MDk1ZjRiNTkwNGFkOGRjZWEwM2MwNzgzNjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEyMTNmOGY5YjEwN2QyYmRlYmNjYzJjZDYyZWIwZjM3ZWI1OGU0NzFjZjNhMGI0MTVkZTkwOGYwOThjY2Q3MGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_71fabf54f14744eb8d217176420aed63",
+      "statement": "The CLI does not wipe its session on start, so the existing messages.jsonl is loaded and the conversation carries over until /reset wipes the session folder.",
+      "evidence": [
+        {
+          "resource": "repo://cli/app.py#L36-L54",
+          "version": "repo-lines-v1:sha256:17d7aa45f0f7058f242733060e3ca18e63b456409455d90d8d7bd088947b8892:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1MzcxZDhiMGU2OWQ2ZGZhMWYwODcxMzhjM2MyNDFkMmVlMGY0NjlkY2Y1NGFiODY5MmQyMGRkNWRjYzY1YjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjOWMwZTc0OWU5NzMxZmQ2ZTE3ZDllOTZjYWVkYTgxYzc1OGQ2OThlM2MyOWY0ODVlOTRjMTY0NmRhOGYwOWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImExNDhiODg4NWY5YjY1NTQyOWU0MjU4YzMxMzZiNGM4YzRhOTI5ZDcxOGVhYmU3OGEyYTBlMDRhN2Q2YmRlZDEifQ"
+        },
+        {
+          "resource": "repo://cli/commands.py#L139-L142",
+          "version": "repo-lines-v1:sha256:3028d647dd649162f46cccb3cb384de203c4b3dda9cdef6106b55700329553ec:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjkzNGZiNzI5ZDYxNjdlMTM4MTMyNmJhZTYxMTI0Njk2ZDlmMjU3ZWI0NjA1ZmMwMzY5N2ZhZjkxN2ZiYTdmYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDBjNTFjOGM1ZDE4YmE0ZWIxMGZiNWM5NDQ0NWM5ODljNDE4MGE3Nzk2ZTY3MDVmYWYwOTg4ZWZmZTRlMzg2MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmUzMzMxODQwNTAzOTdlMTMzZTQ2YjM0MGY0Y2Y5NzE3ZTVhNjBjODlmY2FiZDVjMTBlYzBiNThiNWUyMWUwNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDAwNTg4MTAwMmEyMTk0YjlhMTdiOWQ3ZTIzZGFhMDlkNDAzOWU1YWIwMzcwMjVjZTQwYWU4YWFkYTU2NDNiYSJ9"
+        },
+        {
+          "resource": "repo://cli/commands.py#L89-L104",
+          "version": "repo-lines-v1:sha256:f44cbbac21d6c532b678673d32f8415368e34c496719ec60de1f97a86d7978f7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhODVlMzM0ZjUzYzJiYmVkOGE3MzQ3NTRiMjkyMDljZDQxMDgwMjJmNjhjNTM0MjM1ZDZkMmI3YWQyNDcyMzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhODVkMGFlYTU1MWU1MzhhN2RjMmFjZGJhZjk4MTA3ZGVhNTA4YWUwYjY4MzY1MWNkYTA1NjdmYjZiYmM3MDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI1YjFlZTgxNWNiMzFkODQwMWZhOGRhY2I3NWUxODZhYzJlYWZkMDI5YWNjNWJiNmVkNjc3MjgyZTYzZjlmZTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE2NTk4MzE0NjJiYmU0YWYyMzM1NjRiZTA2NzkyODY1NTQyZWZhZTRmNDE0ODQ0ZDdlNGQ0ZWNjMWVlYzJkNmIifQ"
+        },
+        {
+          "resource": "repo://core/agent/base.py#L231-L232",
+          "version": "repo-lines-v1:sha256:8ebb6b07ebb0cc9c96fecb498094120a3c1eee6373242424110a0280d1be5537:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDU2MmM1YzA5NzgxYzZhYWJjZGVhNjhjMmFmMjk5NTJmNzRhMTE0NzJkYTRkYTJhMGQwODRhYjYzZWVkMzI0OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjA3YTZmZDBhZWFhYzkwODA3Y2VjMGFiYWYzNGEyZjM2YTk2OGZjYmMxNGVkNDNlODBiOTMzMjViZWJmNDVjNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjkzNGRhZmZhOTk4NGRiOGJiOTNjMGQ2M2I0MzA4ZjQzNTIyMjExYzM0N2Y1ODA3ZDIzMjk5ODc5NTQyNDQyNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzE3NzUzNDJlYjgzYTUzMGZkNDMxYTNlYzA1ZjljMWQ0NzU1YTgzNjE3NDAzNTAxN2ZjODRmMTdlNzIxMzI0MyJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.7.2",
+    "at": "2026-10-29T18:35:21.080Z"
+  }
+}
