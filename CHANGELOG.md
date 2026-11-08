@@ -7,6 +7,8 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-11-08
+
 ### Added
 - **Tool output limit** — `read`, `grep`, `find` and `ls` cut output over 2000 lines or 50 KB
   and end it with a `[вывод обрезан: …]` note. Each tool declares its cut (`head` / `tail`) with
@@ -15,6 +17,11 @@ and this project follows [Semantic Versioning](https://semver.org/).
   `offset` / `limit` instead. The folder is readable by `read` and hidden from `ls` / `find` /
   `grep`.
 - **Dependencies** — `prompt_toolkit` and `rich` are now direct dependencies.
+- **Live end-to-end evaluations** — DeepEval scenarios exercise text editing and continued
+  reading of truncated tool output against a real LLM. Checks cover workspace state, tool calls,
+  arguments and answer correctness. The separate OpenRouter judge requires `EVAL_JUDGE_MODEL`
+  and reports its billed cost. Install the `eval` extra to run these integration tests; they
+  are excluded from the default offline test run.
 
 ### Changed
 - **File tools renamed and split** — the file layer is now `read`, `write`, `edit`, `ls`,
@@ -32,6 +39,13 @@ and this project follows [Semantic Versioning](https://semver.org/).
   to Accept-all); input history across runs, multi-line input, completion of `/commands`, their
   arguments and `@` workspace files; Shift+Tab for Plan/Act; a status line with modes and model.
   Without a terminal it falls back to plain input.
+- **CLI language** — interface messages, help and prompts are now in English.
+- **Documentation** — the hand-written `docs/` tree is replaced by the generated OpenWiki
+  evidence index in `openwiki/`.
+
+### Fixed
+- **Truncated output protection** — `.truncated_outputs/` is read-only to file tools:
+  `write`, `edit` and `rm` cannot modify or delete saved output.
 
 ### Removed
 - **JSON tool layer** — `json_inspect`, `json_search`, `json_patch` and the `json_doc` module
@@ -94,5 +108,6 @@ files.
   read from installed metadata (`cli/banner.py`), with `pyproject.toml` as the single source of
   truth.
 
+[0.2.0]: https://github.com/mtalak509/LUNA.AI/releases/tag/v0.2.0
 [0.1.1]: https://github.com/mtalak509/LUNA.AI/releases/tag/v0.1.1
 [0.1.0]: https://github.com/mtalak509/LUNA.AI/releases/tag/v0.1.0
