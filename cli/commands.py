@@ -14,6 +14,7 @@ from pathlib import Path
 from cli.config import SESSION_DIR, state
 from cli.session import new_session
 from core.agent.checkpoint import CheckpointManager
+from core.agent.shell.models import ShellError
 from core.agent.tools.fs_paths import FileAccessError
 from core.agent.workspace import WorkspaceError, WorkspaceManager
 
@@ -21,11 +22,12 @@ from core.agent.workspace import WorkspaceError, WorkspaceManager
 COMMANDS: dict[str, tuple[str, str]] = {
     "/plan": ("", "plan only, write tools hidden"),
     "/act": ("", "carry out the task (write tools available)"),
-    "/confirm": ("", "ask before each edit"),
-    "/accept": ("", "apply edits without asking"),
+    "/confirm": ("", "ask before each write tool or shell call"),
+    "/accept": ("", "execute tools without confirmation"),
     "/attach": ("<path> [--overwrite]", "copy a file from disk into attachments/"),
     "/fs": ("[path]", "workspace file tree"),
     "/cp": ("", "list checkpoints"),
+    "/shell": ("tasks | stop <task_id>", "list or stop shell tasks, including in Plan"),
     "/undo": ("<id>", "restore the workspace and history to a checkpoint"),
     "/reset": ("", "start a new empty session"),
     "/help": ("", "this help"),
@@ -105,6 +107,32 @@ def _wipe_session(session_root: Path) -> None:
             child.unlink()
 
 
+async def _shell(arg: str) -> None:
+    tokens = arg.split()
+    if tokens != ["tasks"] and not (len(tokens) == 2 and tokens[0] == "stop"):
+        print("usage: /shell tasks | /shell stop <task_id>")
+        return
+    session = state["session"]
+    manager = session.shell_manager if session is not None else None
+    if manager is None:
+        print("error: shell manager unavailable")
+        return
+    if tokens == ["tasks"]:
+        tasks = manager.list_tasks()
+        if not tasks:
+            print("(no shell tasks)")
+        for task in tasks:
+            command = " ".join(task.command.split())
+            print(f"{task.task_id}  {task.status}  {task.creator}  {command[:160]}")
+    else:
+        try:
+            task = await manager.stop(tokens[1])
+        except ShellError as exc:
+            print(f"error: {exc}")
+            return
+        print(f"{task.task_id}  {task.status}")
+
+
 async def handle_command(line: str) -> bool:
     """Handle a slash command. True — keep the loop going, False — quit.
 
@@ -121,6 +149,8 @@ async def handle_command(line: str) -> bool:
         state["dec"] = "accept_all"
     elif cmd == "/attach":
         _attach(arg)
+    elif cmd == "/shell":
+        await _shell(arg)
     elif cmd == "/fs":
         _print_tree(SESSION_DIR / "workspace" / arg if arg else SESSION_DIR / "workspace")
     elif cmd == "/cp":

@@ -19,7 +19,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from core.agent.bootstrap import build_agent_factory, init_process
-from core.app.routes import dev, sessions, turn, workspace
+from core.app.routes import dev, sessions, shell, turn, workspace
 from core.agent.session import SessionManager
 from core.config import get_config
 
@@ -93,6 +93,7 @@ def create_app() -> FastAPI:
     app.include_router(turn.router, tags=["turns controller"])
     app.include_router(workspace.router, tags=["workspace controller"])
     app.include_router(dev.router, tags=["file & checkpoint controller"])
+    app.include_router(shell.router, tags=["shell controller"])
 
     # --- статика дев-фронта ------------------------------------------------------------
 
