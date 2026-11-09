@@ -1,7 +1,7 @@
 # 003. Host shell tool
 
 - id: 003
-- status: accepted
+- status: building
 - source: own, digests/1.2.0
 - value: high
 
@@ -24,13 +24,27 @@ The working directory is the agent's zone. `PathScope` does not apply inside the
 process: the shell can leave the zone, read `.runtime`, and write outside the session.
 That is accepted. The tool does not pretend to be a jail.
 
-Before the command, snapshot the working zone the same way `write` and `edit` do. Undo
-still restores only that zone, not the rest of the disk. In confirm mode the user sees
-the command string. Output goes through the truncation decorator in
-[002](002-truncate-tool-output.md).
+The same tool is available to main and subagents in Act. Its actions are
+`run | status | output | stop`. Confirm asks before every invocation through the existing
+decision middleware; Accept-all does not ask. Plan hides and blocks the entire tool.
+Subagents inherit the parent's decision mode for all tools.
 
-A subagent does not get this tool. Otherwise the rule that a subagent does not change the
-main agent's documents cannot be enforced.
+No snapshots are created for shell; checkpoint undo cannot undo its effects. Each invocation
+starts a fresh noninteractive shell with closed stdin and inherited environment. Foreground
+runs wait with a 120-second default timeout; explicit background runs return a task ID and have
+no default deadline. An explicit positive timeout stops the owned process tree.
+
+One manager per session owns tasks, merged stdout/stderr disk logs and process cleanup.
+Agents share task IDs and can poll status/output or stop a task. Output pages are limited to
+2,000 lines / 50 KiB with byte-offset continuation; each task has a 50 MiB log cap that stops
+it on overflow. At most eight tasks run concurrently. Normal shell exit also cleans up owned
+descendants; use the background flag rather than shell detachment.
+
+Tasks survive answers, subagent completion and Plan transitions. Closing/resetting/deleting the
+session or shutting down stops them. There is no restart recovery guarantee or completion event
+broker. Users can list/stop tasks directly through CLI and HTTP, including in Plan:
+`/shell tasks`, `/shell stop <task_id>`, `GET /sessions/{id}/shell/tasks`,
+`POST /sessions/{id}/shell/tasks/{task_id}/stop`.
 
 ## Why this is LUNA
 
