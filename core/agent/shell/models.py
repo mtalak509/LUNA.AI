@@ -123,6 +123,7 @@ class ShellTaskView(BaseModel):
     finished_at: datetime | None = None
     exit_code: int | None = None
     reason: SHELL_REASON | None = None
+    error: str | None = None
 
 
 class ShellResult(ShellTaskView):

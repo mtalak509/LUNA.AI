@@ -156,17 +156,15 @@ async def delegate_to_subagent(
             uid=uid,
             workspace_path=ctx.workspace_path,
             zone=zone,
+            shell_manager=ctx.shell_manager,
         )
         _logger.debug(f"Launched subagent: {namespace}")
-        # 6. Запуск + мультиплекс событий. permission_mode и session_id наследуются от хода
-        #    MainAgent (HITL субагента скоупится той же сессией — резолвится её же
-        #    /hitl/respond); decision_mode ХАРДКОД "accept_all" (субагент пишет только в
-        #    эфемерную зону — DecisionMiddleware у него no-op; реальный confirm-gate
-        #    срабатывает позже у MainAgent).
+        # Inherit the parent's permission/decision modes for every tool. HITL requests
+        # use the same session ID and the existing session confirmation surface.
         async for ev in sub.run_stream(
             task_text,
             permission_mode=ctx.permission_mode,
-            decision_mode="accept_all",
+            decision_mode=ctx.decision_mode,
             session_id=ctx.session_id,
         ):
             _emit(writer, {

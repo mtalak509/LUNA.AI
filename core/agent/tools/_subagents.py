@@ -24,6 +24,7 @@ from langchain_core.tools import BaseTool, ToolException
 from core.agent.base import AgentConfig, BaseAgent, load_agent_prompt
 from core.agent.tools import assemble_pool
 from core.config import InfraConfig
+from core.agent.shell.shell_manager import ShellManager
 
 
 def _agent_md_rel(subagent_type: str) -> str:
@@ -55,6 +56,7 @@ class SubagentFactory:
         uid: str,
         workspace_path: Path,
         zone: Path,
+        shell_manager: ShellManager | None = None,
     ) -> BaseAgent:
         """Собрать субагента под `subagent_type`/`uid`.
 
@@ -79,6 +81,7 @@ class SubagentFactory:
             is_subagent=True,
             checkpoints_root=None,         # зона субагента не чекпойнтится (вне workspace)
             subagent_path=zone,
+            shell_manager=shell_manager,
         )
         return BaseAgent(self.config, agent_config)
 

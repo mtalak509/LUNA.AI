@@ -22,6 +22,7 @@ from core.agent.messages import MessageStore
 from core.agent.compaction import HistoryCompactor, Summarizer
 from core.agent.middleware import PermissionMiddleware, DecisionMiddleware, ContextInjectMiddleware, ToolErrorMiddleware
 from core.agent.patches import install_reasoning_stream_patch
+from core.agent.shell.shell_manager import ShellManager
 
 
 _logger = logging.getLogger(__name__)
@@ -57,6 +58,8 @@ class AgentConfig:
     response_format: Any = None
     checkpoints_root: Path | None = None
     subagent_path: Path | None = None
+    shell_manager: ShellManager | None = None
+
 
 @dataclass
 class AgentRuntimeContext:
@@ -68,6 +71,7 @@ class AgentRuntimeContext:
     session_id: str     # скоуп HITL-записей; субагент наследует от хода main
     checkpoints_root: Path | None = None  # читается @with_checkpoint через get_runtime()
     subagent_path: Path | None = None
+    shell_manager: ShellManager | None = None
 
 
 # Патч конвертера langchain-openai (reasoning-дельты vLLM) обязан встать ДО первой
@@ -326,6 +330,7 @@ class BaseAgent:
             session_id=session_id,
             checkpoints_root=self.agent_config.checkpoints_root,
             subagent_path=self.agent_config.subagent_path,
+            shell_manager=self.agent_config.shell_manager,
         )
 
         # 2. Входное сообщение + рабочая копия + запись в журнал
