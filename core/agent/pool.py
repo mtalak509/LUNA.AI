@@ -22,6 +22,7 @@ from core.agent.tools.rag_tools import (
     knowledge_base_get_reference,
     knowledge_base_search,
 )
+from core.agent.tools.shell_tools import shell
 
 FULL_POOL = [
     read,
@@ -36,4 +37,5 @@ FULL_POOL = [
     delegate_to_subagent,
     ask_user,
     select_from_options,
+    shell,
 ]
