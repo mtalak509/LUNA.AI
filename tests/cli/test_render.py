@@ -6,6 +6,7 @@ non-terminal console, so there is no Live area and every line lands in the expor
 
 from __future__ import annotations
 
+import json
 from io import StringIO
 
 from langchain_core.messages import AIMessage, AIMessageChunk, ToolMessage
@@ -83,6 +84,55 @@ def test_failed_tool_result_is_shown():
     view, out = _view()
     view.handle(_result("edit_file", "Пользователь отклонил выполнение действия.", "error"))
     assert "⎿  Пользователь отклонил" in out.export_text()
+
+
+def test_shell_result_preserves_task_metadata_before_long_command_and_output():
+    view, out = _view()
+    content = json.dumps(
+        {
+            "task_id": "task-123",
+            "command": "x" * 1000,
+            "cwd": "/tmp",
+            "status": "completed",
+            "exit_code": 7,
+            "reason": None,
+            "output": "first\nsecond\nthird\nfourth",
+            "next_offset": 50,
+            "eof": False,
+            "has_more": True,
+        }
+    )
+    view.handle(_result("shell", content))
+    text = out.export_text()
+    for value in (
+        "task-123",
+        "completed",
+        "exit_code=7",
+        "next_offset=50",
+        "has_more=True",
+        "first",
+    ):
+        assert value in text
+
+
+def test_shell_capture_error_is_visible_alongside_partial_output():
+    view, out = _view()
+    view.handle(
+        _result(
+            "shell",
+            json.dumps(
+                {
+                    "task_id": "task-123",
+                    "status": "stopped",
+                    "output": "captured before failure",
+                    "error": "disk write failed",
+                }
+            ),
+        )
+    )
+    text = out.export_text()
+    assert "captured before failure" in text
+    assert "disk write failed" in text
 
 
 def test_edit_call_shows_diff():
