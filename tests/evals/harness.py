@@ -90,16 +90,19 @@ class ScenarioRunner:
 
     @staticmethod
     async def _play_turn(session: AgentSession, text: str) -> list[str]:
-        session.run_turn(text)
-        await session.wait_turn()
-        errors = []
-        events = session.events()
-        while True:
-            event = await events.__anext__()
-            if event.mode == "error":
-                errors.append(str(event.data.get("error")))
-            if event.mode == "control" and event.data.get("type") == "turn_done":
-                return errors
+        try:
+            session.run_turn(text)
+            await session.wait_turn()
+            errors = []
+            events = session.events()
+            while True:
+                event = await events.__anext__()
+                if event.mode == "error":
+                    errors.append(str(event.data.get("error")))
+                if event.mode == "control" and event.data.get("type") == "turn_done":
+                    return errors
+        finally:
+            await session.close()
 
     @staticmethod
     def _save_transcript(run: ScenarioRun, metadata: dict[str, Any]) -> None:
