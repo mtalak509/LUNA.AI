@@ -12,16 +12,20 @@ sources:
     resource: repo://CLAUDE.md
   - id: openwiki-source-89d8131964331b4892ee1631
     resource: repo://cli/banner.py
+  - id: openwiki-source-b3b30b817c9c2ba06d7f090a
+    resource: repo://core/agent/shell/posix_process.py
+  - id: openwiki-source-b7a3fbd681395fd1518b26c1
+    resource: repo://core/agent/shell/windows_process.py
   - id: openwiki-source-5be27729131e30130689f927
     resource: repo://docker/docker-compose.yml
   - id: openwiki-source-7f1ca00753e95588bc8efa39
     resource: repo://docker/Dockerfile
   - id: openwiki-source-05ccef8d4cf1698187f20464
     resource: repo://pyproject.toml
-generated: { by: "claude-code", at: "2026-10-29T18:35:21.080Z" }
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T18:35:21.080Z
+    at: 2026-11-09T20:45:41.933Z
 ---
 
 # Development setup, tooling and deployment
@@ -40,6 +44,15 @@ pip install -e .[dev]          # + pytest, pytest-asyncio, respx, ruff, black, m
 pip install -e .[dev,eval]     # + DeepEval for live scenarios
 copy .env.example .env         # fill in the LLM endpoint
 ```
+
+On Linux, create the environment with `python3.11 -m venv .venv`, activate it with
+`source .venv/bin/activate`, install the same extras and use `cp .env.example .env`.
+
+Host commands require `bash` on POSIX or `pwsh` (falling back to `powershell`) on Windows.
+Each invocation starts a new non-interactive shell without profiles; commands must carry their
+own environment changes and cannot rely on a previous call's `cd` or activation. Shell runs
+with the service user's filesystem and network access, without PathScope or automatic
+checkpoints. See [host shell](../tools/host-shell.md) before deploying command execution.
 
 The package is `luna-agent`; setuptools packages `core*` and `cli*`. Two console scripts are
 installed:
@@ -96,6 +109,9 @@ tests. Live tests run with `pytest -m integration`; the DeepEval scenarios with
 Configuration is not baked into the image. `docker/docker-compose.yml` builds the image from the
 repo root, maps port 8000 and passes `../.env` as `env_file`. Sessions live inside the container
 under `~appuser/.luna/sessions` and die with it.
+
+In this deployment the command host is the container, so shell tasks have `appuser`'s access
+inside it and to any explicitly mounted resources. Bash is already installed by the image.
 
 Caveats in the current tree:
 

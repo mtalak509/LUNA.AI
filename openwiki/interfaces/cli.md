@@ -16,10 +16,10 @@ sources:
     resource: repo://cli/render.py
   - id: openwiki-source-f2e780a6899504a6a25fdf90
     resource: repo://cli/turn.py
-generated: { by: "claude-code", at: "2026-10-29T18:35:21.080Z" }
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T18:35:21.080Z
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # CLI REPL
@@ -54,6 +54,9 @@ Because the session folder is reused and not wiped on start, the conversation an
 carry over between CLI runs until `/reset` (see
 [sessions and storage](../concepts/sessions-and-storage.md)).
 
+The REPL closes its current session in `finally` on every exit. This stops its shell tasks
+but keeps workspace/history files for the next run; live task metadata is not restored.
+
 ## Driving a turn
 
 `drive_turn` (`cli/turn.py`) is the CLI's consumer of the `AgentSession` runner:
@@ -79,6 +82,9 @@ While a turn runs, `CancelKeys` puts the terminal in raw mode and listens for **
 running subagent. In raw mode Ctrl-C arrives as a key rather than `SIGINT`, so it cancels the
 turn instead of killing the process. The listener is removed while a question is open so it
 does not swallow the answer. Without a terminal (piped input, tests) it does nothing.
+
+Cancellation stops awaited foreground shell tasks. Background commands outlive the turn and
+remain manageable with `/shell` when the prompt returns.
 
 ### Answering the agent
 
@@ -107,13 +113,20 @@ The list in `cli/commands.py` (`COMMANDS`) feeds both `/help` and autocompletion
 | `/attach <path> [--overwrite]` | copy a host file into `workspace/attachments/` through `WorkspaceManager` (same rules and checkpoint as an HTTP upload); the path is the rest of the line, so spaces are allowed |
 | `/fs [path]` | print the `workspace/` tree, `.runtime/` hidden |
 | `/cp` | list checkpoints with their time |
+| `/shell tasks` | list session shell tasks with id, status, creator and a command preview |
+| `/shell stop <task_id>` | stop a task and its owned processes |
 | `/undo <id>` | restore a checkpoint and reload the agent's history from the restored log |
-| `/reset` | wipe the session folder and build a fresh session |
+| `/reset` | close the current session and its tasks, wipe its folder and build a fresh session |
 | `/help`, `/?` | list commands and keys |
 | `/quit` | exit |
 
 Unknown commands print a hint. Checkpoint semantics are on
 [checkpoints and undo](../concepts/checkpoints-and-undo.md).
+
+`/shell` controls call the manager directly, without an agent turn or confirmation gate, and
+work in Plan mode. Changing to Plan does not stop background tasks. Unknown ids and missing
+managers print errors; a failed reset cleanup preserves the old session and files. Shell
+execution itself is an agent tool, available only in Act and confirmed on every call in Confirm.
 
 ## Input
 
@@ -146,6 +159,10 @@ spinner showing the current activity, elapsed seconds and "esc — interrupt".
   with an "… N more lines" count (singular for one line).
 - An `edit` call shows a coloured unified diff of `old_string` → `new_string` (up to 40 lines),
   and those two arguments are then not repeated on the call line.
+- A shell result shows its task id/status and available exit code, reason and continuation
+  fields (`next_offset`, `eof`, `has_more`) before the captured output. This metadata stays
+  visible when the output preview is cut. Use [shell output pagination](../tools/host-shell.md)
+  to read further; a preview is not the complete log.
 - A subagent's work is framed between `namespace_open` and `namespace_close` and indented with a
   cyan bar.
 - `error` events and cancellation notes are printed in place.

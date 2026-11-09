@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:588d16f912d115a6d5972df96ad1864dec1b60b0de99653a4e14cc55302b7b62",
+  "pageVersion": "sha256:a92819f2277d929859a034018de6d4fec3e68133cf9f1ae438b878b1abd1e722",
   "claims": [
     {
       "id": "claim_593cface45da43718cd8a5882915ff47",
       "statement": "Every BaseAgent uses the same middleware list in the order ToolErrorMiddleware, PermissionMiddleware, DecisionMiddleware, ContextInjectMiddleware, with ToolErrorMiddleware first so it is outermost in the tool-call chain.",
       "evidence": [
         {
-          "resource": "repo://core/agent/base.py#L272-L274",
+          "resource": "repo://core/agent/base.py#L276-L278",
           "version": "repo-lines-v1:sha256:12f72c369b7b794c1af765aa0186ffb1d85b8cb9cbb5cccae7b7ef6a54b22283:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTU3ZTUxOTcxNjg5Zjg1ZTI0MGNjZWZjY2RiOWU1MDFlZWFmNDI5Y2Q5N2Q5ZDE1OTY4NzcyYzhkNmRlODYwZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzVlNjc4YmIyMThmMmJiOTg1ZWQ1YzhiOWExNjkwYzliMGM0YTE0MWY4M2NjMmFhNzdmNDIzMTNhNDkwOWI1OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDkzNjM1Njg3YWRhNTFmOWJlZjljNmQxMmJmNTIwYWZhYTE2MDExMjE1NWQ0Yzk0MjcyMjgwZjMzZWY2NDkxZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzY5ODNkMzZiYzExNjA5NWViMGVhMzk3ODEzYjY3ZjUyNTNlODRiYjVhZjE5NmExODJjYmZiMDRiMTAzNmI1OCJ9"
         },
         {
@@ -65,10 +65,42 @@
           "version": "repo-lines-v1:sha256:4cffb3fc419afb33bb70f2bb52330f735d5898ecedeaa43706fa785628c573ee:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViNmRjMDU1YjQ2ZDVkYzc5Y2Y0ZjkxYjY4ZTM0M2UzMjMyMGJjOTBjMTFiMzEzN2Y0ZWNkZjhmOTMzMTg1YmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgzMTMyYjI0ZjA0ZDI3N2NiNDhmZmExM2ZiODAxYjJhYmJjYzc3YWM4OTIxZTBkZWJjOGVjMGVlNGRiNzA1MjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2OWUwYjE5ZjZjMWNkNmMyY2FjMDVhNjk4Y2VkZDFhZGEyNDkxNzI3ZmI4N2U2ODgwNWZmYjA4ZTY4MmU4ZGIifQ"
         }
       ]
+    },
+    {
+      "id": "claim_d83b08294c194cdc843e8411f6649fb5",
+      "statement": "Subagents inherit their parent's decision mode, so DecisionMiddleware gates their write tools and shell invocations in Confirm mode.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/middleware/decision.py#L26-L57",
+          "version": "repo-lines-v1:sha256:ba5f37281800858bce7331719439629f2607cc4a9b1f6bcbf6f5575a2dc10992:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzMmNhYzcxY2Y0MWQ0MjIzYzBkZmYxMDU1YjNiYTUyZGFlNTdjOWIwNDJiNDkwMmU2NTAyMTMwMjVmNDVjYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxZWE2M2E2MmY5MjFhY2ZlOTFhMTcyMzExMDkyMjljNTkzZGU3ODMxZjAxYWZkYWZkNjA1MWM1MjYxNTRjZTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAxZWRiYjcyZDAwYWQxZGI1NDE0YjEyZDAxNjE2MmMxYjhiYjhmODJmODJmMzc0MDZhZjJkZWUwODBmNzVmNGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L164-L185",
+          "version": "repo-lines-v1:sha256:5ae6070276791cd707a38dec0d8be5a1546e7cd8aad39c32bbbf633ad2e20b5b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4ZDIyZTVlNjBlNmMzZWI0YTM2M2FmODAwNzJmNThjN2JkMDkwM2M3ODExYWQ3NGUwMGVjN2EwNzM5OTY3NmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEzOWViMTUxNWU4MjE1NGY5MjdkMDlkNzNkNjkzYzUyMjM5MmMzOTFlYzAwMmVhZGI3ZmY0ZGRmNjM1Y2YyZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg5NTI5NDIwNGZiYTRhNDlmZWQ3ZGZlZjIwYmQ5ZjgzZGFiYWE3MmQyYzlkNDdlNzZkZjdiMDc5NjM4MmM5NmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQyMWVlZmEzNjg2M2VlMDliMGEyZTc3MzAzNGFiNTA3ZmQzZDk1MDkyNWZlMTFmZGNlNjY1MjlkZjhiYWQyMjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_be350379b35e491c8a33420af85f0e6b",
+      "statement": "All shell actions use one is_write tool and are hidden and blocked in Plan and confirmed individually in Confirm, while CLI and HTTP list/stop task controls call the manager directly.",
+      "evidence": [
+        {
+          "resource": "repo://cli/commands.py#L120-L147",
+          "version": "repo-lines-v1:sha256:157b546b77f81ea1ef3e22e570135ce269320c7480c7b69c2a6ca45e1ef4d0f5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlYzIyMWQ4ODg3MzczZDUxZWExMjVhZDE1MWVjODY2MmRhZGQ2ZWRmOWM1YTYxY2MwN2QyOTZkNTM4NjgyMGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5ZTkwMjlmMDExOTk3YWI0M2Q4OWQyZWVlNjcyMDRiMDQ2ZmVkYTUwYjE5ZDIwNzA5NmY0YWYzMThmNDJmMzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjliMGJlNWRiNWIyNjBlNjU1MDJlNzFiODJjMGEzM2U3NjZlMDA0ODY2YzhmNzIxMzFkNmU4Mjg2ZjllYzVmNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQwOWM0MTlhMWY3ZDcxYTMxYTc1ZGFlZGFmOTc5NThiNGY4OWVmYjM2YTA4MDY1NTViNmFlZWQzMWZhYjgzMGQifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/shell_tools.py#L76-L107",
+          "version": "repo-lines-v1:sha256:a023f2cec382087678c628e91991281c27d647826dc86acd330f8feadf8068bf:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5ODZhZTc2ZjMzYjI3MTQ3MzY4OTU3NGE0OTc2YjQ1ZGUxMzU5NzNlY2QyMGQ5YTc5MjExMDBkNGVlOTYyOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0NGE4NjI5Zjc0ZGRiNWFlZjRlZWExZjA3OGUyMWJhOGQ3MWFjNTdiYmFhOTI4ODY5ZmY2ZWYzOTRkNTE3ZTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYyYzI1NGUzOGNkNTY0NWU0YzlmMDgzNDM5MjJiZjZiMTg5NWRjNTUzOWE1OGE0ZDY0ZGJiM2M4MDE3OTVkYTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://core/app/routes/shell.py#L22-L39",
+          "version": "repo-lines-v1:sha256:bbf20fd465e2e6d1cbcdacbb556f149e0994995cc8f6896a0eddba5687b1a170:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0MWVlNTJiZGExOTI3ZmI1NGY3N2RhZmY5ZDZjZTg3NzgzMjNjMjQwODAzNmEzNmQ2NzY2YjE5MjYxODYyM2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVjN2QyOTZjNzU1MTBjZjYxNDNmMmNmZWEzMGIwYzk0NDMwM2VjY2UzYzRmNmZkZDYxODk4M2FhNmY4Mzk0YjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T17:46:46.267Z"
+    "at": "2026-11-09T20:38:09.193Z"
   }
 }

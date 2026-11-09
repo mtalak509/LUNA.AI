@@ -3,9 +3,6 @@ type: architecture
 title: Architecture overview
 description: The big picture of LUNA — a thin harness around one self-driving LangChain agent, a flat shared tool pool, filesystem-first state with no database or checkpointer, in-process subagents, and two front ends over one core.
 tags: [architecture, overview, agent, filesystem, langchain]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T18:35:21.080Z
 sources:
   - id: openwiki-source-c46570de609dc2e9a293d8a2
     resource: repo://cli/config.py
@@ -17,15 +14,24 @@ sources:
     resource: repo://core/agent/bootstrap.py
   - id: openwiki-source-8663d578d4a41ad0e6edc1c1
     resource: repo://core/agent/pool.py
+  - id: openwiki-source-ef44557fa5de39f25a459d70
+    resource: repo://core/agent/shell/models.py
+  - id: openwiki-source-b3b30b817c9c2ba06d7f090a
+    resource: repo://core/agent/shell/posix_process.py
   - id: openwiki-source-277976f7cb0a0aa61d455571
     resource: repo://core/agent/tools/delegation_tools.py
+  - id: openwiki-source-6e479670aac673f34064e1c5
+    resource: repo://core/agent/tools/shell_tools.py
   - id: openwiki-source-3a88e4d15da7c9e7b69e7b29
     resource: repo://core/app/server.py
   - id: openwiki-source-27ee44b17a928f4d359d8b25
     resource: repo://core/config.py
   - id: openwiki-source-05ccef8d4cf1698187f20464
     resource: repo://pyproject.toml
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # Architecture overview
@@ -71,6 +77,7 @@ BaseAgent (main) ── create_agent think-act loop
    │   middleware on every call: tool errors · Plan/Act · Confirm · working context
    │
    ├─ file tools ─────────► workspace/ (PathScope-checked paths, checkpoints after writes)
+   ├─ shell ──────────────► session ShellManager → host Bash / PowerShell processes
    ├─ knowledge base ─────► RAG over Qdrant (optional, off by default)
    ├─ ask_user / select ──► parks the turn until the user answers
    └─ delegate_to_subagent ► BaseAgent (subagent) in the same event loop
@@ -88,9 +95,10 @@ and yields namespaced stream events (see [a turn inside BaseAgent](agent-turn.md
 The main agent can hand a self-contained sub-task to a subagent through the
 `delegate_to_subagent` tool. The subagent is another `BaseAgent` with a cold context (only the
 task text), its own prompt (`agents/<type>/agent.md`) and its own folder. It runs as part of the
-same asyncio task, one level deep, and **advises rather than edits**: it can read the main
-workspace but writes only to its own zone, and returns `{summary, artifacts}`. The main agent
-stays the single writer of the user's documents. See
+same asyncio task, one level deep, and returns `{summary, artifacts}`. Its file tools read the
+main workspace and write only to its own zone. Its shell tool shares the session manager and
+runs with host-user access, so the file-tool boundary does not constrain shell commands. The
+prompt still directs it to work as an advisor. See
 [delegation](../workflows/delegation-and-subagents.md).
 
 ### Isolation by paths, not processes
@@ -99,6 +107,10 @@ Agents share one process. Their boundary is enforced by `PathScope`
 (`core/agent/tools/fs_paths.py`), which every file tool resolves its path through: the main
 agent writes in `workspace/`, a subagent only in `subagents/<uid>/`, and nobody touches
 `.runtime/`. See [zones and PathScope](../concepts/zones-and-path-scope.md).
+
+Shell commands bypass PathScope and have the filesystem and network access of the user running
+LUNA. Their manager owns process groups or Windows Jobs, bounded output logs and task cleanup;
+it is a lifecycle boundary rather than a host sandbox. See [host shell](../tools/host-shell.md).
 
 ### Safety switches
 
@@ -114,6 +126,10 @@ Process setup and per-session setup are split in `core/agent/bootstrap.py`:
 - `init_process` runs once: it copies the prompts into a process `procedures/` folder and
   installs process-wide holders (service clients, the subagent factory, the HITL registry).
 - `build_session_agent` builds one main agent for one session folder.
+
+Each session also receives one `ShellManager`, shared by the main agent and all its subagents.
+Background tasks survive answers and Plan transitions. Explicit session close, reset, delete
+and server shutdown stop them; task metadata is in memory and is not restored on restart.
 
 The **HTTP server** (`core/app/server.py`) calls `init_process` in its lifespan and keeps a
 `SessionManager` registry of many live sessions under `~/.luna/sessions/`. The **CLI** (`cli/`)
@@ -150,6 +166,7 @@ see [history and compaction](history-and-compaction.md)), and provider-specific 
 | History, compaction, checkpoints | `core/agent/messages.py`, `compaction.py`, `checkpoint.py` |
 | Tools and the pool | `core/agent/tools/`, `core/agent/pool.py` |
 | Sessions and bootstrap | `core/agent/session.py`, `core/agent/bootstrap.py` |
+| Shell tasks and process ownership | `core/agent/shell/`, `core/agent/tools/shell_tools.py` |
 | User-side file operations | `core/agent/workspace.py` |
 | HTTP server | `core/app/` |
 | CLI | `cli/` |

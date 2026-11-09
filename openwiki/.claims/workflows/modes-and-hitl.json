@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:4b93d8184040fe511cd3c787e61e41de6169ab67f23b3ad765659e6a7475e5ca",
+  "pageVersion": "sha256:c390c45b9741ae2e86cbf98d1363ef9e2aebf39b659f31bc782aa2f061f5ff43",
   "claims": [
     {
       "id": "claim_d89d297e7a614724a3b1640990499570",
@@ -65,8 +65,8 @@
       "statement": "AgentSession.resolve_hitl resolves through the process registry scoped to the session, and the HTTP hitl/respond route maps HitlError to 404.",
       "evidence": [
         {
-          "resource": "repo://core/agent/session.py#L132-L139",
-          "version": "repo-lines-v1:sha256:1b03b1f0a80144276567bc7e3f041a170bfeb18c428f6e63d5d60c8971b824c2:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDljYjc0NTAxYzRjNGQ1Y2NkZTM4ZDliYmY2YWQzNWYzODQzMDdmYWZiNGYzOWIyNjc3ZGM3ZTdkN2E1YWYwYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTYxNzQxNDI2NGM5ODNlOTQ0MzUyNGNhMjA2NjQxZWQ2MmJjMTIzYjliOTJlZWVlMDM3YTA1MmRkYzJmMTViNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2M2OGZhNmQ3YzcyYjgxNDNmODNkNzc3ZTNhNmEwM2RmMWY5ZGYzYzU2Y2I2M2QwYzc0NDAyZjQ5NDgxNTU0ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjU0YWZhY2VjYjI3ZjVmZTQyZGUwZjdmMDY4ZDM1MGMzYzE4MjRjYzgyMTA3ZWM0YWJiOTc2YTE2ZWI1YzBlNiJ9"
+          "resource": "repo://core/agent/session.py#L168-L175",
+          "version": "repo-lines-v1:sha256:1b03b1f0a80144276567bc7e3f041a170bfeb18c428f6e63d5d60c8971b824c2:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDljYjc0NTAxYzRjNGQ1Y2NkZTM4ZDliYmY2YWQzNWYzODQzMDdmYWZiNGYzOWIyNjc3ZGM3ZTdkN2E1YWYwYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTYxNzQxNDI2NGM5ODNlOTQ0MzUyNGNhMjA2NjQxZWQ2MmJjMTIzYjliOTJlZWVlMDM3YTA1MmRkYzJmMTViNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzM3MThiMjA5NTliY2ZmZDkzNjYzMDYzZDVmOTdkMTViYTAyMjI5ZDE0ZmIyMDFjZDE2ZTkyMjdlYWIzNTQ4NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMGQ3MTlhMGY5MTNjYTYyZTg3YjVmYzQ2YjgxZDVjNGViYTFhZjYyOWI5Yzg2ZTcyMGM4MzliNDFlYjJkYTQ1MiJ9"
         },
         {
           "resource": "repo://core/app/routes/turn.py#L28-L37",
@@ -79,7 +79,7 @@
       "statement": "New HTTP sessions default to act and confirm, and mode changes through the API apply to the next turn.",
       "evidence": [
         {
-          "resource": "repo://core/agent/session.py#L154-L156",
+          "resource": "repo://core/agent/session.py#L190-L192",
           "version": "repo-lines-v1:sha256:01a9d998f3828971632e1eb11fd08f332e90482a4da747b210e6b96ab6b87640:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWM0NGUzNWM1YWI0NGJmNjAzOTNiMDBlMmE4ODFjZjk5Y2I3NjBiZjRkZmMxNzdhMDcxM2YxNDFmMjc1NGUwZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmQxYTJhODM1MDlkMmI0MDQzYTRhNmU4ZGEyNmY0ZjMwOWRmZGY3ZDRjOGNjNjVkYWIwYzZmNGIwMzQ2ZmQ4YSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGRjMzA0MDJmMTljMDg3Y2YzYTZjZjRiOGM0Zjc2ZmEyYzRkMzVlYTAwODVkNGQyNTgzMTEwM2JkYTEzZTJhMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmMxZjAyZmQ3ZWMxZDQ2MmMwY2I4MThiOTQ4ZmZlNGY3MTViMmMyYzQzMjYzMGMyMzJkZmUzNGQ0Mjc0M2ZhOSJ9"
         },
         {
@@ -97,10 +97,32 @@
           "version": "repo-lines-v1:sha256:42a8c2e7da6158d3ac262a4719b31fcd38f31a26b11be2d604ef93fcef3418fe:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4YzA3NThmZmY3MTI3OWIzODBjMzIwOTE5ZGNkM2VhYzkzMzA4ZjY5MzgyZTY0NWQ3Zjg4ODliOTkzMzk5YTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0OGY4ZTBmZjEyYWE3ZTAyNmIyYWJlZjllMzJmZmU2MmZlNTE4OThkMDlhNjRlODZmNzk5NDNiOTZhY2QyMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhhYWQyMWI2ZjA2OTY5NjRlMGY0ODZlNTUwODU1M2U4NWM2Y2UzMzE0YzA1NzdjZDJhZjFkNjI3OGZmNDA4N2QifQ"
         }
       ]
+    },
+    {
+      "id": "claim_002bc312ddf943b4a5948a6604825d93",
+      "statement": "Subagents inherit both modes; every shell action is classified as a write call, so Plan blocks it and Confirm requires approval, while direct CLI/HTTP task controls bypass the agent gates.",
+      "evidence": [
+        {
+          "resource": "repo://cli/commands.py#L109-L133",
+          "version": "repo-lines-v1:sha256:d0ed830e287b85882b37c0e3ae2b4c4228a0e67c783690a8fa6e8a7c891585c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1NWFhZTViNjJiZjE3ZjQ4Njg5ZGJiYWQwNWQ1ODViYWM3ZmQ0NWIwNzdjOGI4ZTViMjMwYzg2MWExNjM2OTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA2OWFhYzBkZTU5YzEzYzE0ZDY3YjQ5OGM4MjhiYTExNDMyODg1ZTM2YTJjY2E0MzEwNzcxOGM0YzQwYzZmYjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5NjNhMGZlMDNiODBmOTExNmNkYTJjN2JlZDg3Y2IzNjA0YjBiNTJmYWQ3MGRlM2IwNTgyOTM3NzI5OTM5MDIifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/delegation_tools.py#L162-L169",
+          "version": "repo-lines-v1:sha256:ed01567ef28d861ce87a03a4caf3a0de755a6cd7c3fb421637cd63e751b610d1:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGVmZTY2MGMyZWIyOWQ1ODFiZThjNDc4Y2YyY2RkMWU5MTFiYjM5MTY4NDJjZTIwZDBjNjhiYjA1YjAwNTRkYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWU3NzAwNjk0ZjFlNjc1OWFiNWY5ZTUxZjMwN2VjNjFjYWM2ZTg5OTM3Mzg1OWRhNDA3MzgyNjVhMTgzODgxMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTRhZjk3M2JjMmQwODRiZDExNzFjMDM2YmVkN2FiZWRmMTQ1NmMzZWJjMWI4MzVkMzE5MDBjZjE2MDUwNGY3ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTIxYjI0YTIzNTZlNTNjMGE5MTBjOTNkYTY1NjkxMDY1Zjk2Yjg5ZmM3ZDE3YTk2MWJmYzIwNjQ4YzI2MjYzYiJ9"
+        },
+        {
+          "resource": "repo://core/agent/tools/shell_tools.py#L76-L90",
+          "version": "repo-lines-v1:sha256:3cdca277458a4ecd931d4c27d34b3bc22e10e4e1e9e3e835fe488f66362d11b2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5ODZhZTc2ZjMzYjI3MTQ3MzY4OTU3NGE0OTc2YjQ1ZGUxMzU5NzNlY2QyMGQ5YTc5MjExMDBkNGVlOTYyOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljZDk2ZmFlNzc0NDNkYTEyMDJjYTEzMzUxZDEwZjdmYjA4YWUxZWEyZGI0NDRlYzI3ZWRkYjU4MDczYWM0ODEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYyYzI1NGUzOGNkNTY0NWU0YzlmMDgzNDM5MjJiZjZiMTg5NWRjNTUzOWE1OGE0ZDY0ZGJiM2M4MDE3OTVkYTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI4NWJjYzBlOWEwMWJhNDI2YmMzNzk4MTIzMDk5MzU1YjEzYTllYWY3NGY0YThiMzFiOWU0NTFhZTU5M2Q0MGIifQ"
+        },
+        {
+          "resource": "repo://core/app/routes/shell.py#L22-L39",
+          "version": "repo-lines-v1:sha256:bbf20fd465e2e6d1cbcdacbb556f149e0994995cc8f6896a0eddba5687b1a170:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0MWVlNTJiZGExOTI3ZmI1NGY3N2RhZmY5ZDZjZTg3NzgzMjNjMjQwODAzNmEzNmQ2NzY2YjE5MjYxODYyM2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVjN2QyOTZjNzU1MTBjZjYxNDNmMmNmZWEzMGIwYzk0NDMwM2VjY2UzYzRmNmZkZDYxODk4M2FhNmY4Mzk0YjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T17:46:46.267Z"
+    "at": "2026-11-09T20:38:09.193Z"
   }
 }

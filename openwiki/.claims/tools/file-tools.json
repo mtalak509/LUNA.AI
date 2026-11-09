@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:c2904d04c01b39210ac53a655f8d3203783b78f51223cc4eacc830780a349ba0",
+  "pageVersion": "sha256:9d8dced1e8805d1caf010c2e7b98760723c7962dfbd3ea52d92bc335de007bf5",
   "claims": [
     {
       "id": "claim_09c728e79cfe46f38f016e5ba3a7631b",
@@ -44,11 +44,15 @@
     },
     {
       "id": "claim_a4e3f71c93f24c99b7201217d6810744",
-      "statement": "find and grep only consider files that resolve inside the search root and are not under hidden service folders, and ls hides those folders too.",
+      "statement": "Directory searches in find and grep filter resolved files outside the search root or under service folders, and ls hides service names; explicit single-file grep bypasses directory filtering and can search a readable spill file.",
       "evidence": [
         {
           "resource": "repo://core/agent/tools/files_tools.py#L100-L113",
           "version": "repo-lines-v1:sha256:604aa0fea9637c8ba35e8dd0baa5d6452c151e33479a7b4e012d5f98777d9a74:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4OTZiN2U3NWZhMmYxNjU4YzkyNjAwMWUxYzkyMzFmOWY5MjY4ZDU5NTUyMWY2MzE5NWJiOTc5MDQ2ZDBlYTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyNTRiNDk3NTMzN2VlODBkNjA4NGUzYzVhNzQzNzk1NTk1NzU1MTRhNzdhMTc5NjQ4MTQ5MWFlM2JkMGU3NTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyZDRlY2UzNTUzNjFjOTNmODYxN2NkODRlZTFmNTZiODhmYWFhNjc3MzkwNzA3NGY3ZTAwYjEyZGVlYWU4NzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY1NGZhYjk3YWVhODViODliYjEyZWU1Nzg3YTNmMWMyNGZkZGJhYzBkMzVjMmY5ZTYxNTQ5YmI1ZWJjMmIwOGQifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L150-L170",
+          "version": "repo-lines-v1:sha256:2c84e1cd8718abe2cf5e67ccbf81b126fd1f8c56c2add1e7b64c81a0d59fe5a7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjNzAwN2Q3M2Y1ZTlkZmMwYzBkMGM4NTY5MDFkZTRhNDJjMDI2MTE5YjQ5YzUwOGZiZjE2MDFmNmI3ODU3MWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFmNzJmMjJlNTU5ODc4ZjE4MDBiYTA0YmJkZWFjODBjZGUyZGZmODc4YzFjMDc3NzgxNTE0Yzg2NDU2MGVmZWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNjOTRiN2U0NWRlYTgxNWM1NTlhMWExNWUwZGY5MTIzMTMzMjkwOTJmNWQ0ZDQ1OWM1YmEwMjQ4OWQ1ZWY2MTcifQ"
         },
         {
           "resource": "repo://core/agent/tools/files_tools.py#L41-L58",
@@ -107,6 +111,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T17:46:46.267Z"
+    "at": "2026-11-09T20:38:09.193Z"
   }
 }

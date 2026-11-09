@@ -3,9 +3,6 @@ type: integration
 title: LLM providers and configuration
 description: How LUNA reads its configuration from the environment and .env, how LLM_PROVIDER selects between OpenRouter, GPUStack/vLLM and Ollama through one ChatOpenAI client, and the reasoning-stream patch for vLLM.
 tags: [configuration, llm, providers, openai, vllm]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
   - id: openwiki-source-364a89a77ff1b7418dc1c6c3
     resource: repo://core/agent/base.py
@@ -16,6 +13,9 @@ sources:
   - id: openwiki-source-27ee44b17a928f4d359d8b25
     resource: repo://core/config.py
 generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # LLM providers and configuration

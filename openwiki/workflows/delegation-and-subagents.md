@@ -3,15 +3,19 @@ type: workflow
 title: Delegation to subagents
 description: How the main agent hands a self-contained sub-task to a subagent with delegate_to_subagent — zone and snapshot, building the subagent, inherited modes, streaming its events, the {summary, artifacts} contract, and failure isolation.
 tags: [delegation, subagents, workflow, streaming, isolation]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
   - id: openwiki-source-77582883137c489d92067600
     resource: repo://core/agent/tools/_subagents.py
   - id: openwiki-source-277976f7cb0a0aa61d455571
     resource: repo://core/agent/tools/delegation_tools.py
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+  - id: openwiki-source-8094eb2d8ff4d4977387259c
+    resource: repo://core/procedures/agents/default-subagent/agent.md
+  - id: openwiki-source-ab74b4a68368843c06ab3eba
+    resource: repo://tests/agent/test_shell_integration.py
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # Delegation to subagents
@@ -32,8 +36,9 @@ A subagent is the same `BaseAgent` class with a different configuration:
   read-only view of the main `workspace/`;
 - **no history log and no compaction** — it lives for one call;
 - **no delegation** — `delegate_to_subagent` is `main_only`, so the hierarchy is one level deep;
-- **an advisor, not an editor** — it cannot write into the user's documents; the main agent reads
-  its results and decides what to change. That keeps a single writer for the real files.
+- **an advisor by instruction** — its file tools cannot write into the main workspace, but
+  shell has host-user access and can change shared files. The main agent must state the
+  permitted changes in `task_text` and review the returned results.
 
 It runs inside the main agent's turn, in the same process and event loop, not as a separate
 process.
@@ -66,13 +71,14 @@ delegate_to_subagent(subagent_type: str, task_text: str, task_id: str | None = N
 6. **Build** the subagent with the process `SubagentFactory`: load the prompt, take the pool
    slice for scope `subagent` (no `main_only` tools, no disabled features), set
    `agent_scope="subagent"`, `is_subagent=True`, `subagent_path=<zone>`, and
-   `checkpoints_root=None` (the zone is never snapshotted).
+   `checkpoints_root=None` (the zone is never snapshotted), and the parent's shared
+   `shell_manager`.
 7. **Run** `sub.run_stream(task_text, ...)` with:
    - `permission_mode` inherited from the main turn;
    - `session_id` inherited, so the subagent's questions are scoped to the same session and
      answered through the same `/hitl/respond`;
-   - `decision_mode="accept_all"` always — the subagent writes only to its own throwaway zone,
-     and the real Confirm gate applies later when the main agent edits the user's files.
+   - `decision_mode` inherited from the main turn — Confirm also gates subagent file writes
+     and every shell action through the same user confirmation surface.
 8. **Forward every event** as a `custom` event `{"type": "subagent_event", "namespace", "mode",
    "data", "task_id"}` through the main graph's stream writer.
 9. **Build the result.** `summary` is the subagent's `final_text` (its last `AIMessage`).
@@ -91,6 +97,11 @@ Any `Exception` while building or running the subagent is logged and returned as
 result with an `error` field and an explanatory `summary`. The main agent's loop continues and
 the model decides what to do. A cancelled turn is different: `CancelledError` is not caught, so
 cancelling the main turn stops the subagent too (the close event is still emitted).
+
+Shell process ownership is separate: foreground work awaiting completion is stopped on turn
+cancellation, while background tasks survive delegation and remain owned by the session. Main
+can inspect or stop a helper's task using its returned task ID. Session close stops them all;
+see [host shell](../tools/host-shell.md).
 
 ## What the main agent does with the result
 

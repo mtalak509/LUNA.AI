@@ -3,9 +3,6 @@ type: concept
 title: Agent prompts (procedures)
 description: Where LUNA's agent prompts live, how they are copied into a process folder and loaded with front matter stripped, the XML-section convention, how subagent types map to prompt folders, and the known drift between prompt copies.
 tags: [prompts, procedures, agents, subagents, configuration]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
   - id: openwiki-source-364a89a77ff1b7418dc1c6c3
     resource: repo://core/agent/base.py
@@ -21,7 +18,10 @@ sources:
     resource: repo://core/procedures/main_agent.en.md
   - id: openwiki-source-11ae840fe50156aa29722dff
     resource: repo://core/procedures/main_agent.ru.md
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+generated: { by: "codex", at: "2026-11-09T20:45:41.933Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:45:41.933Z
 ---
 
 # Agent prompts (procedures)
@@ -86,7 +86,23 @@ document (see [middleware](../architecture/middleware.md)).
 
 The subagent prompt `default-subagent/agent.md` describes a cold context (only the task text),
 its own `notes/` and `artifacts/`, read-only access to the main workspace through the
-`workspace/` prefix, and asks for a short summary as the last message.
+`workspace/` prefix for file tools, and asks for a short summary as the last message. It also
+explains that shell can leave the zone and instructs the helper to respect the delegated scope.
+
+## Shell instructions
+
+Both main prompt copies and the subagent prompt describe all four shell actions, foreground
+and background execution, the 120-second foreground default, byte-offset pagination, the
+eight-task limit and 50 MiB log cap. They tell agents to keep task IDs, inspect exit codes and
+poll when needed rather than expect completion notifications. They distinguish Plan's complete
+shell block from direct user list/stop controls, and explain that background tasks survive
+answers and Plan transitions until the session closes.
+
+The Russian delegation section now makes advisor behavior a task instruction rather than a
+technical guarantee: file tools enforce the zone, but shell can change shared files. The main
+agent must state the permitted scope in `task_text`. Runtime permissions and inherited Confirm
+mode remain enforced by code; see [host shell](../tools/host-shell.md) and
+[delegation](../workflows/delegation-and-subagents.md).
 
 ## Known drift
 
@@ -96,6 +112,11 @@ its own `notes/` and `artifacts/`, read-only access to the main workspace throug
   placeholder for testing delegation, and the main prompt repeats that it "will be replaced by
   domain specialists". LUNA has no domain schema, so this is in practice the only helper the
   main agent has.
+- **Some file guidance still exceeds the tool contract.** Notes are described as append-only,
+  although `write` overwrites; artifact promotion mentions `workspace/artifacts/` although
+  main-agent file paths already start inside the workspace. Explicit `grep` on a spill file
+  works even though directory searches hide service output. Cards 009 and 011 track
+  prompt/notes follow-ups; the code and [file tools](../tools/file-tools.md) define actual behavior.
 
 Idea card `planning/ideas/006-general-purpose-subagent.md` proposes renaming it to
 `general-purpose`, rewriting it as a real worker, and refreshing both main prompts (see

@@ -14,26 +14,36 @@ sources:
     resource: repo://core/agent/base.py
   - id: openwiki-source-9cae2963ffbc49ec962d3395
     resource: repo://core/agent/bootstrap.py
+  - id: openwiki-source-ef44557fa5de39f25a459d70
+    resource: repo://core/agent/shell/models.py
+  - id: openwiki-source-4c191222105a52799537e04a
+    resource: repo://core/agent/shell/shell_manager.py
+  - id: openwiki-source-277976f7cb0a0aa61d455571
+    resource: repo://core/agent/tools/delegation_tools.py
   - id: openwiki-source-e1f3d5a721b9517f9aa6ba09
     resource: repo://core/agent/tools/files_tools.py
-  - id: openwiki-source-bc779d44eeaa18d27c90f893
-    resource: repo://core/agent/tools/fs_paths.py
+  - id: openwiki-source-6e479670aac673f34064e1c5
+    resource: repo://core/agent/tools/shell_tools.py
+  - id: openwiki-source-23777f9174e92ec97c2941a7
+    resource: repo://core/app/routes/shell.py
   - id: openwiki-source-3a88e4d15da7c9e7b69e7b29
     resource: repo://core/app/server.py
   - id: openwiki-source-05ccef8d4cf1698187f20464
     resource: repo://pyproject.toml
-generated: { by: "claude-code", at: "2026-10-29T18:35:21.080Z" }
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T18:35:21.080Z
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # LUNA quickstart and task map
 
 **LUNA** is a personal work assistant for reading and editing documents and files. You ask in
-plain language; one LLM agent does the work by calling general-purpose file tools. It is a thin
+plain language; one LLM agent does the work by calling general-purpose file tools and host
+shell commands. It is a thin
 harness around a LangChain v1 `create_agent` loop: no workflow engine, no database, no LangGraph
-checkpointer. All state lives in files under `~/.luna/`. There are two front ends over one core:
+checkpointer. Documents and history live under `~/.luna/`; live shell task ownership is in
+memory. There are two front ends over one core:
 a CLI REPL and a FastAPI server (which can also serve a web UI).
 
 Start with the [architecture overview](architecture/overview.md).
@@ -62,6 +72,7 @@ Python 3.11 only. `LLM_PROVIDER` is `openrouter` (code default), `gpustack` or `
 | change Plan/Act, Confirm, or the injected context | [middleware](architecture/middleware.md) | `core/agent/middleware/` |
 | change how history is stored or compacted | [history and compaction](architecture/history-and-compaction.md) | `core/agent/messages.py`, `compaction.py` |
 | add or change a tool | [tool pool](tools/tool-pool.md), [file tools](tools/file-tools.md) | `core/agent/tools/`, `core/agent/pool.py` |
+| run commands, manage background work or debug cleanup | [host shell](tools/host-shell.md) | `core/agent/shell/`, `core/agent/tools/shell_tools.py` |
 | change what an agent may read or write | [zones and PathScope](concepts/zones-and-path-scope.md) | `core/agent/tools/fs_paths.py` |
 | change attachments / user uploads | [zones and PathScope](concepts/zones-and-path-scope.md) | `core/agent/workspace.py` |
 | change undo | [checkpoints and undo](concepts/checkpoints-and-undo.md) | `core/agent/checkpoint.py` |
@@ -83,13 +94,21 @@ Python 3.11 only. `LLM_PROVIDER` is `openrouter` (code default), `gpustack` or `
 - **The graph has no memory.** LUNA keeps the message list itself and mirrors it to
   `workspace/.runtime/messages.jsonl`; undo restores that file with the documents.
 - **Subagents are not processes.** They run inside the main agent's tool call; isolation is by
-  path rules only.
+  path rules for file tools. Shell bypasses those rules and runs with host-user filesystem
+  and network access for both main and subagents.
+- **Shell tasks belong to the session.** Background work survives answers, subagent completion
+  and Plan transitions. Session close stops it; the task registry is not recovered on restart.
+- **Shell has no checkpoint or undo.** Foreground defaults to 120 seconds; background has no
+  default deadline. Inspect exit codes and page output with byte `next_offset`.
+- **Plan blocks every shell action; Confirm gates every call.** Users can still list/stop
+  tasks directly with `/shell tasks`, `/shell stop <id>` and session HTTP task controls.
 - **Plan mode is enforced twice** — write tools are hidden and also blocked if called.
 - **Sessions do not survive a server restart**; leftover session folders are wiped at startup.
   The CLI's single session does carry over between runs until `/reset`.
 - **The runtime prompt is the Russian one** (`main_agent.ru.md`), so the agent answers in
   Russian, and tool results and error texts from the core are Russian too. The CLI's own menus,
-  notes and help are English.
+  notes and help are English. Shell metadata and diagnostics are also English, while command
+  output comes directly from the executed program.
 - **`devfront/` (web UI) is git-ignored** while it is reworked: the server serves only the API
   on a clean checkout, and the Docker build expects the folder to exist.
 

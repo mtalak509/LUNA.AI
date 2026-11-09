@@ -3,19 +3,23 @@ type: concept
 title: Filesystem zones, PathScope and attachments
 description: How LUNA isolates agents by resolving every file path through PathScope — who may read and write where, the hidden service folders — and how WorkspaceManager applies the same policy to user uploads in attachments/.
 tags: [security, filesystem, zones, attachments, path-scope]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
+  - id: openwiki-source-ef44557fa5de39f25a459d70
+    resource: repo://core/agent/shell/models.py
   - id: openwiki-source-e1f3d5a721b9517f9aa6ba09
     resource: repo://core/agent/tools/files_tools.py
   - id: openwiki-source-bc779d44eeaa18d27c90f893
     resource: repo://core/agent/tools/fs_paths.py
+  - id: openwiki-source-6e479670aac673f34064e1c5
+    resource: repo://core/agent/tools/shell_tools.py
   - id: openwiki-source-a1954481bf636161937b8062
     resource: repo://core/agent/workspace.py
   - id: openwiki-source-43a593a2b71e024f51c42fdd
     resource: repo://tests/agent/test_fs_paths.py
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+generated: { by: "codex", at: "2026-11-09T20:45:41.933Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:45:41.933Z
 ---
 
 # Filesystem zones, PathScope and attachments
@@ -26,6 +30,12 @@ model's relative path into an absolute one through `PathScope`
 (`core/agent/tools/fs_paths.py`), and that resolver is where isolation actually lives. The
 user-facing side (HTTP uploads and the CLI `/attach`) goes through `WorkspaceManager`
 (`core/agent/workspace.py`), which reuses the same resolver.
+
+This page describes file-tool access. The [host shell](../tools/host-shell.md) bypasses
+`PathScope`: both main agents and subagents can run commands with the filesystem and network
+permissions of the host user. Its default working directory is the caller's zone, but explicit
+`cwd` may be any existing directory the host user can reach, including an absolute path.
+The zone rules below are not a sandbox for shell commands.
 
 ## Zones
 
@@ -79,8 +89,9 @@ Two folder names are service space rather than working files:
   [file tools](../tools/file-tools.md)). `read` may open it, but `resolve_write` refuses any path
   with that segment, so `write`, `edit` and `rm` cannot touch it.
 
-Both are in `HIDDEN_DIRS`, which `ls`, `find` and `grep` skip, so a search never finds its own
-earlier output. `PathScope.spill_dir` is the single place that decides where spills go: the
+Both are in `HIDDEN_DIRS`, which listings and directory searches skip. An explicit single-file
+`grep` can search a readable spill file; `.runtime/` is still refused by PathScope.
+`PathScope.spill_dir` is the single place that decides where spills go: the
 agent's own read-write root (the workspace for main, the zone for a subagent, since a subagent
 cannot write to `workspace/`).
 

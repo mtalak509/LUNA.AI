@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:94ec67ec94b846578edc1550d94c22f743cc9b0e8b957b2e54eebfeb6aff0383",
+  "pageVersion": "sha256:3ca88fbaec75c599f83e32bc964546512378b33940f0d7b1eede2f4efe45f0de",
   "claims": [
     {
       "id": "claim_d67f66bbbac6415380fba207f06d47e0",
@@ -17,7 +17,7 @@
       "statement": "load_agent_prompt reads a prompt from the materialized procedures root and strips YAML front matter before it is used as the system prompt.",
       "evidence": [
         {
-          "resource": "repo://core/agent/base.py#L131-L155",
+          "resource": "repo://core/agent/base.py#L135-L159",
           "version": "repo-lines-v1:sha256:fb5c9ada44c78c7f6313806e8a6fc0d364f233f9ee019de8dc88f079f700c95f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmMDllZDExOGQwMDA3NTVjYTRkNGJhZmY5ZDRhNWJlMDhmNzE0MThhNGE1OTU5Mjg2ZWFlN2M1ZGI0ZWViNDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlNzZmNGEwMDExYjIwMGIxODY1NjFjNzEzNmM0ZjE4MTE4OTI3NGVjYzRlMGZhYzBkNTU3MmRmM2RkMGNhN2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJiOTRhZTIwOWE2MDU4ZTJmZDY3N2VhNTUyMmVkMjJmNTU2YjEwZmRhMjYxNjU2NWU2OTJlMDkxNWY1ZjViZTIifQ"
         }
       ]
@@ -31,12 +31,12 @@
           "version": "repo-lines-v1:sha256:1d1a638188fe3ec50189819980dcf24963c813c9a3e5d7f532f83cfad95f8a4d:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWYwNDA5ODlkNDQzOGIyNmQ1Y2U4ZDJhNmU0MDJhNTRhOTgxOTcwYzAwNGVlMzIwNTRlYTQ4OWJkMTViNGI4YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2FlMTk4NjkzZDdjMjg3ODNmMTAyNWE5NTcxODgwZTRiNDU4YmYzZTM4MzllYWZkNzFiNGM3YWRlODY4YjkzZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWFkMGZjOWUxZTFhMzcyYTc0NzUwYWI0NTRjNzBmNWJiNmNhZGJjMGEyMTJiYTFhMWI0NmM5ZmYzODg2NTdhZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjQxZWYzMzUwOWZhOTBiMTM0YjIzNWJkMzg4MmViODA4MzhjMjVjMjg2ZTQwMTFiZmNlY2UwNGU0Njg4NmRjYyJ9"
         },
         {
-          "resource": "repo://core/agent/tools/_subagents.py#L13-L15",
-          "version": "repo-lines-v1:sha256:83801366febaf838d1771d3528f4406ef2517a26a4e527da0f0b9a273bab72e5:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWI2MDFmNTk1Y2ZiZTFkNTcyYzg4OGQ3MDI2ZGFiMTljODg2MzExNzlkZDU2NTU1YWQ0ODQ4YTczMzNhZTBmNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTMwM2VjZGQ0YTRkMTBmMTljNzNmZDQyZmQxMjQzN2ZkMzM1NGE4MjY4MTYwNWRhNTI1NWE5N2EzOTA2OGRiYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTVjYWZkOWU5OTEyY2U2MDM2OGU1Njc5ZTY1ZGMyMzBkYTAyYTRhZjU3Mzk1YTYxYjkzNjA0MzM5YTEwODhlZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTViNmU4NzA2YjQzMDQ3ZjJhNmRiNjdmMTMyNjM4NTk1NjA0ZTY3ZjM2OTY2ODc2Y2UwMTU4ZjAwNTNlNmJkMSJ9"
+          "resource": "repo://core/agent/tools/_subagents.py#L30-L31",
+          "version": "repo-lines-v1:sha256:0b452e0d30f02d0de2751df70ca5bd9b260f7ec02f7d5e3a65f525c3bf94979d:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWU3ZTUyZjQwYzNlZTAyMmM1Njk5ZWI3ZTVlN2MyNDBiNWJiMDdiNjRkODIzYzhkODg5NjUwYzc2NzJlY2M0NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjQyMjIzMzg1MzA5ZjMwYTQ0MTI5ZGExZjIzOTRmNzNhOGEwMjVjODRlYmE3ZDQxMzQ0M2YyZDVhMjA0ZGFhYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2VjMjQ1MWFiOThjNTNmYTc2YTE5MjVmNmRiY2M2MWJhY2EzY2JjMDIyMDc2ZGM1ODk2OWE5N2FiOGYwNWNiMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmJiOGFmNzg4Njc5ZWNjNGJjNDZhMTI0Y2E5MTFkZjJmMzkyZTMwZjVhNDMwOGZiMDBlMzFjNTFiMDc5MjE0ZCJ9"
         },
         {
-          "resource": "repo://core/agent/tools/_subagents.py#L52-L67",
-          "version": "repo-lines-v1:sha256:991434c11c3a7056c46881eb2381a183223a8dbe1b01b9b30ef5f251b6032d14:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1YThlNDMyOWU0MTAxYjRiNDljNmQyZjg3MzI2Mjc0OTY0NTdiMzY1NTRkNDFkYTI2ZjI1MGVjM2NhOGIwZWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwZGUyNTg3MTk2MTQ5MjYwNzFjOGZiMTlmZDg2NjE1MDU1NWYxYjAxMzU0ZjhjZDE2MDNhMTA5YTdkZGFlNDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM4OTJiNDUwOTAyM2M1ZTIxMTBmOTc0OTYyYjhjYTRmOWM1YTM4MzNhOGZkMTFhMWMxNTYxZWRiNmFiYmEwYTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYxODc2Nzk1MjE5ZTFkMDRhNmIzZTY3YmI1NGQ3Njg2NmMwYjFlNjc3N2RlNjIxOWNmMWExZmY5MDUwNmQ1OGEifQ"
+          "resource": "repo://core/agent/tools/_subagents.py#L70-L86",
+          "version": "repo-lines-v1:sha256:a91f6e3f38d6a42a25416cb85ca3f257461131a9e668fbd3eef1e80d9610d55f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExMDJiYzc5ZmIwYWJkNDQyNjUzZmE4ZTI3NmE0N2UyYjMwNzFiZTM1ZTIxMWFhNDlkZTJkMzdiZjBiMjUxNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkYjA5YzcwYzYzZmU0ZmI0ZjAwNDI3MjQ3ODE3NTA3OTA3YmU2OGY3YjE4NTlhZGFmYWMxMjk0NDgzNTYwODYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVhZmU0NTVhNjQwYTM2ODZlZjZmYzM0NGEzMjIyMjc4ZDFhYWVmYjcwNTA4MzA5ODg1MjYxYWRkY2E4YzQ4YWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ1OWY0YWNmMWQzNzFiMGU4MTY0MDdmNDE2OTI0MGFjYmNmZDFiMDZiM2UxMjg5MjljOTI4MWVjOTRlNzk3NzMifQ"
         }
       ]
     },
@@ -55,38 +55,56 @@
       "statement": "The Russian main prompt is organized in XML sections role, environment, tools, delegation, working_method, constraints and response_style, while the English copy lacks the delegation section.",
       "evidence": [
         {
-          "resource": "repo://core/procedures/main_agent.en.md#L6-L97",
-          "version": "repo-lines-v1:sha256:ee23db7db6899c69a81498485a03e992f6a3c217c8c35b444e6415a3df2bcb93:eyJzZWxlY3RlZExpbmVDb3VudCI6OTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4ZjhmZDQwNWYwNTRiOWYzY2M4MTJiZTMxN2NkY2UxMmEwOTE5NzQzMjhkZjkxMWYzMDRmNzRiNDhjMjc4YzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlYmI1YzJhZWM3MjQ1OTYzNGE2NDk2ZTUzYTc0NWE4ZTcwYzNhM2VjNGUyMzYzNTg2OWU2OWZiMmM2NWQ3M2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRjNmQyOTI2NTM4MmQ0NDkzZjVkZjM3NTUwODRhMmQ2MjZiNjY4YThkODZlNGY5OTc5YjBjMzA1OWZmMWUzZTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://core/procedures/main_agent.en.md",
+          "version": "repo-file-v1:sha256:41b9e8a4f055b0569ff3d4f488dcccfccbe637c7f06e8f3ece1e3e5d7606657c"
         },
         {
-          "resource": "repo://core/procedures/main_agent.ru.md#L6-L119",
-          "version": "repo-lines-v1:sha256:dd7ef025094fe6c38ac6c6ee82c2f140cd5d3cddffae30d4ced2e003d3ee4c2e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJmOGY4ZmQ0MDVmMDU0YjlmM2NjODEyYmUzMTdjZGNlMTJhMDkxOTc0MzI4ZGY5MTFmMzA0Zjc0YjQ4YzI3OGM5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4ZWJiNWMyYWVjNzI0NTk2MzRhNjQ5NmU1M2E3NDVhOGU3MGMzYTNlYzRlMjM2MzU4NjllNjlmYjJjNjVkNzNjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJiNDAxOWE4Zjk2Nzk0Y2NhNzljOWRiM2ExMDIyNTIzOTM0NTAwOGE0YmM5NzU4NTc0NTkyNzgxOThlODg3ODgxIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+          "resource": "repo://core/procedures/main_agent.ru.md",
+          "version": "repo-file-v1:sha256:661dae4be76f8bf65c68c7c0daf340ceea9edd2cb3da159dbd8555975c95c72b"
         }
       ]
     },
     {
       "id": "claim_7741500a10434c808ff4853486a3668f",
-      "statement": "The main prompt's delegation section lists only default-subagent, described as a technical placeholder, and instructs the agent to read artifacts, author edits itself, and promote files into workspace/artifacts because subagent zones are not checkpointed.",
+      "statement": "The main prompt lists only default-subagent as a technical placeholder and tells the main agent to read artifacts, author edits itself and promote files because subagent zones are not checkpointed, while acknowledging shell can change shared files.",
       "evidence": [
         {
-          "resource": "repo://core/procedures/main_agent.ru.md#L80-L94",
-          "version": "repo-lines-v1:sha256:1dcff099015c0bc18cf2ae43301860d8ecd23833cc22d295c0070630f64c810a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYWM5OGJmYjQ5YjQ1ZmY1MDkxNWVjOTQzNGI4YjZhMTAwZDEyNDkzOTU3MWIzMDdhOWRlN2ZkODQ0M2M1MWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyNTQxNDAwNzE0NDQzZWJiZGNlNThlMjE2YWJjNTAxM2EwNDQxOTg1Y2VmMGUxYmZhZDVlY2Y0MDQ4NTY1MmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlZDJhM2Q3MTlkMzI1NDg4MGYyYWUxZWEzZjY4Yzg1M2MxZjY4MjBlNGE2YmFlNDJkODA3M2Q2NmQ2NzU2MzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjNWRhN2MyNTBmYjIzNGY2MDllOGRmYmMyYTA0ZWYxYjA3YjQzNDk5NjUwNzYxMzc3ZjdmZTljMzAxZmUxY2QifQ"
+          "resource": "repo://core/procedures/main_agent.ru.md#L103-L119",
+          "version": "repo-lines-v1:sha256:9d9f9b5ff9e936a3ba3c928982c8478823a9de6904316382a45d6c5179a1df51:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYWM5OGJmYjQ5YjQ1ZmY1MDkxNWVjOTQzNGI4YjZhMTAwZDEyNDkzOTU3MWIzMDdhOWRlN2ZkODQ0M2M1MWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE3NmZkZjJmM2RhMTM4MTBmZTMzZDk3MmFmY2IwNjU3MzFhOWY5YWM5ZGFiNDU1ZGE5Y2I0NDVmYzhiNWI2ZTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVkMzhiZGUwYmE4MDI5Y2I0NGMzNTIyMTExMzUxZDRiOTI2MGVlNzllMDVkYWU2NDRhMjVlYTU4MzFjMDQ0OTYifQ"
         }
       ]
     },
     {
       "id": "claim_886b8017d9c843abb9e947f04a6aed64",
-      "statement": "default-subagent's prompt gives it a cold context, its own notes and artifacts folders, read-only access to workspace through the workspace/ prefix, and asks for a short summary as the final message.",
+      "statement": "default-subagent's prompt gives it cold context, notes/artifacts folders and read-only main workspace access through file tools, explicitly explains shell's broader access and asks for a short final summary.",
       "evidence": [
         {
-          "resource": "repo://core/procedures/agents/default-subagent/agent.md#L1-L48",
-          "version": "repo-lines-v1:sha256:dce4abd82953f50da3c89031a16ea9cd8fd6121488af27548bf9638063b8047a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1MmQ3MTExMDNkNTBhNDM3ODMwYzZmYmNkMDRmYjRiYWI0OWEwZjgyZjZkMjZkMWM3OTFjNmU4NDg4ZGQwOTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlYmI1YzJhZWM3MjQ1OTYzNGE2NDk2ZTUzYTc0NWE4ZTcwYzNhM2VjNGUyMzYzNTg2OWU2OWZiMmM2NWQ3M2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://core/procedures/agents/default-subagent/agent.md",
+          "version": "repo-file-v1:sha256:f7f2b32d4874794722a9e71ba2eb852bd6c5f22f0477887cf991f83aef9df605"
+        }
+      ]
+    },
+    {
+      "id": "claim_6687e74bc5f64d608aa46282eb1e9b9b",
+      "statement": "Both main prompt copies and the default subagent prompt teach shell actions, task lifecycle, pagination, limits and mode behavior including user task controls in Plan.",
+      "evidence": [
+        {
+          "resource": "repo://core/procedures/agents/default-subagent/agent.md#L32-L53",
+          "version": "repo-lines-v1:sha256:671ed44993b53f14da0c5a907d8fb2615d2b22e392dc7a4bdf240c9783c17bce:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdiOTU0ZWFmMDk0NDJkZjY1ODk2MGFiYTc1ZDY5MDIzNWQzMGIzMjliMWY5NGRiNjE1M2Y1ZWVlNGUxNWFkODYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlhOTIyYTQ3N2IyMjExYWJlZDFhYWRhN2Y1NTRjZWZlOGU1OWE3MzY4YTBkMDEwMzNhMTA3ODVjMjY2YmY1NmIifQ"
+        },
+        {
+          "resource": "repo://core/procedures/main_agent.en.md#L76-L96",
+          "version": "repo-lines-v1:sha256:6589f2aad288c308f2e3eeac5825c7ad98c61f70ea3b6ac42cf3ba05fe1ff906:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1MDYwZTMwOTJkMThhYzhiOTJmNmQ0N2Y5MGVlNmZjMDgwMTJkMTI2ZDA1MGU2ZjlmNDZjODUwMzRlOTg0MzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ1NWMyNjA4Y2RmYjcxZGM2OWMyMGZkZGZmNzBiODYwMTM4NWNiZTE1ZGQxZGU2YWY1YjUyMDE3MzU2MDcwMDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE3OTIzMDBjNmI2YjE1ODM4ZmE3ZDU1N2Y3NWRiY2IwYWZkMzQwOWU5NjNkNWRjNTM3MTNlMzFlYThiOTczNWUifQ"
+        },
+        {
+          "resource": "repo://core/procedures/main_agent.ru.md#L80-L101",
+          "version": "repo-lines-v1:sha256:b370f95d32dcc8c14b4263edc249c92132c6fcd28935de5f2a6241e0cb35f059:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhYTI0Y2I1YmU5Mzk4OTUyODI4ZmU3MjM0Zjc5MjBkOWYwMzVkYzUxMzIxNzUyMzVkNWM2ZGVjNTM3Y2Y0ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1OThkMTk5ZWNiYzRhMTQ3YTYxODA3ZThhODZmYzJlNGI3ODE3NGVmMTM3N2U1MzcxNzhmNjkwNWI0MjQ4ZmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgwNmZhNmRjN2E4NjNiNzQ0ODJlZDliNmU2YmFmZmI5ZjQwNmIxNzExYTQ5MWY0YjVlYWRhYzk2MTNhODc5NDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhMGY1YzEzYjc5N2E2MDg5MTRlMjllZjQ5YmM1OTUxMDdhY2E4YWU0NzhkNTk3ZGQyNzBjYTEyYTc3MzA3YjMifQ"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T17:46:46.267Z"
+    "at": "2026-11-09T20:45:41.933Z"
   }
 }

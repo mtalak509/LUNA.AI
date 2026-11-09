@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:59670425a9d06f51830a3ea9125f906c2904dc8626c3829186382b29b29c65cc",
+  "pageVersion": "sha256:0eb17f14d12a69f68f5109ab69c4ce12ced4ee485e326617e0ab1cac92077ab9",
   "claims": [
     {
       "id": "claim_f7f2868ff990478cbff10ac2e0f39e9f",
-      "statement": "create_app configures root_path and CORS from ServerSettings, registers the sessions, turn, workspace and dev routers, and mounts devfront/static at / only if that directory exists.",
+      "statement": "create_app configures root_path and CORS, registers sessions, turn, workspace, dev and shell routers, and mounts devfront/static at / only if present.",
       "evidence": [
         {
-          "resource": "repo://core/app/server.py#L67-L100",
-          "version": "repo-lines-v1:sha256:1f5b3db834c0a6cc9ac284f77fc9ee47f9973509dd2267dd89c99a83566371e1:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA3MTgyOTc0NzkyNjRjNGIzMTA4MWJhMDE4MDUzYmQ5ZDE0YjcyM2JjYTY3ZTA3NzI2MDdlZTRiMjE1ZDU4ZjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkNjdiNDY2Mzc4NzVjM2JiN2Y5MDNiMWRiODczNGI0YTI5NjY4NWRmNGRiZTY2YTRmNmNlZjdmZGM0MTE2M2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEzNTQyMDYyODMzNTk1MmFiOTViMWY5YzkyYjhkZGViYmY1NzIxMmZjZmIwOTY0YWViZTY4MmQ2NWY3YmMwMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEyZWQwZGIwN2U1NGJhYTIxNjEwNGQwMjZmYjczZDQzODJjNjM5NzlmNzhjOTI1NGVhMGQ1ZDc3ZjJkNzUxNmYifQ"
+          "resource": "repo://core/app/server.py#L82-L119",
+          "version": "repo-lines-v1:sha256:91ddc9317ea42c052be98fd5b907d37da9b61ba34e861e08ad3e4accd2fbb86c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlNGE4MmFjNjkzYmU0N2Y4YjQ4OTc1MWVhYzgyYmRiNmFkNTExMDM1NDdlOTY5NGI0ZDI0ZmQ2ZGE0MGY0OWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjViMzI0N2M2ODliZjRhODk1ZjM3NjcwNjc2OTNjNTA3MjIxZWQxM2VjMGMwNWEzYTY1MjNiZGMwM2JiZjQ0M2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlMmE0ZjljNWE0NWM0YjA1OWY3MjRhMzFjOTg5YWYyMDliYWY5Y2Q5ZTYyZWUwMTJkNDgzZmI5MTdmMzFiYzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBkZmVhZDYxMjFhN2ZjNjU1Zjk3OGMxMmEyZDkyNmI2MGQ0ZTc5ZThkMWMyZDVjMmUzMWNiN2NmNWEyNTk5NWEifQ"
         }
       ]
     },
@@ -17,7 +17,7 @@
       "statement": "luna-web runs uvicorn on core.app.server:create_app as a factory with host, port and reload from configuration.",
       "evidence": [
         {
-          "resource": "repo://core/app/server.py#L103-L120",
+          "resource": "repo://core/app/server.py#L109-L126",
           "version": "repo-lines-v1:sha256:1557d9455fa8ddef12fa428a23a382f49ab586bb009221ed0d88db9479df8967:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1Yzg0Nzc1OGQzMjFjMThjZDRhMWQyMjI0MjkwNjIwYmY5OTdiMDQ1NzU0OTYxYjdkYjRiYTk4NDZjODQ2YTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlZmFjOWE2YjY4ZDA5NDRmZDMzNmRjOGYzOTM4YjhhMTVjZGY2YzQ2ZWJiODViNDk4MzViODIxNGNhMDE5NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
         },
         {
@@ -107,10 +107,28 @@
           "version": "repo-lines-v1:sha256:91d7a454089c3521dc547f8859e8d8c041e147f8a587f5ac45fe2cae120ba975:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmU5NTMwYmM3NjRhYTYxMDRhYTUzN2JkZGMxNDkxYzJjYzhiMTBlZGQ4NDZjNjU5YTRlZWM4NmU2ZmM2NTI2MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWVjNGY1NTAwZTM5ZjczYzJhZDVjYzdlN2UyODhkZGEwMzc0ZTk0ZWUwMzg3OTRiYjgxZTJhZDJkMmJhNDc1ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTBlYmFhNWM5ZjQyMjRhNzk2NDQzYTE1MzViNWZjNWE3M2E4YjA0YmI2NjdjZmY1OWM1YTFkNGUyODAzMDE1YiJ9"
         }
       ]
+    },
+    {
+      "id": "claim_e61ecd34a828469a86d7b51ec9313f2d",
+      "statement": "Session-scoped shell routes directly list all task snapshots or stop one task regardless of agent mode or busy state; missing sessions/tasks return 404 and missing managers return 503.",
+      "evidence": [
+        {
+          "resource": "repo://core/app/routes/_deps.py#L25-L31",
+          "version": "repo-lines-v1:sha256:dceb577e006055862e65deeb64091731758e278ebbcfb0dc069601027c1dc816:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWYyYmEyMzhhZDEzZmY5OTI2YzJhZjdkZjFkMjFlMDJjZjE5MjUxNzg3NGU2YmY2YmZhNDVlMTczZGEzMDBjZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTU0MDgyYjRkOWRkM2I0ODYxM2E2OTI1ZGU3MzAzNzhhMDg3OTdiMDFkMmMxZWNjZGZjZGM5ZWQ1OGE3OTFmYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDMwMjE0ZTVkNWY3MWJiNjkxOGRkNzVlZmI0YzRmMzIzNzdmZDhkZTNhNTdmZmQ1Y2UyMDc2YTZjMDYxZWUzMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzM2YjYzMGI2YWJhMmU2MzJhNTJhZTczZDJiOGVjYzc1OTZlMjQxYTlhNWZhOTRjYWJkZTRlZGUzZWQ5NGRkMCJ9"
+        },
+        {
+          "resource": "repo://core/app/routes/shell.py#L12-L39",
+          "version": "repo-lines-v1:sha256:8ff42e2eba782cadf49a9df853255ca2dfeb027b37b035898baad673116a1f43:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0MWVlNTJiZGExOTI3ZmI1NGY3N2RhZmY5ZDZjZTg3NzgzMjNjMjQwODAzNmEzNmQ2NzY2YjE5MjYxODYyM2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhMmQyYzg0ZTNmOTk4ZGVjMDZjMDJlZmI0ZDdiNDNhNTcxN2M1MGU2MTRjZWFiYzA2MmJjNzEyZWQ2NDc0ZDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/app/test_shell.py#L1-L78",
+          "version": "repo-lines-v1:sha256:29550f718a2e7121fbb48c6cdbcbdb33ca1a18610f2a4d312bfb806459a9061f:eyJzZWxlY3RlZExpbmVDb3VudCI6NzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVmN2YyZDZiZDM4MmEwOWNiNjgxYWViNDQ0MjM4M2VkMDc2YjQ4M2I4YjMwOGZjODZjMmJlYTRhZTExYzVhYTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmNzgyZmNkOTg0NGUyMzJjMjQ2MzE4MjM2NjYzNzBjYWYwOTRlNDZjMmNhYWQxZGU0ZTI2YjA3Mzc4NDk1YWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T17:46:46.267Z"
+    "at": "2026-11-09T20:38:09.193Z"
   }
 }
