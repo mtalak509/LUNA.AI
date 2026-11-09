@@ -7,6 +7,7 @@ the loop should continue. The current runner lives in `state["session"]`, so /re
 
 from __future__ import annotations
 
+import asyncio
 import shutil
 from pathlib import Path
 
@@ -104,7 +105,7 @@ def _wipe_session(session_root: Path) -> None:
             child.unlink()
 
 
-def handle_command(line: str) -> bool:
+async def handle_command(line: str) -> bool:
     """Handle a slash command. True — keep the loop going, False — quit.
 
     The current session is read and replaced in `state["session"]`.
@@ -137,7 +138,10 @@ def handle_command(line: str) -> bool:
             except ValueError as e:
                 print(f"error: {e}")
     elif cmd == "/reset":
-        _wipe_session(SESSION_DIR)
+        session = state["session"]
+        if session is not None:
+            await session.close()
+        await asyncio.to_thread(_wipe_session, SESSION_DIR)
         state["session"] = new_session()
         print("session reset")
     elif cmd in ("/help", "/?"):

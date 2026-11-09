@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import logging
 import shutil
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -42,7 +43,7 @@ def _wipe_stale_sessions(session_root: Path) -> None:
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Lifespan-события FastAPI: зачистка stale-сессий + процессная инициализация
     + реестр сессий.
 
@@ -55,13 +56,17 @@ async def lifespan(app: FastAPI):
     procedures_root = init_process(session_root)
 
     app.state.session_root = session_root
-    app.state.sessions = SessionManager(
+    session_manager = SessionManager(
         session_root,
         agent_factories=build_agent_factory(procedures_root),
     )
+    app.state.sessions = session_manager
 
     _logger.info("SessionManager ready: session_root=%s", session_root)
-    yield
+    try:
+        yield
+    finally:
+        await session_manager.close()
 
 
 def create_app() -> FastAPI:

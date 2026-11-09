@@ -15,12 +15,14 @@ import asyncio
 import logging
 import shutil
 import uuid
+from collections.abc import AsyncIterator
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
 from core.agent.base import BaseAgent, StreamEvent
+from core.agent.shell.shell_manager import ShellManager
 from core.agent.tools._hitl import get_hitl_registry
 
 _logger = logging.getLogger(__name__)
@@ -48,6 +50,15 @@ class AgentSession:
         self._turn_task: asyncio.Task[None] | None = None
         self._last_activity: datetime = datetime.now(timezone.utc)
         self._turn_counter = 0
+        self._closing = False
+        self._closed = False
+        self._close_task: asyncio.Task[None] | None = None
+
+    @property
+    def shell_manager(self) -> ShellManager | None:
+        """The agent's session-owned manager; legacy runners may have none."""
+        config = getattr(self._agent, "agent_config", None)
+        return getattr(config, "shell_manager", None)
 
     @property
     def is_busy(self) -> bool:
@@ -67,6 +78,8 @@ class AgentSession:
         ходы её бы гонкой испортили). Вывод хода — через `events()`; ход может припарковаться
         на HITL, который резолвится отдельным `resolve_hitl` (потому не ждём завершения тут).
         """
+        if self._closing:
+            raise RuntimeError("Session is closing")
         if self.is_busy:
             raise RuntimeError("Another turn is already running")
         self._turn_counter += 1
@@ -129,6 +142,29 @@ class AgentSession:
         if self._turn_task is not None and not self._turn_task.done():
             await asyncio.shield(asyncio.wait({self._turn_task}))
 
+    async def close(self) -> None:
+        """Finish the active turn and shell tasks, even if the caller is cancelled."""
+        self._closing = True
+        if self._closed:
+            return
+        if self._close_task is None or self._close_task.done():
+            self._close_task = asyncio.create_task(self._close())
+        try:
+            await asyncio.shield(self._close_task)
+        except asyncio.CancelledError:
+            await asyncio.shield(self._close_task)
+            raise
+
+    async def _close(self) -> None:
+        self.cancel_turn()
+        try:
+            await self.wait_turn()
+        finally:
+            manager = self.shell_manager
+            if manager is not None:
+                await manager.close()
+        self._closed = True
+
     def resolve_hitl(self, hitl_id: str, value: Any) -> None:
         """Разрешить висящий HITL-вопрос ответом извне (HTTP `/hitl/respond` / REPL).
 
@@ -138,7 +174,7 @@ class AgentSession:
         """
         get_hitl_registry().resolve(hitl_id, value, self.session_id)
 
-    async def events(self):
+    async def events(self) -> AsyncIterator[StreamEvent]:
         """Бесконечный async-генератор событий сессии (один SSE-стрим на весь сеанс).
 
         Не завершается на `turn_done` — тот отдаётся наружу как рядовое control-событие,
@@ -176,6 +212,9 @@ class SessionManager:
         self._root_path = root_path
         self._agent_factories = agent_factories
         self._records: dict[str, _SessionRecord] = {}
+        self._closing = False
+        self._closed = False
+        self._close_task: asyncio.Task[None] | None = None
 
     def create_session(self, profile: str) -> tuple[str, AgentSession]:
         """Создать сессию: минт id, директория на диске, сборка агента.
@@ -183,6 +222,8 @@ class SessionManager:
         `exist_ok=False` — paranoia-check от коллизии uuid и от затирания живой
         директории
         """
+        if self._closing:
+            raise RuntimeError("Session manager is closing")
         try:
             agent_factory = self._agent_factories[profile]
         except KeyError:
@@ -229,9 +270,29 @@ class SessionManager:
     async def delete_session(self, session_id: str) -> None:
         """Убить сессию: погасить ход, убрать из реестра и стереть диск"""
         record = self._records[session_id]
-        record.session.cancel_turn()
-        await record.session.wait_turn()
+        await record.session.close()
+        await asyncio.to_thread(shutil.rmtree, self._root_path / session_id, ignore_errors=True)
         del self._records[session_id]
-        shutil.rmtree(self._root_path / session_id, ignore_errors=True)
-        
-        
+
+    async def close(self) -> None:
+        """Close every session without removing its files; failed cleanup can retry."""
+        self._closing = True
+        if self._closed:
+            return
+        if self._close_task is None or self._close_task.done():
+            self._close_task = asyncio.create_task(self._close_all())
+        try:
+            await asyncio.shield(self._close_task)
+        except asyncio.CancelledError:
+            await asyncio.shield(self._close_task)
+            raise
+
+    async def _close_all(self) -> None:
+        sessions = tuple(record.session for record in self._records.values())
+        results = await asyncio.gather(
+            *(session.close() for session in sessions), return_exceptions=True
+        )
+        for result in results:
+            if isinstance(result, BaseException):
+                raise RuntimeError("Could not close all sessions") from result
+        self._closed = True
