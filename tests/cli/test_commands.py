@@ -104,17 +104,17 @@ def test_attach_missing_source_reports_error(cli_zone, tmp_path, capsys):
     assert list(attachments.rglob("*")) == []
 
 
-def test_attach_is_dispatched_by_handle_command(cli_zone, tmp_path, capsys):
+async def test_attach_is_dispatched_by_handle_command(cli_zone, tmp_path, capsys):
     attachments, _ = cli_zone
     source = tmp_path / "report.json"
     source.write_bytes(b"{}")
 
-    assert commands.handle_command(f"/attach {source}") is True
+    assert await commands.handle_command(f"/attach {source}") is True
 
     assert (attachments / "report.json").is_file()
     assert "attached:" in capsys.readouterr().out
 
 
-def test_help_lists_attach(capsys):
-    commands.handle_command("/help")
+async def test_help_lists_attach(capsys):
+    await commands.handle_command("/help")
     assert "/attach" in capsys.readouterr().out

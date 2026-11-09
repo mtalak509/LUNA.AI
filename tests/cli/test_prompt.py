@@ -56,8 +56,8 @@ def test_shift_tab_toggles_permission_mode(monkeypatch):
     assert state["perm"] == "act"
 
 
-def test_help_lists_every_command(capsys):
-    commands.handle_command("/help")
+async def test_help_lists_every_command(capsys):
+    await commands.handle_command("/help")
     out = capsys.readouterr().out
     for name in COMMANDS:
         assert name in out
