@@ -175,10 +175,11 @@ chore(docs): update project documentation
 > **Releases are performed by the maintainer, manually. Never cut a release automatically —
 > no version bump+tag, no `chore(release)` commit, no `git tag` — except on an explicit request.**
 
-Current version: **0.2.0**.
+Current version: **0.2.1**.
 
 Release history (one line each; full detail in `CHANGELOG.md`):
 
+- **0.2.1** — host shell for main agents and subagents, with CLI and HTTP task controls
 - **0.2.0** — renamed/split file tools, bounded tool output, CLI rebuild, live evals and OpenWiki
 - **0.1.1** — attachments (HTTP/CLI + web tab), `fs/download`, drop `pointer` / techprocess remnants
 - **0.1.0** — first public release

@@ -7,6 +7,8 @@ and this project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.1] — 2026-11-10
+
 ### Added
 - **Host shell** — one `shell` tool for main agents and subagents: `run`, `status`,
   `output`, `stop`. Bash on Linux and PowerShell on Windows run with full host-user filesystem
@@ -15,13 +17,13 @@ and this project follows [Semantic Versioning](https://semver.org/).
 - **User task controls** — `/shell tasks`, `/shell stop <task_id>`, and session-scoped HTTP
   list/stop endpoints work independently of agent permission mode. CLI shell results show task
   status, exit code and output continuation metadata.
+- **Live eval** — one DeepEval scenario starts, polls and stops a background shell command.
 
 ### Changed
 - **Shell permissions** — Plan hides and blocks every shell action; Confirm asks before every
   invocation through the existing decision gate. Subagents inherit the parent's decision mode
   for all tools, including file writes. Background tasks survive answers and Plan transitions;
   session close/reset/delete and server shutdown stop them.
-
 
 ## [0.2.0] — 2026-11-08
 
