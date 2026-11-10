@@ -1,44 +1,44 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:e6e0cf2b56ccb18435a46e6a6fcb39094893e26caddb6619c72a4ee059c4df4b",
+  "pageVersion": "sha256:b05cac8cf7f30b8b9cb0426e773f6cbbb38fbff3bf92d4a37a3206b4d3102d53",
   "claims": [
     {
       "id": "claim_bbba448faef34b248807851be42b0067",
       "statement": "Main agents and subagents are both BaseAgent instances wrapping a single create_agent graph built without a checkpointer; the difference between them is only the AgentConfig.",
       "evidence": [
         {
-          "resource": "repo://core/agent/base.py#L209-L236",
+          "resource": "repo://core/agent/base.py#L213-L240",
           "version": "repo-lines-v1:sha256:2978261524bdb2acb457372744417b3270a7d4b71ad280f260550fc89f9348b3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0ZDhiNWZjMmM4ZjIwNTk3OGYxM2VkNmQwNWY5NjVhODkzYTkxYjliMTExYTc4MDVmZjg4NzYxN2NkOTAxOGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU0NWUzMmJiOGFiM2Q1ZThiMTdmMTlkMzcyN2YxZTFhYTM5MmZkNTY5YTM0MWE0NzA5NTJkMzgzNTRhN2IwNDYifQ"
         }
       ]
     },
     {
       "id": "claim_2c775fa1721c407a84d92c3f6208ee5c",
-      "statement": "All agents draw tools from one flat FULL_POOL list containing the file tools, the RAG tools, delegate_to_subagent and the two HITL tools.",
+      "statement": "All agents draw tools from one flat FULL_POOL list containing file tools, RAG tools, delegate_to_subagent, the two HITL tools and shell.",
       "evidence": [
         {
-          "resource": "repo://core/agent/pool.py#L25-L38",
-          "version": "repo-lines-v1:sha256:f6de7ea150eda9cf99aa39556a5479ef53c424732758e324d969084a59ca1c57:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhY2I1YzA5MzMzNjMyODk0OGYwNzNkYTA1Y2Y5ZWViN2IwMTJmNjQ4NmQ5Zjg5NWRhZDQzYjhhNzk4Yjg5YjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhY2JmNzU3MDkyMmU4OTdmMGQ3M2FjMjJkYWUyMTkyODhlZmUxY2FiYjkyNTU1NGJlYWE0YmJiYWI4OGM3NjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5NDE2ZTA5Zjc4YmEzMTZjMDMyNTY4MjEzYjg1NWVlNzU2ZTQxNTY1ZDkxOGYwOTUxOWM4MWZkNjIwZjQwNjAifQ"
+          "resource": "repo://core/agent/pool.py#L26-L40",
+          "version": "repo-lines-v1:sha256:0b9b98bb3bdf66ab486a3f5d1e4e1700ec4777d6e12cd22f97cf1103160070e4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5YjFjZGRkMjU5YmVlYjUwODFmNTc4Mzk5NGNjZTIxZTEyMDY2ZGUyYzc2ODhlNGJhMDQzMWZiOGI2ZDUzNDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkZDI0MTQ4MjNiOGZiZWVjMzE4MTBmM2VmOWY2YjgxZmU3NjNkOWY4ZmE2YjEwYzkyMWRiNjJiYjI1NTk4N2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5NDE2ZTA5Zjc4YmEzMTZjMDMyNTY4MjEzYjg1NWVlNzU2ZTQxNTY1ZDkxOGYwOTUxOWM4MWZkNjIwZjQwNjAifQ"
         }
       ]
     },
     {
       "id": "claim_46a3c96fe0a94775a8af42a1d67c0439",
-      "statement": "Bootstrap is split into a once-per-process init_process (materialize procedures, install client, subagent-factory and HITL holders) and a per-session build_session_agent that builds the main agent under a session root.",
+      "statement": "Bootstrap is split into a once-per-process init_process (materialize procedures, install client, subagent-factory and HITL holders) and a per-session build_session_agent that builds the main agent and its ShellManager under a session root.",
       "evidence": [
         {
-          "resource": "repo://core/agent/bootstrap.py#L48-L85",
-          "version": "repo-lines-v1:sha256:8d1f49ee8872960c4dc441b670c92484e09817a8a9cca8d88bb1f88b65cadcc6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyMDgwNjBhODVhZmFhZjUyZDE2ZmRiNmE3MTQ2YWQzYzQ3ZTA2ODg0ODIzYWM1OTMzMjM2MDY1ODJmMjA5NjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgzNjY2NWI0MjNkZTM0ZTUwYWUyODRmNThmNzRkMWE2ZTg4NmMwYjBmYTAxMmEwNmVkYzQwODUxZjkwZjNjNmEifQ"
+          "resource": "repo://core/agent/bootstrap.py#L48-L95",
+          "version": "repo-lines-v1:sha256:083907dbb151836eb75c38c4cfba6e74cf3c9c12e3af50c7b46ffee316ef54a1:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4NTFhM2Y2NzBjMjBmYzMzZDQzY2IyNzYwMjM2MDliMGMyMTdmZmFlMjdmM2QwMWJiY2NkOTE4NjU5ZGZjNTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUyMDgwNjBhODVhZmFhZjUyZDE2ZmRiNmE3MTQ2YWQzYzQ3ZTA2ODg0ODIzYWM1OTMzMjM2MDY1ODJmMjA5NjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2OGFhNDViYTNiM2U1Y2ZjMTQwN2RiOTk3ZjFhYWYzNTIwNjE3NmJiY2VkMTMwMWY2MzRmOTJjZmFjZGRjMWMifQ"
         }
       ]
     },
     {
       "id": "claim_02340b122a5942c3bb37a7d6161f908d",
-      "statement": "The FastAPI lifespan wipes stale session directories, calls init_process once, and installs a SessionManager over ~/.luna/sessions.",
+      "statement": "The FastAPI lifespan wipes stale session directories, calls init_process once, installs a SessionManager over ~/.luna/sessions and closes it at shutdown.",
       "evidence": [
         {
-          "resource": "repo://core/app/server.py#L28-L64",
-          "version": "repo-lines-v1:sha256:113a040e15f2e3153227f607f3cef6ba7584695e15add94e4f31c277c0b2fbc9:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1MTMzNmZhMjA0N2U3YTY3YWRmYWRhMDgyMDFlYjc3NTgwYjU0Y2Y1NWFlYTVlNGEzZWYzMmMxOGYwM2ZjMmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMDkzZDA5N2U4YTRkNTMyNTM0NjMwNTQ1OWJmY2FlYmZiODVlZTliMjc1ZjA1OWU0ZGY3ODFjYjMxODMwMGIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBiN2Y4NTc4NzhlYWQ1ODExODAyYjM3MjMwNDE2ZTAzMzE2ZmY5MDk1ZjRiNTkwNGFkOGRjZWEwM2MwNzgzNjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3MDYzZDc5YWEzZTVhN2MzMzdmNThjZDc4YzE2NTc1M2JjNzRiMDEyNDM4M2M2YWEyYTg2NmY0OGFmMGEzOGEifQ"
+          "resource": "repo://core/app/server.py#L30-L79",
+          "version": "repo-lines-v1:sha256:dd796d1f06ce171b82807d8d04dd428c57907f556e7f73a839e150240b11b49d:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlYWRjODc5ZTU1Mjg3MWViNDdiOWJmYTI4ZWU4OGY0NWNiNTg3OGFjMzBmNjc2NzQwNmY2NmJmNTE5ZDg2ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiNjQ5ZDdmNzdkMTJlY2ZjMjkzNGU1NDcyODI1OTRmZmUyOTFkOWI1NDFmNWFiNjIzYmUxZWUxNGJmZTI5ODciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhkOGJhZWQyMjc2OGMyNTY4ZGQzYjIyOTIzNjc0ZDM5NGJlZmExZTEyM2RhYTEzZDVmNmVhYWQzMjkyZGM2OWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ1ZTkyNWQxMzdlYTI5MTY1NDM2NjBiNDUyOTRhYzNmODBhMTUzMDVkMDhjMTc1NTE1M2MwZjM1MzkxZWEzYmQifQ"
         },
         {
           "resource": "repo://core/config.py#L42-L51",
@@ -65,8 +65,8 @@
       "statement": "A subagent is launched from the delegate_to_subagent tool inside the main agent's task and returns a summary plus a list of artifact files from its own zone.",
       "evidence": [
         {
-          "resource": "repo://core/agent/tools/delegation_tools.py#L98-L191",
-          "version": "repo-lines-v1:sha256:b5629e36b961d9aafa556b1ed0ba4020323896b367c9e32b7712f06300d0acf5:eyJzZWxlY3RlZExpbmVDb3VudCI6OTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkMWVkZWQ1Mjc0MzA0NmUwNjY0YjUxODBlNDM3OTU1OGQzMTU2YzlhYzJhYWYwNTFhMWNjNjM3ZjMyMjhiZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjExMzU5ZWIwZDc1YTZlOTRiZDFiNmM5NTVhNzc3YzQyYTZlMTYzYWI1NTQ0OTkzMWRjOGVmY2I4ZTVkOTgwYzgifQ"
+          "resource": "repo://core/agent/tools/delegation_tools.py#L98-L196",
+          "version": "repo-lines-v1:sha256:02d7bf3a01c317d9ae84015cdecc36abb9251795f10c0aae5bf9daac9984569b:eyJzZWxlY3RlZExpbmVDb3VudCI6OTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkMWVkZWQ1Mjc0MzA0NmUwNjY0YjUxODBlNDM3OTU1OGQzMTU2YzlhYzJhYWYwNTFhMWNjNjM3ZjMyMjhiZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5YjE5ODJlOGRkNzQ4MTE4MTQ2YjM5YTJkMDA2MmY0MDgxZTM0Nzc5Yjg2NzVjMjM0YzRmYjEyNGRjMzkzOTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
         }
       ]
     },
@@ -79,10 +79,28 @@
           "version": "repo-lines-v1:sha256:badf9591ce08d1260e765ef4ba21fab23731032081ec95453820278ba9b33d32:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkOTVmNWU5ZWRlMDE4MTYwNDNjMDc5N2FjZThkYTJhYzRlOTlhOGE2YTYxMGZhOTg1NzBlZjM0YjkzNTYxMDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NDE2ZTA5Zjc4YmEzMTZjMDMyNTY4MjEzYjg1NWVlNzU2ZTQxNTY1ZDkxOGYwOTUxOWM4MWZkNjIwZjQwNjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM1ZWNmNWQ3NTk2YzQ3M2EzNjMwMDhmZjhjOTg5MDg0NTEyMjE4NzU3NWYyODU1ZWQyMzcyYWM3MGQ2ZTdjOTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlNmFkNTNjZGY1NDM5MDFhZTQ0MTExZmY1MmY4MDlmNmNlMWFlZWUwMjI1ZjRhOWJiY2Q5N2IxMGU1OTBlZmEifQ"
         }
       ]
+    },
+    {
+      "id": "claim_5036e3c8b015445f89d692a2d18120a0",
+      "statement": "Shell uses the session's shared manager and resolves a working directory without PathScope; commands run under the host user's filesystem and network permissions.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/shell/models.py#L78-L113",
+          "version": "repo-lines-v1:sha256:14976696a4e6cb705da9cfb78eb49ff5cba03b6fc1591aeebf1b4c42a392f33f:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyMGM3ZGI2YzBkN2M3OWY1MjcwODg4MmNhZDcyMjAyZWY5YTBkZmI3NGE1MzVjNGI4OWRlOGRhNGUwZGQ1ZDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0ZmQwNDVjODJjN2RlNTNiN2NkNjA0ZjBiNDZmNTg4NmU0NGI2NGQ2YmVhODA0MWE2NTkwYWU2OGQ0OWYzNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE5Y2YxYTRhMDRhZTBiMzkyZDA0OGVlMGY3MzMwNjNhMTg1MDZmYzE1ODAwNDU0YzVkMGQ4MzkwMjY3ZjU5NWYifQ"
+        },
+        {
+          "resource": "repo://core/agent/shell/posix_process.py#L64-L90",
+          "version": "repo-lines-v1:sha256:815f2201f922817ac383c863aca9fecabee344dcebb29c2559c80b342d9d9fe4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwMmE5ZWQ2ZWVhNWJkYmEzOGUxMDg1MGNiMzk3YWQwZDcwMTAyNGYyZDc2OGE1YWNmODg0YmVhYzU3MjlkM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAzYjM1NWY2YWU2Y2I3YWYxY2Y0M2UzNzc4ZjljMjA1ZTZlNjU3NzVlOWMxNzM4ZGI3NGU4YzAyNjNkYzU3ZWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/shell_tools.py#L28-L58",
+          "version": "repo-lines-v1:sha256:b816181aeee8a9b61e46f821cb3190b1e20adbeec52a5f23bbb1b118244402ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxODlkYzAwZTU5MjQ4MzAwZTQ2NWJhYTJmOWQxY2M2Yjg3YzU4MTllODc5MDI4ZDc1MmY1NDNjNTJmNTIzNTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjliMzg5MGU5NmIwNTBiMmI1ODNiMDQ1NDA1Y2I1OGQwMWY3N2Y4NjQyYTA4M2YxMTNlYmJhNzM1NmIwMDBhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc4M2I4YWU5NjNkZTk5NjIxZjVhM2QxZmI5MWU4MmZlMjY0Y2Y3MmUyYzdlNjFhOGFhZGUyZTQ3NTdkODViMjYifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T18:35:21.080Z"
+    "at": "2026-11-09T20:38:09.193Z"
   }
 }

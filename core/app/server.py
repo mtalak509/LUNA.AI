@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import logging
 import shutil
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -18,7 +19,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from core.agent.bootstrap import build_agent_factory, init_process
-from core.app.routes import dev, sessions, turn, workspace
+from core.app.routes import dev, sessions, shell, turn, workspace
 from core.agent.session import SessionManager
 from core.config import get_config
 
@@ -42,7 +43,7 @@ def _wipe_stale_sessions(session_root: Path) -> None:
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Lifespan-события FastAPI: зачистка stale-сессий + процессная инициализация
     + реестр сессий.
 
@@ -55,13 +56,17 @@ async def lifespan(app: FastAPI):
     procedures_root = init_process(session_root)
 
     app.state.session_root = session_root
-    app.state.sessions = SessionManager(
+    session_manager = SessionManager(
         session_root,
         agent_factories=build_agent_factory(procedures_root),
     )
+    app.state.sessions = session_manager
 
     _logger.info("SessionManager ready: session_root=%s", session_root)
-    yield
+    try:
+        yield
+    finally:
+        await session_manager.close()
 
 
 def create_app() -> FastAPI:
@@ -88,6 +93,7 @@ def create_app() -> FastAPI:
     app.include_router(turn.router, tags=["turns controller"])
     app.include_router(workspace.router, tags=["workspace controller"])
     app.include_router(dev.router, tags=["file & checkpoint controller"])
+    app.include_router(shell.router, tags=["shell controller"])
 
     # --- статика дев-фронта ------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:dac2239d73318be63e13a34616672b57898544ef8873bcffcbf0e6ae2ed5cf76",
+  "pageVersion": "sha256:11c9b863d33b4e280cc74dbe757f076dc12659d7a79eea3ed05f33c70be1ebe7",
   "claims": [
     {
       "id": "claim_bbde3005d0fd40e1bfad3ba748cfe76b",
@@ -14,11 +14,11 @@
     },
     {
       "id": "claim_d30e1017e77645ecb8378e63396c62e3",
-      "statement": "ScenarioRunner copies the golden's start workspace into a fresh .runs/<scenario> folder, builds a real main agent via init_process and build_session_agent, runs one turn in act/accept_all, reads tool calls and the final answer from messages.jsonl, and writes transcript.json.",
+      "statement": "ScenarioRunner copies the golden's starting workspace, builds a real session, runs one turn in act/accept_all, closes the session in finally before its event loop ends, reads tool calls and final text from messages.jsonl and writes transcript.json.",
       "evidence": [
         {
-          "resource": "repo://tests/evals/harness.py#L45-L140",
-          "version": "repo-lines-v1:sha256:f14f1f26b623d6aab3712b3fc7a54c9e67012cd594c1d12a0f8917932837f167:eyJzZWxlY3RlZExpbmVDb3VudCI6OTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2ZmJhZTBiOTFkNDRmYzBkNDlmNWRlNjkxZGE2ZmM0MzFmMjYwMTM0YmY3MzFlMGUyMWY3NjQ4MDk0MzM0Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkZDI0NDU4MmI2ZmIwM2QyM2I4NDE1YWJlY2QzNDZiMGM5ZjQ2NmI2Zjc1MmIwNjgxODljZTdlOWEyZGMzNTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIzZGYyYWNmMDZlOGMzZjAzYzcxMzVjNmU4YWM1YTljYTU0MzJhYmUwNmE3NGFjYTBmZGQ5YTUzYTAwOGY5ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://tests/evals/harness.py#L45-L133",
+          "version": "repo-lines-v1:sha256:19f4ffb05ae3fbb03e25163308f3c8a6995323a032890e531772d36ac977293d:eyJzZWxlY3RlZExpbmVDb3VudCI6ODksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2ZmJhZTBiOTFkNDRmYzBkNDlmNWRlNjkxZGE2ZmM0MzFmMjYwMTM0YmY3MzFlMGUyMWY3NjQ4MDk0MzM0Y2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkMjIwZGI0YzM2ZTVhZDMyNjQ0OGIwYTY0ZTlkMWNhY2UwN2I1YmUwNmE4YjE5YjFlMWNhZDg1ODFjNTI5NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIzZGYyYWNmMDZlOGMzZjAzYzcxMzVjNmU4YWM1YTljYTU0MzJhYmUwNmE3NGFjYTBmZGQ5YTUzYTAwOGY5ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNmM2VlMmRmNGI1ZjMxODM5ODVkMTljMWYyODM1M2JkOWQ1MzY1ZjdkOGE3ZjczMDhiN2VkNTg1ZTE3MzVjY2IifQ"
         }
       ]
     },
@@ -75,10 +75,34 @@
           "version": "repo-lines-v1:sha256:ccd4fb27c42ed1edd3a958928080246605f096a01892b7d9a0ff781fdcab9838:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1ZDJiMTkzNDkzMTY5MTY2OWNjMzVhODc2MTk1MTgwMTUzMzYyMTNkZGEwYTYwZmUxYjA5ZjliOGUzZTk5M2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NDE2ZTA5Zjc4YmEzMTZjMDMyNTY4MjEzYjg1NWVlNzU2ZTQxNTY1ZDkxOGYwOTUxOWM4MWZkNjIwZjQwNjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
         }
       ]
+    },
+    {
+      "id": "claim_b92e07a743234cbdb58a3ecdc16d2491",
+      "statement": "The live background_lifecycle shell scenario requires a background worker, status/output containing READY and an explicit stop of the same task ID; metrics are run synchronously.",
+      "evidence": [
+        {
+          "resource": "repo://tests/evals/shell/.dataset.json#L1-L28",
+          "version": "repo-lines-v1:sha256:c5d1017c6a67171ad74ecb4e532c1e1a5192dc1d7c294b3a8491da872659fa18:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1ZDJiMTkzNDkzMTY5MTY2OWNjMzVhODc2MTk1MTgwMTUzMzYyMTNkZGEwYTYwZmUxYjA5ZjliOGUzZTk5M2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5NDE2ZTA5Zjc4YmEzMTZjMDMyNTY4MjEzYjg1NWVlNzU2ZTQxNTY1ZDkxOGYwOTUxOWM4MWZkNjIwZjQwNjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/evals/shell/test_shell.py#L28-L62",
+          "version": "repo-lines-v1:sha256:b2860b117d9c956e3fc3e5128df6750ed232ab91e5b9e1e883e5f75663a650ac:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMGEyNWE0YWFmMTQ0ODllNzE5YTg0ZmNkNzIyZTRmZDhlMTJkODRhNjFlZGZhZmRkYjYyMTNmZGYyMTI1YTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhYjlkMGQxZDJlYzA5M2YyMTIxMDg0YTBlOTU1ZTI3MmE2NWMzNzE2MDUwYzA3OGRkZDZjNzk1MjY5YzJlZTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5OGIwNjNkOWI0N2U2NTM3OTYyNTU3MmNjZTE5NzY2OWQ1NzY3ZTEyYzE4YmUwNzU2NTJiOGNkOTgxY2U4ZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_384ee088036e49848cda93fa2ae283b0",
+      "statement": "An offline integration test proves a subagent's background server survives delegation and can be inspected and stopped by main through their shared ShellManager.",
+      "evidence": [
+        {
+          "resource": "repo://tests/agent/test_shell_integration.py#L21-L83",
+          "version": "repo-lines-v1:sha256:0274dc3901da86b98b11f1f0ca187664d71834a60b31342660cc646ba4e237e4:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlZmIwZjFmOGVhYzg3MzAxNjZhYTVkYTdhYzc1MGE3Mzg2NGNiZGMyNmVmOTVmMzgyNzRmMjc0ZWNiMDMwNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwY2IwMGJjNTFhNTUyNTBkZDFjYjhkMTdlY2UxYzBiYTNkMjk1NmMxMjZjMTc1ZmZmNTE2ZGE2NGM0ZTRlNmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIyNWUzZjQxMWU4YTVlOWVlMjNjZDdkYzRiYzM5ZjMxZjUzMWI0MWNkOTVhMjIyYmZmYTM4MjRkZmIwZDhhZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T17:46:46.267Z"
+    "at": "2026-11-09T20:38:09.193Z"
   }
 }

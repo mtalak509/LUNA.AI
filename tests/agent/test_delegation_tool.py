@@ -19,6 +19,7 @@ import pytest
 
 import core.agent.tools.delegation_tools as dt
 from core.agent.base import StreamEvent
+from core.agent.shell.shell_manager import ShellManager
 from core.agent.tools import is_main_only, is_write_tool
 from core.agent.tools.delegation_tools import DelegationError, delegate_to_subagent
 
@@ -37,7 +38,9 @@ class _StubSub:
         self._order = order
         self.ran_with = None
 
-    async def run_stream(self, task_text, *, permission_mode, decision_mode, session_id):
+    async def run_stream(
+        self, task_text, *, permission_mode, decision_mode, session_id,
+    ):
         if self._order is not None:
             self._order.append("run")
         self.ran_with = dict(
@@ -73,10 +76,11 @@ class _StubFactory:
                 p.write_text("# stub", encoding="utf-8")
         return p
 
-    def build(self, *, subagent_type, uid, workspace_path, zone):
+    def build(self, *, subagent_type, uid, workspace_path, zone, shell_manager=None):
         self.build_uid = uid
         self.build_args = dict(
-            subagent_type=subagent_type, uid=uid, workspace_path=workspace_path, zone=zone
+            subagent_type=subagent_type, uid=uid, workspace_path=workspace_path, zone=zone,
+            shell_manager=shell_manager,
         )
         # Привязать artifacts-зону субагента к зоне, которую передал тул.
         self._sub._artifacts_dir = zone / "artifacts"
@@ -104,10 +108,11 @@ def wired(tmp_path, monkeypatch):
         workspace_path=workspace,
         checkpoints_root=checkpoints_root,
         permission_mode="act",
-        decision_mode="confirm",  # НЕ должен попасть к субагенту (хардкод accept_all)
+        decision_mode="confirm",  # Наследуется субагентом для всех инструментов.
         agent_scope="main",
         subagent_path=None,
         session_id="sess-a",  # субагент наследует
+        shell_manager=None,
     )
     monkeypatch.setattr(dt, "get_runtime", lambda *a, **k: SimpleNamespace(context=ctx))
     monkeypatch.setattr(dt, "get_stream_writer", lambda *a, **k: events.append)
@@ -125,6 +130,7 @@ def wired(tmp_path, monkeypatch):
     monkeypatch.setattr(dt, "CheckpointManager", _SpyCM)
 
     state = SimpleNamespace(
+        context=ctx,
         session_root=session_root,
         subagents_root=subagents_root,
         events=events,
@@ -199,16 +205,33 @@ async def test_checkpoint_before_run(wired):
 
 
 async def test_subagent_run_modes(wired):
-    """permission_mode и session_id наследуются, decision_mode хардкод accept_all."""
+    """Permission mode, decision mode and session ID are inherited from the parent."""
     sub = _make_sub()
     wired.install_sub(sub)
 
     await delegate_to_subagent.ainvoke({"subagent_type": "counter-specialist", "task_text": "t"})
 
     assert sub.ran_with["permission_mode"] == "act"
-    assert sub.ran_with["decision_mode"] == "accept_all"
+    assert sub.ran_with["decision_mode"] == "confirm"
     assert sub.ran_with["session_id"] == "sess-a"  # HITL субагента скоупится сессией main
     assert sub.ran_with["task_text"] == "t"
+
+
+@pytest.mark.parametrize("mode", ["confirm", "accept_all"])
+async def test_delegation_preserves_session_shell_ownership_and_mode(wired, mode):
+    manager = ShellManager(wired.session_root)
+    wired.context.shell_manager = manager
+    wired.context.decision_mode = mode
+    sub = _make_sub()
+    wired.install_sub(sub)
+    try:
+        await delegate_to_subagent.ainvoke(
+            {"subagent_type": "counter-specialist", "task_text": "t"}
+        )
+        assert wired.factory.build_args["shell_manager"] is manager
+        assert sub.ran_with["decision_mode"] == mode
+    finally:
+        await manager.close()
 
 
 async def test_multiplexes_events_under_namespace(wired):

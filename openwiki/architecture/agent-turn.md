@@ -5,13 +5,15 @@ description: How BaseAgent.run_stream runs one turn of the think-act loop — hi
 tags: [runtime, agent, streaming, history, langgraph]
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
+    at: 2026-11-09T20:38:09.193Z
 sources:
   - id: openwiki-source-364a89a77ff1b7418dc1c6c3
     resource: repo://core/agent/base.py
   - id: openwiki-source-07e76361ddee296c51381ff5
     resource: repo://core/agent/session.py
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+  - id: openwiki-source-4c191222105a52799537e04a
+    resource: repo://core/agent/shell/shell_manager.py
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
 ---
 
 # A turn inside BaseAgent
@@ -37,7 +39,8 @@ store and starts with an empty list (see
 
 1. **Build the per-turn context.** `run_stream` creates an `AgentRuntimeContext` with the
    current `permission_mode`, `decision_mode`, the agent's namespace, workspace path, scope,
-   `session_id`, checkpoints root and subagent zone. Middleware and tools read it through
+   `session_id`, checkpoints root, subagent zone and the session's shared `ShellManager`.
+   Middleware and tools read it through
    `request.runtime.context` or `get_runtime().context`. Because modes travel in this object,
    a mode change applies from the next turn without rebuilding the graph.
 2. **Record the user message.** The text becomes a `HumanMessage`, is appended to
@@ -92,7 +95,8 @@ described in [LLM providers](../integrations/llm-providers-and-config.md).
 - **Cancellation** comes from outside: `AgentSession.cancel_turn` cancels the task running the
   turn, `CancelledError` unwinds through `run_stream`, and the runner emits `turn_cancelled`
   and `turn_done`. Because a subagent runs inside the delegation tool of the same task, the
-  whole tree stops together.
+  agent call tree stops together. An awaited foreground shell task is stopped with reason
+  `turn_cancelled`; background shell tasks remain owned by the session and can outlive the turn.
 
 Tool failures are not turn failures: the middleware converts them into error `ToolMessage`s
 the model can read (see [middleware](middleware.md)).
@@ -119,3 +123,7 @@ question while the consumer stays free to answer it. Only one turn per session m
 time: a second `run_turn` while busy raises `RuntimeError`, because concurrent turns would
 interleave writes into the same shared message list. See
 [sessions and storage](../concepts/sessions-and-storage.md).
+
+The session owns shell processes separately from the graph. Closing a session cancels and
+awaits its turn, then closes its shell manager; finishing an answer does not close it. See
+[host shell](../tools/host-shell.md) for task lifetime and output pagination.

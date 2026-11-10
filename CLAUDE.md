@@ -36,20 +36,29 @@ before proposing anything.
   they were removed; the agent server is the whole backend.
 - **MainAgent** is one `create_agent` instance per session; **subagents** run as in-process
   `asyncio.Task`s spawned from the `delegate_to_subagent` tool (cold logical context, own message
-  list). Subagents advise via `{summary, artifacts}`; they never write into the main agent's workspace.
+  list). Subagents advise via `{summary, artifacts}`. Their file tools cannot write into the main
+  workspace, but shell has host-user access; delegated instructions must define allowed changes.
 - **LLM inference:** provider selected by `LLM_PROVIDER` (`build_chat_model`) — `gpustack`
-  (default, vLLM via GPUStack on the **Responses API**), `openrouter` (public OpenAI-compatible
+  (vLLM via GPUStack on the **Responses API**), `openrouter` (default, public OpenAI-compatible
   gateway, Chat Completions), or `ollama` (local, Chat Completions). All three are built with
   `ChatOpenAI`. Config from env / `.env` (`core/config.py` → `InfraConfig`).
 - **Middleware stack:** Permission Mode (plan/act — hides+gates write tools), Decision Mode
   (confirm/accept-all — gates any `is_write=True` tool), context injection (working-context
   envelope in the message tail), history compaction (custom step, no checkpointer).
-- **RAG:** two-step Qdrant knowledge-base search (preview → full); `fastembed` for local vectors.
+- **RAG:** optional two-step Qdrant knowledge-base search (preview → full), disabled by default;
+  vectors come from the separate OpenAI-compatible `EMBEDDING_*` endpoint. No local embedding backend.
+- **Shell:** one `shell` tool (`run`, `status`, `output`, `stop`) for main and subagents, backed
+  by a session-owned manager. Bash on POSIX / PowerShell on Windows runs with host-user access,
+  outside PathScope and without checkpoints. Plan blocks every action; Confirm gates every
+  invocation. Subagents inherit both modes. Background tasks survive answers and Plan changes;
+  session close/reset/delete and server shutdown stop them. User CLI/HTTP list/stop controls
+  remain available in Plan. See `openwiki/tools/host-shell.md`.
 
 ## Repository layout
 
 - `core/agent/` — agent core: `base.py` (BaseAgent / `run_stream`), `middleware/`, `tools/`
-  (flat pool: files, RAG, HITL, delegation), `compaction.py`, `checkpoint.py`.
+  (flat pool: files, RAG, HITL, delegation, shell), `shell/` (process ownership and logs),
+  `compaction.py`, `checkpoint.py`.
 - `core/app/` — FastAPI server (`server.py`), session-scoped `routes/`, SSE (`sse.py`).
 - `core/services/` — RAG, embedding, Qdrant services. `core/clients/` — HTTP clients.
 - `core/procedures/` — agent prompts (`main_agent.*.md`, subagent `agent.md`s).
@@ -166,10 +175,11 @@ chore(docs): update project documentation
 > **Releases are performed by the maintainer, manually. Never cut a release automatically —
 > no version bump+tag, no `chore(release)` commit, no `git tag` — except on an explicit request.**
 
-Current version: **0.1.1**.
+Current version: **0.2.0**.
 
 Release history (one line each; full detail in `CHANGELOG.md`):
 
+- **0.2.0** — renamed/split file tools, bounded tool output, CLI rebuild, live evals and OpenWiki
 - **0.1.1** — attachments (HTTP/CLI + web tab), `fs/download`, drop `pointer` / techprocess remnants
 - **0.1.0** — first public release
 

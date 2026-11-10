@@ -21,9 +21,17 @@
 You talk to LUNA in plain language — "find where the price is set in this report and change it to
 42" — and it does the work by calling tools: finding files, searching inside them, reading the
 part that matters, applying edits. Under the hood it is a **thin harness around one LLM agent**. There is no workflow
-engine and no database: the agent decides each next step by itself, and all state lives as plain
-files on disk. You use it through a **command-line REPL** or a **web UI**, both backed by the same
+engine and no database: the agent decides each next step by itself, and documents and history
+live as plain files on disk. Live shell tasks are owned in memory by their session. You use it
+through a **command-line REPL** or a **web UI**, both backed by the same
 agent core.
+
+The agent can also run **host shell commands** with Bash on Linux or PowerShell on Windows.
+Main and subagents share foreground/background tasks within a session. Shell uses the host
+user's filesystem and network access and creates no checkpoints. Plan blocks every shell
+action; Confirm asks before each call. Users can list or stop existing tasks with `/shell tasks`
+and `/shell stop <task_id>`, including in Plan. Closing the session stops its tasks. See the
+[shell reference](openwiki/tools/host-shell.md) for output pagination, limits and HTTP controls.
 
 ## How to run
 

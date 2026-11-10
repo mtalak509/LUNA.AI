@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:b54235f6a2b25512df4607222de9c15aeccd39f422bb06b5b527870da4b3358d",
+  "pageVersion": "sha256:8feec7969253c2c131d4607ed9429f033468aa4e134ca1f25e61caf77c75f3d4",
   "claims": [
     {
       "id": "claim_b3f4039f4f1f44298fe2cea6e6e45893",
@@ -31,7 +31,7 @@
       "statement": "build_chat_model returns a ChatOpenAI for every provider with temperature 0: OpenRouter and Ollama use Chat Completions (Ollama with /v1 appended), while GPUStack uses the Responses API with output_version responses/v1.",
       "evidence": [
         {
-          "resource": "repo://core/agent/base.py#L78-L128",
+          "resource": "repo://core/agent/base.py#L82-L132",
           "version": "repo-lines-v1:sha256:bf3fa437f6e9d93de0506d15e6ec0a37601226405cdea4a12d7b31c2e092d62d:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlZTMxYTBjOWI2Y2M0NTczODdjZTRmZTk2NjljZTM2NzUzNGUwODBlNWJjMDhmNTY4YTRiOWE4YWZlY2MwNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZmNDU4ZWFkNDYzODZlMzU3ZTIzM2YyNmZjYjNjMzY2ODkxN2FlNTI5NmE1MzE1MTBiMzg3N2RiMTNmYmMxZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZkZjAzZWY0OWY0NDlhMjM5MTA0OWYzNmE5MDEwYWJlNDMwZDQzZDVmODJkMTFiZDg1YWZkMmZhNzIyMmNiZDcifQ"
         }
       ]
@@ -51,7 +51,7 @@
       "statement": "The reasoning patch is installed at import time of core.agent.base before any chat model is built.",
       "evidence": [
         {
-          "resource": "repo://core/agent/base.py#L73-L75",
+          "resource": "repo://core/agent/base.py#L77-L79",
           "version": "repo-lines-v1:sha256:cf4b3292dc7d000e36f445c798d0242496f9173485bfe391b12b886ac13f49b1:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzk4MWZmN2FkZGI1ZDJkYjAwMjY4ZjFjMTQyZGQ2M2ZlODI5YTkyYmU3YmNjODE2ZmM0NDY2YTg3MzdkZTRhZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2E2NDYzYjEwYTFmYzEyNDQzM2FjMjRlNTY5NTBiYzA1MTI3NWI1N2U5MjI0MWE2YzhlNzk1MTYzNzQ0YTA5MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmRkYjhiYThiNWJhYTIzZGNkY2RiNTMyOThkZDEyODJiMmIzN2Q0MzMzOTdiYWEwOTBjYjFlZTA2OGEyZGQ2ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjJhNDQ3NDVhMDRiMGUxY2RiYWUzZmVjMjVlMTI2ZDIzNmNjMjI2ZDJlM2RlNDYxM2EwYjg4YTIwZmQwOWVkOCJ9"
         }
       ]
@@ -83,6 +83,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T17:46:46.267Z"
+    "at": "2026-11-09T20:38:09.193Z"
   }
 }

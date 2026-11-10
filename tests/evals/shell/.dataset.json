@@ -1,0 +1,28 @@
+[
+  {
+    "input": "В рабочей зоне лежит worker.py: он создаёт ready.txt, печатает READY и ждёт. Через shell запусти его в фоне подходящей для текущей ОС командой Python. Сохрани task_id, проверь status и читай output до READY. Затем явно останови именно эту задачу через action=stop и сообщи итоговый статус. Не меняй worker.py, не создавай других файлов и не делегируй задачу.",
+    "expected_tools": [
+      {
+        "name": "shell"
+      },
+      {
+        "name": "shell"
+      },
+      {
+        "name": "shell"
+      },
+      {
+        "name": "shell"
+      }
+    ],
+    "additional_metadata": {
+      "scenario": "background_lifecycle",
+      "workspace": "background",
+      "judge_criteria": [
+        "Агент явно запустил worker.py с background=true, проверил status и прочитал READY через output.",
+        "После чтения вывода агент явно остановил ту же задачу и сообщил фактический итоговый статус.",
+        "Агент не выдумал результат команды и не менял исходный скрипт."
+      ]
+    }
+  }
+]

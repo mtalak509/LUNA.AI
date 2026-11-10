@@ -3,10 +3,9 @@ type: subsystem
 title: The flat tool pool and per-agent slices
 description: How LUNA defines one shared pool of tools, tags each tool with declarative attributes, computes each agent's slice by subtraction, gates optional subsystems with feature flags, and gives tools access to process services.
 tags: [tools, tool-pool, feature-flags, agents, extension]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
+  - id: openwiki-source-364a89a77ff1b7418dc1c6c3
+    resource: repo://core/agent/base.py
   - id: openwiki-source-9cae2963ffbc49ec962d3395
     resource: repo://core/agent/bootstrap.py
   - id: openwiki-source-8663d578d4a41ad0e6edc1c1
@@ -25,7 +24,10 @@ sources:
     resource: repo://core/agent/tools/rag_tools.py
   - id: openwiki-source-27ee44b17a928f4d359d8b25
     resource: repo://core/config.py
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # The flat tool pool and per-agent slices
@@ -46,6 +48,7 @@ prompt, not by a private toolbox.
 | Knowledge base | `knowledge_base_search`, `knowledge_base_get_reference` | `feature="rag"` |
 | Delegation | `delegate_to_subagent` | `main_only` |
 | Questions | `ask_user`, `select_from_options` | none |
+| Host commands | `shell` (`run`, `status`, `output`, `stop`) | `is_write` for every action |
 
 The tools themselves live in `core/agent/tools/` (see [file tools](file-tools.md),
 [RAG](../integrations/rag-knowledge-base.md), [delegation](../workflows/delegation-and-subagents.md)
@@ -119,6 +122,12 @@ Long-lived process services come from three module-level holders installed once 
 Each getter raises a `ToolException` if its holder was never set, so a wiring mistake shows up
 as a readable tool error. Holders carry no per-session state.
 
+Shell tasks have a different owner: `build_session_agent` creates a `ShellManager` per session,
+puts it in `AgentConfig`, and `run_stream` carries it into runtime context. Delegation passes
+the same object to subagents. It must not become a module-level holder or a new manager per
+tool invocation: task IDs and background-process lifetime belong to the session. See
+[host shell](host-shell.md).
+
 ## Errors are feedback
 
 A tool signals an expected problem by raising a `ToolException` subclass (`FileAccessError`,
@@ -131,9 +140,12 @@ non-`ToolException` errors are logged as bugs.
 1. Write an async function with a clear docstring (it is the model's description) and typed
    arguments.
 2. Decorate it with `@agent_tool(...)` and the right attributes. For a write tool add
-   `@with_checkpoint()` inside it; for large text output add `@truncate_output("head" | "tail")`
-   inside it.
-3. Read session data from `get_runtime().context` and paths through `PathScope`.
+   `@with_checkpoint()` inside it when the change is a workspace file operation. Shell is
+   deliberately exempt: host effects cannot be snapshotted. For large text output add
+   `@truncate_output("head" | "tail")` when spill-to-file is appropriate; shell instead uses
+   byte-paged capped logs with its metadata kept outside the output limit.
+3. Read session data from `get_runtime().context`. File-tool paths go through `PathScope`;
+   host shell paths use native resolution and the host user's permissions.
 4. Add it to `FULL_POOL` in `core/agent/pool.py`.
 5. Describe it in the main prompt's `<tools>` section (see
    [prompts](../project/prompts-and-procedures.md)), add unit tests, and add a live scenario if it

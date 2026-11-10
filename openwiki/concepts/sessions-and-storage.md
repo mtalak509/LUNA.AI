@@ -20,16 +20,16 @@ sources:
     resource: repo://core/app/server.py
   - id: openwiki-source-27ee44b17a928f4d359d8b25
     resource: repo://core/config.py
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T18:35:21.080Z
+    at: 2026-11-09T20:45:41.933Z
 ---
 
 # Sessions, process bootstrap and on-disk layout
 
-LUNA has no database. A session is a folder plus one live agent object, and everything worth
-remembering is a file inside that folder. This page covers the folder layout, how the process
+LUNA has no database. A session combines a folder, a live agent and an in-memory shell-task
+manager. Documents and history are files; live process ownership is not persisted. This page covers the folder layout, how the process
 and each session are built, and the runner that executes turns.
 
 ## The home folder
@@ -66,6 +66,7 @@ The two front ends use separate subfolders so they never clobber each other:
 │       ├── blobs/             externalized large strings
 │       └── hitl_pending.json  present only while the main agent waits for an answer
 ├── checkpoints/               full copies of workspace/ (undo)
+├── shell_tasks/<sh_id>.log     bounded combined stdout/stderr logs, outside checkpoints
 └── subagents/<uid>/           one zone per delegated subagent
     ├── notes/  artifacts/  .runtime/
 ```
@@ -96,7 +97,8 @@ id, modes — travels in the per-turn runtime context instead.
 **`build_session_agent(session_root, procedures_root)` — once per session.** It builds the main
 agent: prompt `main_agent.ru.md` loaded from `procedures_root`, the tool slice for scope `main`
 minus disabled features, namespace `main`, workspace `<session_root>/workspace`, checkpoints
-`<session_root>/checkpoints`.
+`<session_root>/checkpoints`, and one new `ShellManager(session_root)`. Delegation passes that
+same manager into each subagent; it is not a process-wide holder or a per-turn object.
 
 `build_agent_factory` wraps that into a `{profile: factory}` dict. The only profile is
 `standalone`. `build_agent` is a deprecated shim that does both steps at once.
@@ -110,8 +112,10 @@ code of its own; the routes sit on top of it.
   `uuid4().hex` id, creates the folder with `exist_ok=False`, builds the agent and wraps it in
   an `AgentSession` with server defaults **`act` / `confirm`**.
 - `list_sessions()` reports id, profile, busy flag, creation time, last activity and both modes.
-- `delete_session(id)` cancels any running turn, waits for it to finish, drops the record and
-  removes the folder.
+- `delete_session(id)` awaits `session.close()` before deleting the folder and dropping the
+  record. Failed cleanup preserves the record and files so deletion can be retried.
+- `close()` rejects new sessions and attempts to close every registered session without
+  deleting their files. A failed close can be retried.
 
 Because session ids are minted by the backend as hex strings, they are path-safe by
 construction; the HTTP layer still resolves an id against the registry before it ever builds a
@@ -130,7 +134,10 @@ path from it.
 - `events()` is an endless async generator over that queue. It does not stop at `turn_done`, so
   one consumer (one SSE connection) can follow many turns.
 - `cancel_turn()` cancels the task; the cancellation unwinds through the main agent and any
-  subagent running inside it.
+  subagent running inside it. Awaited foreground shell tasks stop, while background ones
+  remain running.
+- `close()` rejects new turns, cancels and awaits the active turn, then closes the shell
+  manager. Cleanup is shielded from caller cancellation, repeatable and retryable on failure.
 - `resolve_hitl(hitl_id, value)` answers a parked question through the process HITL registry,
   scoped to this session's id (see [modes and HITL](../workflows/modes-and-hitl.md)).
 - `permission_mode` and `decision_mode` are plain attributes read when a turn starts, so
@@ -141,13 +148,20 @@ path from it.
 - **Server start.** The lifespan first wipes every directory under `~/.luna/sessions/` —
   including `procedures/`, which `init_process` immediately recreates — and only then
   initializes. The registry is in memory, so old folders would be orphans nobody can reach.
-- **Work.** Each message runs a turn; each successful write leaves a checkpoint.
+- **Work.** Each message runs a turn; successful file-tool writes leave checkpoints. Shell
+  calls do not. Background tasks survive answers and mode changes, including switching to Plan.
 - **End.** Sessions end only through `DELETE /sessions/{id}` or a process restart. There is no
-  idle timeout and no session-count limit yet.
+  idle timeout and no session-count limit yet. Server lifespan shutdown closes all sessions
+  and their shell tasks in `finally` before the process exits.
 - **CLI.** The CLI does not wipe on start. Its fixed session `~/.luna/cli/dev/` is reopened and
   the agent loads the existing `messages.jsonl`, so the conversation and workspace carry over
-  between CLI runs until `/reset` wipes the session folder (the log in the parent folder is
-  untouched).
+  between CLI runs. `/reset` first closes the old session, then wipes its folder and constructs
+  a replacement; failed close leaves the old session and files intact. Every REPL exit closes
+  the current session, including exceptional exits. The log in the parent folder is untouched.
+
+The task registry is never rehydrated from `shell_tasks/` logs: a new CLI process gets an
+empty manager even when those logs remain. The manager stops tasks with reason `session_closed`
+on close. See [host shell](../tools/host-shell.md) for task limits and process ownership.
 
 See [HTTP API](../interfaces/http-api.md) and [CLI](../interfaces/cli.md) for how each front
 end drives sessions.

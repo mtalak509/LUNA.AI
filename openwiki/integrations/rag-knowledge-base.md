@@ -3,9 +3,6 @@ type: integration
 title: Optional RAG knowledge base
 description: The optional two-step knowledge-base search over Qdrant — tools, feature flag, the RAGService/EmbeddingService/QdrantService layers, and the HTTP client retry and error taxonomy underneath.
 tags: [rag, qdrant, embeddings, http-client, feature-flag]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
   - id: openwiki-source-8bbed1e3cb44f8f7104d0888
     resource: repo://core/agent/tools/_clients.py
@@ -22,6 +19,9 @@ sources:
   - id: openwiki-source-05ccef8d4cf1698187f20464
     resource: repo://pyproject.toml
 generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # Optional RAG knowledge base

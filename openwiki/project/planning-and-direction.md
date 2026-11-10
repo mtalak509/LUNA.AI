@@ -12,10 +12,10 @@ sources:
     resource: repo://planning/index.md
   - id: openwiki-source-a01ee747afcc71ec1338db0e
     resource: repo://planning/README.md
-generated: { by: "claude-code", at: "2026-10-29T18:35:21.080Z" }
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T18:35:21.080Z
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # Planning, digests and design rules
@@ -56,16 +56,26 @@ At the time of writing the index lists:
 |---|---|---|
 | 001 | File tools replace the JSON tool layer | done |
 | 002 | Truncate tool output with a decorator | building |
-| 003 | Host shell tool | accepted |
+| 003 | Host shell tool | building |
 | 004 | CLI on prompt_toolkit and rich | building |
 | 005 | Agent Client Protocol adapter for Zed | shaped |
 | 006 | General-purpose subagent and a prompt refresh | shaped |
 | 007 | Run the CLI from any directory | seed |
+| 008 | Honest file tool errors and directory removal | shaped |
+| 009 | Align the prompt with the tool set: append and artifact promotion | shaped |
+| 010 | Fewer round trips in grep, edit and ls | seed |
+| 011 | Only verified facts go into decisions.md | seed |
+| 012 | Read PDF, DOCX and XLSX | seed |
+| 013 | Choose how much tool activity the CLI shows | shaped |
 
 A card earns its place when it makes LUNA easier to understand, extend or run locally. Card 006
 is a good example of the kind of drift cards record: the only shipped subagent is still a
-self-described stub, and the English main prompt is a stale copy (see
+self-described stub, and the prompts still contain some tool-contract drift (see
 [prompts and procedures](prompts-and-procedures.md)).
+
+Planning status is not a runtime switch. Card 003 remains `building`, but host shell, shared
+session tasks and user list/stop controls are already implemented; see [host shell](../tools/host-shell.md).
+Cards 008–013 describe proposed follow-ups, not capabilities to assume in the current tools.
 
 ## Parent-release digests (`digests/`)
 

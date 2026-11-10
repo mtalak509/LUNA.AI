@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:dc982e4fdb4748e83d3dcd41f3a77d4cc5b45a496340f9cb27b9195641eddcad",
+  "pageVersion": "sha256:c37b48acc796e24162f952878f6a6076322493480d03072724e2e0cab3e6ab3e",
   "claims": [
     {
       "id": "claim_2ffc3cddf2f4411e83ca5b1d6f664255",
-      "statement": "The CLI main loop logs to ~/.luna/cli/repl.log, bootstraps the process once, builds one session, and routes lines starting with / to command handling and everything else to drive_turn, printing a short error instead of exiting when a turn fails.",
+      "statement": "The CLI main loop logs to ~/.luna/cli/repl.log, initializes one session, routes slash commands separately from turns, catches turn failures and closes its current session in finally on exit.",
       "evidence": [
         {
-          "resource": "repo://cli/app.py#L36-L87",
-          "version": "repo-lines-v1:sha256:eb2718f601616b582ed37618f4d158f26bdcc8fcf48ba395eaee8f182e14999f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1MzcxZDhiMGU2OWQ2ZGZhMWYwODcxMzhjM2MyNDFkMmVlMGY0NjlkY2Y1NGFiODY5MmQyMGRkNWRjYzY1YjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQzMGRjYmZlNDAxZjM1YTNlZWI0MzJiNzYyODFmMGMyZTUyMmRiMzIwYTUwOWZjNTdiYzZiMDc1OTVjNDFhOTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjOWMwZTc0OWU5NzMxZmQ2ZTE3ZDllOTZjYWVkYTgxYzc1OGQ2OThlM2MyOWY0ODVlOTRjMTY0NmRhOGYwOWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEyZWQwZGIwN2U1NGJhYTIxNjEwNGQwMjZmYjczZDQzODJjNjM5NzlmNzhjOTI1NGVhMGQ1ZDc3ZjJkNzUxNmYifQ"
+          "resource": "repo://cli/app.py#L37-L94",
+          "version": "repo-lines-v1:sha256:f3b99b177bcfabee0b98f257d81c6d4807a0a58969be5aa5c3f90146ec423565:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiMjI4Y2IzMzVhNGM5MzM3ZGIxMzg2OGNkMDFiZTRjODU1MjdjMWUxMmRhOTk3MGFlZDVkNGUzNGIyNzg2NmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhMTRlMGZmYjk2Y2Q0OTlmZWNjYzk1MjFkNTY2NWRiNDNjNWFjMGM4MTk3ODY0NjBmMjYxNzhhY2JhZjI5MWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkZjc4MzA4ODkzMTE5YmMwNzdmODI2ODg4M2UyMjlhZGNjMWY3MmM1ZjU4MTlhZjk2MmEyNDI0ODZmNGZmMDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM5NjMzNWNiNmQzY2E5YzM3YjIwODZjZGE5MjFiNDc3Mjk3MWRhODA3NGVhZDRjYjNkY2UxMzBkMzYzZTllZGYifQ"
         }
       ]
     },
@@ -68,19 +68,19 @@
     },
     {
       "id": "claim_56e285f1f50a406999aee092b035957b",
-      "statement": "The CLI commands are /plan, /act, /confirm, /accept, /attach, /fs, /cp, /undo, /reset, /help and /quit, with /attach going through WorkspaceManager.attach_from_host and /reset wiping the session folder before building a new session.",
+      "statement": "CLI commands include modes, /attach, /fs, /cp, /shell tasks, /shell stop, /undo, /reset, /help and /quit; /attach uses WorkspaceManager and /reset closes the old session before wiping and replacing it.",
       "evidence": [
         {
-          "resource": "repo://cli/commands.py#L107-L157",
-          "version": "repo-lines-v1:sha256:26f8a10e060f507a6d9167530deeb762715097e5daa89e937dc579712d203b66:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmNTRmMjJhYTU0YWQ3YTY2ODJkOTQxNzZjMTU4NjkzY2Q0NjdmZjczZGM5NTMyNDdjN2U2NTJlYjJhMTI0NWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwZTJhNDY1MDA5NWZhOTVkMGUyYmI0MWIyZGIyOTA5NGQzNDA0ZDI4Y2UxMjMzOWVjODhiYjRiNWM1YmU4ZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ1OWNiMDEyNDdhYjVlZDE1MWJmMDUxYjE1YTZiMTc4MDc0YjhhOTU0MzU0NmVhNzVjN2RiZmQwN2MwNGI3NDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://cli/commands.py#L136-L191",
+          "version": "repo-lines-v1:sha256:67540ad2f1543db6a73afc9cff4aab485d462461a44c9ee886c287f997637543:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1MGNjMzM3NWVjZjlmYTRmMDk5MTQ2MzMyY2JiMzAxM2NiZDIwN2YzNWYzMjdkZTE3OGNhNWYwNDJmMzEyMmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwZTJhNDY1MDA5NWZhOTVkMGUyYmI0MWIyZGIyOTA5NGQzNDA0ZDI4Y2UxMjMzOWVjODhiYjRiNWM1YmU4ZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc2NzdiYjcwZWQ2NTJhMDhiMjM1OWZkZjI3NTgzNzEyZWUwOWIxMmY0N2MwODUyMDRkMjBiMmZlZWFjYzA3MDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
         },
         {
-          "resource": "repo://cli/commands.py#L20-L32",
-          "version": "repo-lines-v1:sha256:e7ffcf95ecb4f2efe01d2b9f2ebca5d686c9659a1949233a56193b1b72b5537c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0MDA5MjI5MDVmOWNjYmIxNjM2OWYxMzM3ZDU1ZWM4YmJhYzAwODVjMDFlNWI0NzU5MDYwNWZiMTRlYjJmYzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJmNDBhMzQ0NDIxNWRhOTYyYzZhNmExMTkyNjdjNTNhZmJmM2FkNzk5OTE3Y2I3ZjhmZWY3NDVjMjAxYmQyYWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkYzM0YjZlZTkzMDA4MzZjNzRkN2M4ODFiZDdlODgzZjgwYjdlOWI0Zjg5MGYxZTQxZDQyOTY5NjU3OWJiMzEifQ"
+          "resource": "repo://cli/commands.py#L26-L41",
+          "version": "repo-lines-v1:sha256:a52c7def08ee7af4862fe9527650d4dd953db058e519070224f278620728c796:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwNTJlNWE5MTk4MGY1MGRhYWIyYjlhYjMwMWRhMjQ0ZjBjYjkxZmM2YTI0YjdlZjQ2MGY1ZTNmNmU1MDk5MGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwM2ZjYmJmMjExZGVjMjQ3YTg4MzU2ZTNmZDk5YmFhOTk0N2M5ODkzYjc4OWQxZmQ2YzFiNjk3MjIxMjQ2NGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI0OGM5NzZmNjMzODgzNzkxZmNjZjQ0NDZhOGY0ZjQ2YWVjMDg0YmI4MDY4ZjFiZmQ0OGE0Y2NkZGM3NTM4ZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkifQ"
         },
         {
-          "resource": "repo://cli/commands.py#L49-L71",
-          "version": "repo-lines-v1:sha256:b5b306322a113eb886da13f720a108bee9c1e74d8b6a4d0e63c4bcc85f6c4cf4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0NGI5ZTAxMWZiMGIyOWMyNzJlMjNiNjI1NjNkMThjNTk4YzliMmQ0Njc1ZWIwYTFlMmRkOWYzNDIwNTZjYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg4NDdhZWFhYWFiZWVlYTY4M2UwNWQ0NDYwZWM3MTk5ZWUxY2Q5NmFiODg2NzQ0MTIxZWI1MWMxNjMyYWUwN2YifQ"
+          "resource": "repo://cli/commands.py#L50-L77",
+          "version": "repo-lines-v1:sha256:7ba11015f1694fb27938c2a8b42d38556cf30c2ce6f52a69b0f63c1d79435351:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyYTk4MGM1ZTEzZTczYzY5ODA1NzQ0MWFkMDcyOWJmOGU2MzQyMTViMmZjYzViOWQ1YjE1ZDIzYTQ5YjIxZjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImEyMWU4ZWI0ZDM0ZGQ5ZjdlOWU1YzYwMWQyMzE1MGNlMzkyZjYxNDA0NDAwMjVjYzM5ZDY4YTgxZDM2NjFjM2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdhNGI1ZDY2MTA0MWJlMTgyOTg0NGRiM2NlMWE3YTY4MWE0ZTc2MzdiM2JlOWRhOTdhOThiMzZlMDhmYTU1NTcifQ"
         }
       ]
     },
@@ -89,11 +89,11 @@
       "statement": "The CLI renders an edit call as a coloured unified diff of old_string to new_string, capped at 40 lines.",
       "evidence": [
         {
-          "resource": "repo://cli/render.py#L32-L32",
+          "resource": "repo://cli/render.py#L33-L33",
           "version": "repo-lines-v1:sha256:2719028acbb8fbc68e41beb17fe68e1f6ef36fb52e8d42e339aad4d6aeb2490a:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjcxOTAyOGFjYmI4ZmJjNjhlNDFiZWIxN2ZlNjhlMWY2ZWYzNmZiNTJlOGQ0MmUzMzlhYWQ0ZDZhZWIyNDkwYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjcxOTAyOGFjYmI4ZmJjNjhlNDFiZWIxN2ZlNjhlMWY2ZWYzNmZiNTJlOGQ0MmUzMzlhYWQ0ZDZhZWIyNDkwYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDliN2Q1OWIyMzEwMWNjZTcwMDM3ZWI3ZjdhM2ExOGI1N2Y1ODA2YzVlOGFlZjg5ZTllYjMxZjQ4Y2MxNmRiOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWY2MTllNjkyNzBkODlhMmE0NzA0NzQ5MGFjZmIzYjYyMTA1MmZiY2EzZTU1NmQxY2NlZDRiYzhhZTNkMWNjOSJ9"
         },
         {
-          "resource": "repo://cli/render.py#L67-L88",
+          "resource": "repo://cli/render.py#L84-L105",
           "version": "repo-lines-v1:sha256:f70e6a69aa5e10dbef19c96d86145aae0accf4b7cd5b947c5efe2042e513de10:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE3M2MzM2MzNDA3YjIwM2ExZTgzYWE5M2JiNmMwMDMwYjk5MWNkODliOTEyOGYxMTFjOTRiZDllYzY3MDY3YzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0NDNkMTI2M2E5YjZhOWFhMTBjZjFiZTYzODdmMWY5ZDM4MDQ1NTQyMTU5MjllODFkM2RlZGY4ZGUxMjZjMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImViNmY0MDlkZWEzOGM1YTZmYTFjMmRlYWE3OTQ4MWRjOTk4NThiYjU2ZTE1YTRlODMwOTViMzZmZDIxYmZlODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRlZjQ3NzhkNzYxMjA0N2U0NTc5MDBjMDc4ODFiOWE5NTE5NWQ3YjcxOGUzMzVmMmEwYTRlYTM0M2E3ODc5ZmEifQ"
         }
       ]
@@ -113,22 +113,36 @@
       "statement": "The CLI renderer separates answer output from tool output with a single blank line printed only when the turn switches between the two block kinds, and cuts long tool results with a pluralized '… N more lines' note.",
       "evidence": [
         {
-          "resource": "repo://cli/render.py#L171-L175",
+          "resource": "repo://cli/render.py#L188-L192",
           "version": "repo-lines-v1:sha256:ec65aabf4992a66ce904ef6309bea0ae1eeb0fbb6f82fc3c56cf95a9a6ccdb3c:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjIwNjZkMTY0NDgyZDIyMWZkZmIzYzZhYTM5NzNkZjhkM2E4MGQ0NjMxMjk0M2EzOGNmMTU4NmRkYWEwMzczNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWJjYjBkMmMwMTNmZjI1YTg2MmMzMjI2NmMyYjhhZjk0ZmM3YmIwMjI1ZDkyZDE1MmQ2MTVkYjU2YTY4NDAxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjc1MjBhZjVmNDYyZmE2N2Q4MDMxNjRlOGM3ZTcyNDRiNjZiODMwMDMxYzFlOGY2MGNkMGQ1YzYyZTNhMThmNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODI3ODE4NGQzYjBiZmZlZmQ3YzYzMmJmYzE3MTJmMjJmYzJhMjZmMTNmOTc2MjJkYzJlMWQ3M2I2NzBmN2M1MiJ9"
         },
         {
-          "resource": "repo://cli/render.py#L225-L235",
+          "resource": "repo://cli/render.py#L242-L252",
           "version": "repo-lines-v1:sha256:e0edd20662beac6d9c1ecb5ab6e579b8493fdefe3c5f197e28dea5e027562e20:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiZjA1MjVlN2Q5MTVkYWZjNzk5ZDlkY2I2MmUyNDRjMTZmZTgxOTVkNGJjNWFkZDcxZjhhNzQ1NzQ2MDNjNWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiOTk4NjUyMjA3YzNiYmI1OTdlYWQyOGNhOTU1ZWUzNjFjMmRjZTczMDE1MDk3ZGQ0MjAwZWUyYmNjN2M2ODUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5OTlkNGM4YWNmZWYyMTZlZmIyYzM4ZTE4YTZlYjQzZTI0NzE0YjJiNjMwN2Y0MDI2NzAwZDc4OTVhMDVjMmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxMmUwODUxNmUyZmRkYTI5ZThjNTZhMzFhZDhmZjEzZmRiODg5M2VkOTc3MDIwYmI0NjUzNzIyYjE1Y2VhOWEifQ"
         },
         {
-          "resource": "repo://cli/render.py#L86-L88",
+          "resource": "repo://cli/render.py#L103-L105",
           "version": "repo-lines-v1:sha256:a81d2eef5310588c6ccdb1f15bd346d5ea6ca60f814643ff0c5681a707073cf3:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzY4NDEyMmYzOTZkMTVlYWVmNDk4NjIxMTNlNDc3NTYxMWJiZjcxNTU5OTNjYWY0Yjc1YjMxYzRiZDc3NWM3YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDQ0M2QxMjYzYTliNmE5YWExMGNmMWJlNjM4N2YxZjlkMzgwNDU1NDIxNTkyOWU4MWQzZGVkZjhkZTEyNmMyZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjI2OWZmZWVjYjliNjNkMGZlZWVlOGFlYmVjMDFiYTg2NDBlODA3NDQ0MGQ3YWU3MTRmYmM3OTVjOWRmODk1MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGVmNDc3OGQ3NjEyMDQ3ZTQ1NzkwMGMwNzg4MWI5YTk1MTk1ZDdiNzE4ZTMzNWYyYTBhNGVhMzQzYTc4NzlmYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1bfff06d5754469a8b6504ba5b9d5b87",
+      "statement": "CLI shell task controls directly list or stop manager tasks independently of agent modes, and shell result rendering puts metadata before the bounded output preview.",
+      "evidence": [
+        {
+          "resource": "repo://cli/commands.py#L109-L133",
+          "version": "repo-lines-v1:sha256:d0ed830e287b85882b37c0e3ae2b4c4228a0e67c783690a8fa6e8a7c891585c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ1NWFhZTViNjJiZjE3ZjQ4Njg5ZGJiYWQwNWQ1ODViYWM3ZmQ0NWIwNzdjOGI4ZTViMjMwYzg2MWExNjM2OTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA2OWFhYzBkZTU5YzEzYzE0ZDY3YjQ5OGM4MjhiYTExNDMyODg1ZTM2YTJjY2E0MzEwNzcxOGM0YzQwYzZmYjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5NjNhMGZlMDNiODBmOTExNmNkYTJjN2JlZDg3Y2IzNjA0YjBiNTJmYWQ3MGRlM2IwNTgyOTM3NzI5OTM5MDIifQ"
+        },
+        {
+          "resource": "repo://cli/render.py#L59-L81",
+          "version": "repo-lines-v1:sha256:bbdeef01edb974c5454cdac944f4eb12d1d3c7e11255f0250bd6c27998b84223:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwN2I4Zjc4NDZiNzNjMWM4ZDQ1NDQ4MDRhOTZiOTlkNDA4OWIxOGI2NTY3NGZhODM0ZDBkZGVjZWM5YWYzNWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwYTk5ZDdkYTczZDA0NGQxMWRmZGNkODUwZjI3MzZmYmRkZWU2ZDI2ZjJmODNiMGFlNDQzYzYxNTkxYmMzYjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkNDk2ODk0MmY3NWM5Mjk1NDUzMmJiNjQ4MjNmYzgwZjE4YTY2ZTMyZDRkYjZiZjg0YjkwODdiNDZmMmQ5Y2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImViNTg4ZTQ2NzMyYmU2ZjY4Mzk0Y2JmNWI4NDRlNDg2ZWMwYjgyM2U4MDczMjU0YTZjOTY2Mzc1YTVkOGRhMTAifQ"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T18:35:21.080Z"
+    "at": "2026-11-09T20:38:09.193Z"
   }
 }

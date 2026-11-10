@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:5cb2fcde3eb3d975b712f84cb8c6a55bfdd32c127e320efbabb9332f6b66c3ce",
+  "pageVersion": "sha256:a06978cd29befdd502914f0a7be2b096a560a1a059af38f6a92c6b5f910d4863",
   "claims": [
     {
       "id": "claim_a8f095be6f7246a4bfcd7c11ae948446",
@@ -113,10 +113,38 @@
           "version": "repo-lines-v1:sha256:116dd6b08c3f2075552e3ab078ab7d4ee8b748de2b86b5ee1e7223ecf94f87c6:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjg5NmI3ZTc1ZmEyZjE2NThjOTI2MDAxZTFjOTIzMWY5ZjkyNjhkNTk1NTIxZjYzMTk1YmI5NzkwNDZkMGVhNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2VhODQzZTM5ZTg3NzQ1NTVhMTNlOTUwMGJmMzk0N2Y1YjVhNmRmNDBjNTkxNDQwNWM1YTZhYmJmZWJlM2VjNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmU2MmM2N2U1ODQwNjc3MTVlZmMzNTI0YjRhYjY1ODAxZjdhMTFlYTJmZDY3NWYwMGM4OWU2ODc4NzU1ODgyMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDA1MDE1MzQwMzE4MTQyZGIwNDA2NTQ5MjQxMTU3NGVmY2RmMjczMjg3MTZlZjkxMDM1NDZkZmZkNzFjZTg2NSJ9"
         }
       ]
+    },
+    {
+      "id": "claim_1b254e044e5f471889863ccbd97d499e",
+      "statement": "Shell working directories are resolved against the caller's workspace or subagent zone without PathScope and may be absolute paths outside those zones, subject to host access.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/shell/models.py#L78-L113",
+          "version": "repo-lines-v1:sha256:14976696a4e6cb705da9cfb78eb49ff5cba03b6fc1591aeebf1b4c42a392f33f:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyMGM3ZGI2YzBkN2M3OWY1MjcwODg4MmNhZDcyMjAyZWY5YTBkZmI3NGE1MzVjNGI4OWRlOGRhNGUwZGQ1ZDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0ZmQwNDVjODJjN2RlNTNiN2NkNjA0ZjBiNDZmNTg4NmU0NGI2NGQ2YmVhODA0MWE2NTkwYWU2OGQ0OWYzNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE5Y2YxYTRhMDRhZTBiMzkyZDA0OGVlMGY3MzMwNjNhMTg1MDZmYzE1ODAwNDU0YzVkMGQ4MzkwMjY3ZjU5NWYifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/shell_tools.py#L40-L58",
+          "version": "repo-lines-v1:sha256:d3b406b36bb0611db707ca12e4fe717931f000a3310e55771e6e4e09111e5805:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQzZTVhYmY2OTY2Mzg0YjI1MjY5YWU0Y2MzZjhhYTc4MjcyNDc3MzA2M2RlYTc5ZTVkYTNiOGY1MGQ2YWUyMzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxODlkYzAwZTU5MjQ4MzAwZTQ2NWJhYTJmOWQxY2M2Yjg3YzU4MTllODc5MDI4ZDc1MmY1NDNjNTJmNTIzNTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2YTc5NDIzZDI5NTU1Mzc2MjY4Zjc2ZDAyNDQ4NTMwMTlhNTlkZDg2NWU0OTJiNmQ3ZjI1NDQzMjJlODRkMDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc4M2I4YWU5NjNkZTk5NjIxZjVhM2QxZmI5MWU4MmZlMjY0Y2Y3MmUyYzdlNjFhOGFhZGUyZTQ3NTdkODViMjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d4c9a5a8c57d4b6187b7c81760c4ee52",
+      "statement": "Service directories are hidden from listings and directory searches, but grep's explicit single-file path branch can search a readable .truncated_outputs file.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L150-L170",
+          "version": "repo-lines-v1:sha256:2c84e1cd8718abe2cf5e67ccbf81b126fd1f8c56c2add1e7b64c81a0d59fe5a7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRjNzAwN2Q3M2Y1ZTlkZmMwYzBkMGM4NTY5MDFkZTRhNDJjMDI2MTE5YjQ5YzUwOGZiZjE2MDFmNmI3ODU3MWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFmNzJmMjJlNTU5ODc4ZjE4MDBiYTA0YmJkZWFjODBjZGUyZGZmODc4YzFjMDc3NzgxNTE0Yzg2NDU2MGVmZWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNjOTRiN2U0NWRlYTgxNWM1NTlhMWExNWUwZGY5MTIzMTMzMjkwOTJmNWQ0ZDQ1OWM1YmEwMjQ4OWQ1ZWY2MTcifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/files_tools.py#L41-L58",
+          "version": "repo-lines-v1:sha256:9a0c1ecf71b14e85af062f046d30c2a3b1eb17098db3b0b3218325a85dc29868:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwZDViNTFmYThlNmZiYzFmZjE4YTEwNzNhNzE1Y2RkYWYzMzM0MTdmMzE2OTc5OWEwMWVlZmNjZDFmZGUwNTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhkYTI0ZGYxZjQyOTNhMmM4NjE0MjJjNzc3NDg3YjYxMDc3Zjk2NmM2NDY0YWUwNmFiMGQ4NzBhMWZlOTZjNDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE4YjQ3YThjNjM5YzQ1MWEyNzlmODM4OTZkZDc2YTI2Nzg3Mzk4MGFiMmY5Yjk5ZjE2MjQ5YWEzMDcyMDZiYzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkMGQ0MTgxZWNhMDdjNzc0NjAzZjRlODdkMWVmYjcyODI4Njk2NDdjZjk3MjUwM2NjYjkwNmRlOTM4ZmQzNWUifQ"
+        }
+      ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T17:46:46.267Z"
+    "at": "2026-11-09T20:45:41.933Z"
   }
 }

@@ -1,10 +1,9 @@
-"""
-Сборка процесса и сессий MainAgent — общий вход для прод (`server.py`) и дев (REPL).
+"""Build the process and its MainAgent sessions for the server and the REPL.
 
-Разрез 15.1: `init_process` — ОДИН раз на процесс (материализация процедурной памяти +
-процессные холдеры `set_clients`/`set_subagent_factory`/`set_hitl_registry`);
-`build_session_agent` — per-session сборка `BaseAgent` под `/session/<id>/`.
-`build_agent` — DEPRECATED шим односессионного режима (все входы переведены в 15.4/15.5).
+`init_process` runs once per process: it materializes procedure memory and installs
+the process-wide holders (`set_clients`, `set_subagent_factory`, `set_hitl_registry`).
+`build_session_agent` builds one `BaseAgent` under `/session/<id>/`.
+`build_agent` is a deprecated shim for the old single-session mode.
 """
 
 from __future__ import annotations
@@ -24,6 +23,7 @@ from core.agent.tools._subagents import (
     set_subagent_factory,
 )
 from core.agent.tools._hitl import HitlRegistry, set_hitl_registry
+from core.agent.shell.shell_manager import ShellManager
 
 
 # Процедурная память репозитория — источник для дев-материализации (промпты main + субагентов).
@@ -82,6 +82,7 @@ def build_session_agent(session_root: Path, procedures_root: Path) -> BaseAgent:
         is_subagent=False,
         checkpoints_root=session_root / "checkpoints",
         subagent_path=None,
+        shell_manager=ShellManager(session_root),
     )
     return BaseAgent(cfg, agent_config)
 

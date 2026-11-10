@@ -3,14 +3,13 @@ type: interface
 title: HTTP server, API and SSE stream
 description: The FastAPI agent server — startup, the session-scoped route surface with status codes, the asynchronous turn model over one long-lived Server-Sent Events stream, and how events are normalized for the browser.
 tags: [http, api, fastapi, sse, interface]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
   - id: openwiki-source-005cbaacecc681a00b4b1e60
     resource: repo://core/app/routes/_deps.py
   - id: openwiki-source-53e6f36a073f4241bf57b1e0
     resource: repo://core/app/routes/dev.py
+  - id: openwiki-source-23777f9174e92ec97c2941a7
+    resource: repo://core/app/routes/shell.py
   - id: openwiki-source-4a9e014667c5d2fd5ea34178
     resource: repo://core/app/routes/turn.py
   - id: openwiki-source-bfc9e6c28fb445356f8c6a8e
@@ -23,7 +22,12 @@ sources:
     resource: repo://core/models.py
   - id: openwiki-source-05ccef8d4cf1698187f20464
     resource: repo://pyproject.toml
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+  - id: openwiki-source-901c0978c6f2b508af952822
+    resource: repo://tests/app/test_shell.py
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # HTTP server, API and SSE stream
@@ -41,14 +45,17 @@ There is no separate orchestrator or database.
   [development and deployment](../operations/development-and-deployment.md)).
 
 `create_app()` sets the ingress `root_path` from `ROOT_PATH`, adds CORS with
-`ALLOWED_ORIGINS` (default `*`), and registers four routers: sessions, turns, workspace, and
-files & checkpoints. If `devfront/static/` exists next to the code it is mounted at `/` as the
+`ALLOWED_ORIGINS` (default `*`), and registers five routers: sessions, turns, workspace,
+files & checkpoints, and shell task controls. If `devfront/static/` exists next to the code it is mounted at `/` as the
 web UI; otherwise a warning is logged and only the API is served. `devfront/` is currently
 git-ignored (it is being reworked), so a fresh checkout serves the API only.
 
 The `lifespan` runs on startup: wipe stale session folders under `~/.luna/sessions/`, run
 `init_process`, and store a `SessionManager` and the session root on `app.state` (see
 [sessions and storage](../concepts/sessions-and-storage.md)).
+
+On lifespan exit, `finally` closes all sessions and their shell tasks. Shutdown preserves
+session files until the next startup wipe.
 
 ## Session-scoped dependencies
 
@@ -68,7 +75,7 @@ The `lifespan` runs on startup: wipe stale session folders under `~/.luna/sessio
 | `GET /health` | `{"status": "ok", "pending_hitl": <all sessions>, "sessions_count": n}` |
 | `POST /sessions` `{"profile": "standalone"}` | `201 {"session_id", "profile"}`; any other profile fails request validation |
 | `GET /sessions` | list with id, profile, `is_busy`, timestamps, both modes |
-| `DELETE /sessions/{id}` | `204`; cancels the running turn, waits, removes registry entry and folder; `404` if unknown |
+| `DELETE /sessions/{id}` | `204`; closes the turn and shell tasks before removing the folder and registry entry; `404` if unknown |
 
 ### Turns
 
@@ -83,6 +90,22 @@ The `lifespan` runs on startup: wipe stale session folders under `~/.luna/sessio
 
 `TurnRequest` also has an `attachments` field, but it is unused; files are attached through the
 attachments routes instead.
+
+### Shell task controls
+
+| Route | Result |
+|---|---|
+| `GET /sessions/{id}/shell/tasks` | JSON array of task metadata, including finished tasks |
+| `POST /sessions/{id}/shell/tasks/{task_id}/stop` | task metadata after stopping its owned processes; repeated stop returns the terminal task |
+
+Both depend on the session registry: unknown session or task gives `404`, and a legacy session
+without a shell manager gives `503`. They call the manager directly and work in Plan and while
+a turn is busy, without agent confirmation. The routes do not launch commands or page their
+output. The agent's [shell tool](../tools/host-shell.md) provides those operations in Act.
+
+`POST .../stop` in the Turns table cancels the agent turn; it leaves background shell tasks
+running. Switching to Plan also leaves them running. Use the task stop endpoint or delete the
+session to end them.
 
 ### History and attachments
 
@@ -106,7 +129,7 @@ so an oversized body is never buffered. Path rules are on
 
 | Route | Result |
 |---|---|
-| `GET /sessions/{id}/fs/tree` | recursive tree of `workspace/` and `subagents/` (not `checkpoints/`) with sizes and mtimes |
+| `GET /sessions/{id}/fs/tree` | recursive tree of all session directories except `checkpoints/`, including `workspace/`, `subagents/` and `shell_tasks/` when present |
 | `GET /sessions/{id}/fs/file?path=` | `{"path", "content", "size", "mtime"}` for a UTF-8 file up to 1 MiB; `413` if larger, `415` if binary |
 | `GET /sessions/{id}/fs/download?path=` | raw bytes, any type and size |
 | `GET /sessions/{id}/checkpoints` | `[{"id", "label", "mtime"}]`, newest first |

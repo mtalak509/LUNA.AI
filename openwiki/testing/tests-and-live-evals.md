@@ -3,21 +3,27 @@ type: testing
 title: Tests and live evals
 description: LUNA's offline pytest suite and its live end-to-end DeepEval scenarios — layout, how a scenario runs a real session, the four metrics, the OpenRouter judge and its cost, and how to add a scenario.
 tags: [testing, pytest, evals, deepeval, regression]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
+  - id: openwiki-source-ab74b4a68368843c06ab3eba
+    resource: repo://tests/agent/test_shell_integration.py
   - id: openwiki-source-9343d7cdc219182be2b1dbbc
     resource: repo://tests/evals/conftest.py
   - id: openwiki-source-7d7075d33349ecde1b4043b8
     resource: repo://tests/evals/harness.py
   - id: openwiki-source-ad980eed34d8273627b05d8b
     resource: repo://tests/evals/metrics.py
+  - id: openwiki-source-8021ca2468f670779dfc05c3
+    resource: repo://tests/evals/shell/.dataset.json
+  - id: openwiki-source-10cf1f21ab973fcce7747e91
+    resource: repo://tests/evals/shell/test_shell.py
   - id: openwiki-source-d880b358fe220b07b999b739
     resource: repo://tests/evals/text_editing/test_text_editing.py
   - id: openwiki-source-5736a743bf6cd0ae9913ca5c
     resource: repo://tests/evals/truncation/.dataset.json
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # Tests and live evals
@@ -38,7 +44,7 @@ compaction) ships with unit tests **and** a few live scenarios.
 | Folder | Covers |
 |---|---|
 | `tests/agent/` | `BaseAgent`, bootstrap, checkpoints, compaction, message store, middleware, path scope, file tools, truncation, tool pool, delegation, subagent factory, HITL, sessions, workspace manager, reasoning patch |
-| `tests/app/` | the FastAPI server and attachments routes |
+| `tests/app/` | the FastAPI server, attachments and direct shell task controls |
 | `tests/cli/` | commands, HITL handling, prompt, rendering, turn driving |
 | `tests/clients/`, `tests/services/` | HTTP client, embedding, Qdrant and RAG services |
 
@@ -74,6 +80,10 @@ Current features: `text_editing` (a targeted heading change must go through `edi
 nothing else) and `truncation` (after a cut `grep` or `read`, the agent must read the rest from the
 spill file or with `offset`, not answer from the partial output).
 
+The `shell` feature adds `background_lifecycle`: start `worker.py` with `background=true`,
+retain its task ID, check status, read until `READY`, then explicitly stop the same task. Its
+test checks the actual task results and management actions as well as the shared metrics.
+
 `conftest.py` sets `DEEPEVAL_TELEMETRY_OPT_OUT`, skips collecting the folder entirely when
 DeepEval is not installed, and marks every test that lives in a feature subfolder as
 `integration`. Modules directly in `tests/evals/` (such as `test_judge_cost.py`) stay offline.
@@ -99,7 +109,8 @@ The project owner approves `judge_criteria` for new scenarios.
 2. calls `init_process` on that folder and builds a real main agent with `build_session_agent`;
 3. wraps it in an `AgentSession` in **`act` / `accept_all`** so writes do not stop for
    confirmation;
-4. plays the turn and collects `error` events until `turn_done`;
+4. plays the turn and collects `error` events until `turn_done`, then closes the session in
+   `finally` so its processes stop before `asyncio.run` closes the event loop, even on failure;
 5. reads the tool calls (paired with their outputs) and the final answer back from the session's
    `messages.jsonl`;
 6. writes `transcript.json` (input, answer, tool calls with arguments and outputs, errors, judge
@@ -151,6 +162,31 @@ deepeval test run tests/evals/<feature> -m integration
 ```
 
 A result belongs to the model it ran on, so note the provider and model when reporting one.
+
+For the shell scenario use `deepeval test run tests/evals/shell -m integration`. Its metrics
+run synchronously because the agent's event loop has already closed; this avoids reusing its
+cached asynchronous HTTP transport in a different loop. Cleanup is guaranteed by the harness,
+but the scenario separately requires the agent to call `stop` explicitly.
+
+## Shell regression coverage
+
+The offline shell tests exercise real local subprocesses as well as fakes; they do not need
+an LLM or external service. Run `pytest -q tests/agent/test_shell*.py tests/app/test_shell.py
+tests/cli/test_shell_commands.py tests/cli/test_session_lifecycle.py tests/cli/test_render.py`.
+Windows-only process tests skip on POSIX and POSIX-only tests skip on Windows.
+
+- Models and preparation reject irrelevant fields, invalid offsets/timeouts and missing cwd;
+  absolute cwd outside the zone is intentionally supported.
+- Process tests cover combined streams, closed stdin, inherited environment, independent
+  invocations and owned descendants. Log tests check UTF-8 boundaries, lossless byte offsets,
+  page limits and output-cap handling.
+- Manager and lifecycle tests cover shared admission, cancellation, cleanup failures/retry,
+  delete/reset ordering and server/CLI shutdown.
+- Wiring and tool tests cover Plan/Confirm for every action, inherited decisions, shared task
+  IDs and a background server started by a subagent then inspected and stopped by main.
+- API and CLI tests prove direct task controls work in Plan and during an active turn; the
+  renderer keeps task metadata ahead of output. `tests/evals/test_shell_cleanup.py` covers
+  harness cleanup without live model calls when the eval extra is installed.
 
 ### Adding a scenario
 

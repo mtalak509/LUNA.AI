@@ -3,21 +3,29 @@ type: workflow
 title: Permission and decision modes, human-in-the-loop
 description: The two per-session safety switches (Plan/Act and Confirm/Accept-all) and the mechanism by which a turn parks on a question to the user and resumes when the answer arrives over HTTP or in the CLI.
 tags: [modes, hitl, permissions, confirmation, workflow]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
+  - id: openwiki-source-0999e357957975c8879ee999
+    resource: repo://cli/commands.py
   - id: openwiki-source-07e76361ddee296c51381ff5
     resource: repo://core/agent/session.py
   - id: openwiki-source-23ea0cffc72ce040b46eb998
     resource: repo://core/agent/tools/_hitl.py
+  - id: openwiki-source-277976f7cb0a0aa61d455571
+    resource: repo://core/agent/tools/delegation_tools.py
   - id: openwiki-source-ae7f2a24717c9d8b001d8c1c
     resource: repo://core/agent/tools/hitl_tools.py
+  - id: openwiki-source-6e479670aac673f34064e1c5
+    resource: repo://core/agent/tools/shell_tools.py
   - id: openwiki-source-3f9d7ad731f632978576bec7
     resource: repo://core/app/routes/sessions.py
+  - id: openwiki-source-23777f9174e92ec97c2941a7
+    resource: repo://core/app/routes/shell.py
   - id: openwiki-source-4a9e014667c5d2fd5ea34178
     resource: repo://core/app/routes/turn.py
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # Permission and decision modes, human-in-the-loop
@@ -35,7 +43,8 @@ outside the graph.
 | Decision | `confirm` / `accept_all` | `confirm` = every write tool call waits for the user's approval |
 
 All four combinations are valid. "Write tool" means a tool declared with `is_write=True`
-(`write`, `edit`, `rm`). Enforcement lives in middleware at the execution boundary, so it does
+(`write`, `edit`, `rm`, `shell`). Every shell action counts, including `status`, `output`
+and `stop`. Enforcement lives in middleware at the execution boundary, so it does
 not depend on the model cooperating; an earlier design with a separate "confirm" tool failed
 because models sometimes skipped it. Details on [middleware](../architecture/middleware.md).
 
@@ -48,9 +57,14 @@ context when a turn starts. A change made while a turn runs — `POST /sessions/
 one exception is the CLI's "yes, and don't ask again" answer, which also auto-approves the rest
 of the current turn's confirmations on the CLI side.
 
-**Subagents** inherit the main turn's permission mode but always run with `accept_all`, since
-they can only write into their own throwaway zone (see
+**Subagents** inherit both permission and decision mode from the main turn. Confirm therefore
+also gates their file writes and shell calls through the same session HITL surface (see
 [delegation](delegation-and-subagents.md)).
+
+**Existing shell tasks** are independent of the next turn's mode. A switch to Plan does not
+stop background work. Users can list and stop it through `/shell tasks`, `/shell stop <id>`
+or session HTTP controls without an agent turn or confirmation gate. These direct controls
+remain available in Plan; agent `shell` calls remain blocked. See [host shell](../tools/host-shell.md).
 
 ## Questions from the agent
 

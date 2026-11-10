@@ -14,6 +14,7 @@ so a long answer is not limited by the window height.
 from __future__ import annotations
 
 import difflib
+import json
 import time
 from typing import Any
 
@@ -55,10 +56,26 @@ def summarize_args(args: Any, width: int = ARGS_WIDTH, skip: tuple[str, ...] = (
     return shorten(", ".join(parts), width)
 
 
-def summarize_result(content: Any) -> tuple[list[str], int]:
+def summarize_result(content: Any, *, name: str | None = None) -> tuple[list[str], int]:
     """The first lines of a tool result, and how many lines were hidden."""
     if isinstance(content, list):  # message content blocks
         content = "\n".join(b.get("text", "") if isinstance(b, dict) else str(b) for b in content)
+    if name == "shell" and isinstance(content, str):
+        try:
+            data = json.loads(content)
+        except ValueError:
+            data = None
+        if isinstance(data, dict) and "task_id" in data and "status" in data:
+            metadata = f"{data['task_id']}  {data['status']}"
+            for key in ("exit_code", "reason", "next_offset", "eof", "has_more"):
+                if data.get(key) is not None:
+                    metadata += f"  {key}={data[key]}"
+            output = data.get("output") or ""
+            shown, hidden = summarize_result(output)
+            lines = [metadata, *shown] if output else [metadata]
+            if data.get("error"):
+                lines.append(shorten(f"error: {data['error']}", RESULT_WIDTH))
+            return lines, hidden
     lines = [ln for ln in str(content).splitlines() if ln.strip()] or ["(empty)"]
     shown = [shorten(ln, RESULT_WIDTH) for ln in lines[:RESULT_LINES]]
     return shown, len(lines) - len(shown)
@@ -296,7 +313,9 @@ class TurnView:
                             self._print(Text.assemble((prefix, color), "    ", diff_line))
                 elif source == "tools":
                     failed = getattr(m, "status", None) == "error"
-                    lines, hidden = summarize_result(getattr(m, "content", ""))
+                    lines, hidden = summarize_result(
+                        getattr(m, "content", ""), name=getattr(m, "name", None)
+                    )
                     style = "red" if failed else "dim"
                     self._begin_block("tools")
                     for i, ln in enumerate(lines):

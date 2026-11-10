@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:cdce077d334959bc6e2e11274f8a1226ef0f23f7205d2a7ff7d245f6623ed49b",
+  "pageVersion": "sha256:2728b97b7d8144c30a3a56dc216975a9af9bb804604254f4831f215f4da84102",
   "claims": [
     {
       "id": "claim_26e96a011457455ebfcb6d1a98805325",
@@ -89,14 +89,36 @@
       "statement": "The CLI /undo command restores a checkpoint and reloads the agent's working message list from its store.",
       "evidence": [
         {
-          "resource": "repo://cli/commands.py#L127-L138",
+          "resource": "repo://cli/commands.py#L158-L169",
           "version": "repo-lines-v1:sha256:eff83d266db6aea0d1af758b34339dfaec518264817465a6c23729281df601ce:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyNzM1OTc0ODlkNjJmOWYzN2U5MjNkYjJmOGVmYWEzMGIwYmZkZDg5ZTg5YmMzYzkwMGM1MjgyYjZlOWYwN2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5N2MzZWY1NDJjNmIyYWI4OTNhNTQzYjgxYzljMzIzZTNkMzlhNGEwMjM3YWNiNDhjNGZkZjk3MTY3YjM4ZWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViNjJlN2NlYWVmOTMzZWM3YTNlZDdjOWM3N2JlN2E0ODc2YTZkYTQ5MjNiYzIyNjQzMjYwZjJhMGUxZjQxNTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4M2U5NDU2NGMxYTQ1OGRlOWQ2ZTg4MjY3ZDRhMDJkZmEwYWU2NDU3MTczMDlhMTQ5NzBhNmJlYzcyNGM1OTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dc68cbde6b38461c965f056e539e979f",
+      "statement": "Shell has no checkpoint decorator and task logs live outside workspace; checkpoint restore replaces workspace files without stopping session shell tasks or reverting host side effects.",
+      "evidence": [
+        {
+          "resource": "repo://core/agent/checkpoint.py#L88-L101",
+          "version": "repo-lines-v1:sha256:2b9f4b108d4cc93f524e909993e1105d788a07347fff4ead64e2b7d3f0588919:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNWQ1ZTA0ZTE2YmZlMDYyYTI2YTY2NzBiNzYyODE3ODI1NGJhYzFhM2YxN2JlOTdkODhkZGMyOGUyYWY3NGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlM2ZjNjMyY2ZlMzMxYmIwZjJiMzA2NzM2ZTQ2YzllNGQ0YWQ5YTlkZTU4NWQ0NzUwZDcwM2I1OWM1NzRkYjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE1ZDcxY2NhOGE5YWRiOWM4OTI4YWQ0YTNlM2VhZTI3NjFmYmIwZmE2NzcxNTVjOTc0ZjY5NDM0ZDU0Yzg1ODAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZhN2UwZDQyMmY3YmRkOGY2NWY1MjMzYzdjYWU5MTY4Mjk2ZWQ2YzdhNjdhNzYyOTcyOTdjYTE4OWE3NDFmYzgifQ"
+        },
+        {
+          "resource": "repo://core/agent/shell/shell_manager.py#L44-L60",
+          "version": "repo-lines-v1:sha256:a5abac8a1cc5285409e92eb09251bd87b5711acaaa78f8c4eacf87c5af523a3e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2ZDA2MTBlMTFkZmU2ZWI5ZWU2NmFlZTBjYjU2ZWIyMDg2MTk3Zjg2ZjdkMjM5YzdhYTkyYTVkN2QxMmFiMjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4M2IwNTY3MDVjMDMyNTY1ZDMwNTE0OTdhMjk5OGYyZDdhNzhlOWUzYjcyMDA4ZjViYWQ0ZjYwMmNhMDkyZTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU2NTdiOGE1ODZlYTExNTZjNjY2ZmM1YjI0MzA3ZWE1ZDhhNmI5ZjBkYjY0YWQ3NmQwZjIwNDE5ZWZjMTNhZTQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE3ZjNjYjIwOWYwNzllNGRlMjQ2ODNmNWM4MjM0ODczYzc1ODgyYTAxOTZhMzNlMjQyOTgzMjVjZTYzOWYyMjcifQ"
+        },
+        {
+          "resource": "repo://core/agent/tools/shell_tools.py#L76-L107",
+          "version": "repo-lines-v1:sha256:a023f2cec382087678c628e91991281c27d647826dc86acd330f8feadf8068bf:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5ODZhZTc2ZjMzYjI3MTQ3MzY4OTU3NGE0OTc2YjQ1ZGUxMzU5NzNlY2QyMGQ5YTc5MjExMDBkNGVlOTYyOTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ0NGE4NjI5Zjc0ZGRiNWFlZjRlZWExZjA3OGUyMWJhOGQ3MWFjNTdiYmFhOTI4ODY5ZmY2ZWYzOTRkNTE3ZTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYyYzI1NGUzOGNkNTY0NWU0YzlmMDgzNDM5MjJiZjZiMTg5NWRjNTUzOWE1OGE0ZDY0ZGJiM2M4MDE3OTVkYTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://core/app/routes/dev.py#L177-L210",
+          "version": "repo-lines-v1:sha256:fc18170c75c2717f78238a1acf125142267d89900992a0930b512ae2fedd6ac6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3YjQ2NDBjMGVmMTZkZDNiZTZhMmYyOTMyYjQ3NGI0YzVlODFkNTI1ZTE0NGNjNjA1Y2Q2MzNjOWJhODZlMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY5YzNmZmNhMTM2YjNmOWU4MDkxYTIzZDhhNDM4YTg0NGM3OWZmNjNjYzA5NDM4ZmMyMzU4M2I4ZWVlOWY0NGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjlhODJlYmU5ZWQ0MDdjM2E2YmE0YjAwMzQyOTJiYWE1MmMxMWNlNWFlMjg2MTA3NDAyZGU0NzkyZWVlY2FjZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
         }
       ]
     }
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T18:35:21.080Z"
+    "at": "2026-11-09T20:38:09.193Z"
   }
 }

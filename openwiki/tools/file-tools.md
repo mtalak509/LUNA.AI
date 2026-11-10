@@ -3,15 +3,15 @@ type: tool reference
 title: File tools and output truncation
 description: The seven general-purpose file tools (read, write, edit, ls, find, grep, rm), their exact semantics and errors, and how large tool output is cut and spilled to .truncated_outputs/ so one call cannot flood the context.
 tags: [tools, files, truncation, editing, search]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
   - id: openwiki-source-e1f3d5a721b9517f9aa6ba09
     resource: repo://core/agent/tools/files_tools.py
   - id: openwiki-source-ab5a4aaa5b635da70e735b12
     resource: repo://core/agent/tools/tool_output.py
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # File tools and output truncation
@@ -62,8 +62,10 @@ binary file.
 
 `find` and `grep` collect files through `_zone_files`, which keeps only files that resolve inside
 the search root (a glob containing `..` cannot climb out) and drops anything under `.runtime/`
-or `.truncated_outputs/`. `ls` hides those two names too. So the agent cannot find its own
-history or its own earlier spilled output.
+or `.truncated_outputs/`. `ls` hides those two names too. Directory searches therefore do not
+rediscover earlier spilled output. An explicit `grep(path=".truncated_outputs/<file>", ...)`
+is allowed: the single-file branch bypasses directory filtering. `.runtime/` remains blocked
+by PathScope.
 
 ### Writes leave checkpoints
 
@@ -127,6 +129,10 @@ note gives the exact `offset` to continue from:
 ```
 
 A whole-file read that fits the limits is returned as is, with no header.
+
+File `read` offsets count lines. [Shell output](host-shell.md) instead uses byte offsets into
+the combined process log and returns `next_offset` for lossless continuation, including long
+lines. Shell does not use the spill decorator and does not create checkpoints.
 
 The live `truncation` scenarios check that the agent actually follows these notes instead of
 answering from the partial output (see [tests and evals](../testing/tests-and-live-evals.md)).

@@ -3,10 +3,9 @@ type: subsystem
 title: Middleware stack
 description: The four LangChain middleware LUNA wraps around every model and tool call — tool-error conversion, Plan/Act permission, Confirm gate, and working-context injection — their order and exact behaviour.
 tags: [middleware, runtime, permissions, context, langchain]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
+  - id: openwiki-source-0999e357957975c8879ee999
+    resource: repo://cli/commands.py
   - id: openwiki-source-364a89a77ff1b7418dc1c6c3
     resource: repo://core/agent/base.py
   - id: openwiki-source-dd85edee451d1cd631927428
@@ -17,7 +16,16 @@ sources:
     resource: repo://core/agent/middleware/permission.py
   - id: openwiki-source-2b29142abb8c5acbac285b63
     resource: repo://core/agent/middleware/tool_error.py
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+  - id: openwiki-source-277976f7cb0a0aa61d455571
+    resource: repo://core/agent/tools/delegation_tools.py
+  - id: openwiki-source-6e479670aac673f34064e1c5
+    resource: repo://core/agent/tools/shell_tools.py
+  - id: openwiki-source-23777f9174e92ec97c2941a7
+    resource: repo://core/app/routes/shell.py
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # Middleware stack
@@ -97,10 +105,14 @@ earlier design used a separate confirm tool and the model sometimes skipped it.
   `action_description` built from the tool name and its arguments. A false answer returns an
   error `ToolMessage` ("the user declined the action"); a true answer runs the tool.
 
-The pending-question marker is written only when the main agent asks. Subagents always run with
-`decision_mode="accept_all"` (they write only into their own zone), so this middleware is
-effectively a no-op for them. The full HITL mechanism is in
+The pending-question marker is written only when the main agent asks. Subagents inherit the
+parent's decision mode, so Confirm also gates their file writes and shell calls. The full HITL mechanism is in
 [modes and HITL](../workflows/modes-and-hitl.md).
+
+The `shell` tool is declared `is_write=True` for all four actions, including `status`, `output`
+and `stop`. Plan therefore hides and blocks every shell invocation, and Confirm gates each
+one. Direct CLI and HTTP task controls operate outside the agent middleware; users can still
+list or stop tasks in Plan. See [host shell](../tools/host-shell.md).
 
 ## ContextInjectMiddleware — live working context
 

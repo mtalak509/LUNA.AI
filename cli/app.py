@@ -46,13 +46,21 @@ async def main() -> None:
     # Explicit init/build pair — the process once, the session separately (as in server.py).
     bootstrap_process()  # init_process → state["procedures_root"]
     state["session"] = new_session()  # creates workspace/ and a runner over MainAgent
-    console.print(
-        Text.assemble(
-            f"CLI ready (session={SESSION_DIR}). ",
-            ("/help — commands, /quit — quit.", "dim"),
+    try:
+        console.print(
+            Text.assemble(
+                f"CLI ready (session={SESSION_DIR}). ",
+                ("/help — commands, /quit — quit.", "dim"),
+            )
         )
-    )
+        await _run_repl()
+    finally:
+        session = state["session"]
+        if session is not None:
+            await session.close()
 
+
+async def _run_repl() -> None:
     prompter = Prompter()
     last_interrupt = 0.0
     while True:
@@ -72,7 +80,7 @@ async def main() -> None:
             continue
 
         if line.startswith("/"):
-            if not handle_command(line):
+            if not await handle_command(line):
                 break
             continue
 

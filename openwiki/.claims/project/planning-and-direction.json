@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:872e132225c9310b4639a8f894f2b14669f3622827998d2869de572d1cf2b08c",
+  "pageVersion": "sha256:a4082fab7666c9ffbc15081396ca4d7babc397db62d055566513b5b534a83e12",
   "claims": [
     {
       "id": "claim_4a6c6a278f8948048cc61113cf17a04f",
@@ -14,11 +14,11 @@
     },
     {
       "id": "claim_7b0139967b3548fe9f46921dcddd3828",
-      "statement": "The planning index lists seven ideas, from 001 file tools (done) to 007 running the CLI from any directory (seed).",
+      "statement": "The planning index lists thirteen ideas numbered 001–013, with file tools marked done, host shell marked building, and follow-ups for file errors, prompt alignment, tool ergonomics, verified notes, non-text documents and CLI output modes.",
       "evidence": [
         {
-          "resource": "repo://planning/index.md#L1-L11",
-          "version": "repo-lines-v1:sha256:46f82863666e547896277e5728c13c27ddee0a5c16a0dca580eeb3044ac2f5eb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1OTMwZTA1YTdjNjA0MTVmZDM0NTM5MWMyOWE5YzUyNWU3NDg5ZjU5N2U1N2MyZThhYjUzODNhZGFjNGY3YjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY5YThmYzVjNTkyMzE5ZmM4Y2NlNWI4NmY5ZDdiZjMyZDZmOWQxMzJiNTM3OTg0MDY1YjgyZmQ0ZmVhMWFmZTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+          "resource": "repo://planning/index.md#L1-L17",
+          "version": "repo-lines-v1:sha256:db0021779eda935ca3869bc2e9c150e7f2c99aee75f6b1671889d0529f7e9de2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI1OTMwZTA1YTdjNjA0MTVmZDM0NTM5MWMyOWE5YzUyNWU3NDg5ZjU5N2U1N2MyZThhYjUzODNhZGFjNGY3YjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5ZDZiNWVlMWNmMTE3MjY3YzNjZDI2N2U2ZjQ4NzJkMjk0NWYzNWE4MTIwZTFhMjYzMTE2NzIwZTA3ZTQ4MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
         }
       ]
     },
@@ -55,6 +55,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T18:35:21.080Z"
+    "at": "2026-11-09T20:38:09.193Z"
   }
 }

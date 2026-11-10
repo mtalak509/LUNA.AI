@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "pageVersion": "sha256:e41895eb5c692a483bfc4f227c3b5270dc079690c62d42175b2cb26126507012",
+  "pageVersion": "sha256:561b3df075727c706ef113e75b40eadd77150c5945efec8a5219d65a718bc591",
   "claims": [
     {
       "id": "claim_abf1df40a7a943afa5832875c25bade7",
@@ -79,15 +79,15 @@
       "statement": "Only the main agent gets a HistoryCompactor; it runs in run_stream before the graph, and the production summarizer is one extra chat-model call with a fixed summary prompt.",
       "evidence": [
         {
-          "resource": "repo://core/agent/base.py#L231-L236",
+          "resource": "repo://core/agent/base.py#L235-L240",
           "version": "repo-lines-v1:sha256:a1f15ad0d3af9ece56d3b2ef11780b221dd3a63edd5d583ca2668d91eaddaf81:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDU2MmM1YzA5NzgxYzZhYWJjZGVhNjhjMmFmMjk5NTJmNzRhMTE0NzJkYTRkYTJhMGQwODRhYjYzZWVkMzI0OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjkzNGRhZmZhOTk4NGRiOGJiOTNjMGQ2M2I0MzA4ZjQzNTIyMjExYzM0N2Y1ODA3ZDIzMjk5ODc5NTQyNDQyNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTQ1ZTMyYmI4YWIzZDVlOGIxN2YxOWQzNzI3ZjFlMWFhMzkyZmQ1NjlhMzQxYTQ3MDk1MmQzODM1NGE3YjA0NiJ9"
         },
         {
-          "resource": "repo://core/agent/base.py#L276-L298",
+          "resource": "repo://core/agent/base.py#L280-L302",
           "version": "repo-lines-v1:sha256:7ae171db97c262b81eb1821e590cc23234abb0dd7a8f4880954634409d55ab1d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4NmI1NGQ2MDMxMTk3YTQxMDBlMjE2YjRhNDc1ZDZiOGU5ZWJjNjFkZGFiNzc4NDc4Y2Y4MmM0ZjVmNTc2MmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxMDEzNjA5MzcxZTNjOTY0ODhhZWEyMmFhODM2ZmJmMzg5YTY3OWQwOTZhOWFiMDQyNTk3MGUwZWUyNjkzMWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI1MzI2NTYxNjYxZGFlNzQ3M2ZhMWFkYjQyOGUwZDcwMjJhOWM3ZGUyOTUyMzA3MGI5Y2YxMDYwYmEwOGU0OWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkzNTZiZWQ2ZjQyMzEwYWU3MTNiZTNjZjI2ODc4ZGZjZGQxMGY3NmMyYzE2NjU3NDA0OTJmYzFkNmFkNDRiYmIifQ"
         },
         {
-          "resource": "repo://core/agent/base.py#L337-L347",
+          "resource": "repo://core/agent/base.py#L342-L352",
           "version": "repo-lines-v1:sha256:14c75880ebb097067437588e97a126f314e21a7c56cfbfc289f4ceabe0245520:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5MTAwODkzNDRkZDFkMzA4YTBhMjVmMzgwMGEzODI2Yjg5MDRjYzc4M2JlZmU0ZDJlZTI1ZDViNGY0ZTI0ZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxMDM0ODFjNTdkMGYwZGMwZjc2Y2QyY2M4YjM2MDRjNGU4Mjk2ZGE0MTIyYWRkMTllODE3NDVkYzdlMzMxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJiMjI3ZTk4MmUzMGM2MjE4ZTgyNmU0NWM1Y2MxMzMyODgwMjI3ZDI3NjBlY2YzYzI3ZjNhNDlhNTU0ZjY5NmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRmYTdiNzU3YzVlYTM3NmZiYWY4Y2NhMDRhMmY4MmVjNGYxMzQwZDNhNDIyYTA5NzNmMjAzM2ViOWY0OTkxZTIifQ"
         }
       ]
@@ -95,6 +95,6 @@
   ],
   "verification": {
     "by": "openwiki/0.7.2",
-    "at": "2026-10-29T17:46:46.267Z"
+    "at": "2026-11-09T20:38:09.193Z"
   }
 }

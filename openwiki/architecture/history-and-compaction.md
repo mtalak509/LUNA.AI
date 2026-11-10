@@ -3,9 +3,6 @@ type: subsystem
 title: Conversation history and compaction
 description: How the main agent's conversation is kept as an append-only messages.jsonl log with summary markers, and how HistoryCompactor shrinks long histories once without orphaning tool results.
 tags: [history, compaction, persistence, messages, runtime]
-verified:
-  - by: openwiki/0.7.2
-    at: 2026-10-29T17:46:46.267Z
 sources:
   - id: openwiki-source-364a89a77ff1b7418dc1c6c3
     resource: repo://core/agent/base.py
@@ -14,6 +11,9 @@ sources:
   - id: openwiki-source-30add05b9a24cb76dcc6329a
     resource: repo://core/agent/messages.py
 generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+verified:
+  - by: openwiki/0.7.2
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # Conversation history and compaction

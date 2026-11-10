@@ -8,18 +8,22 @@ sources:
     resource: repo://cli/commands.py
   - id: openwiki-source-70210339a3af34349c2062c6
     resource: repo://core/agent/checkpoint.py
+  - id: openwiki-source-4c191222105a52799537e04a
+    resource: repo://core/agent/shell/shell_manager.py
   - id: openwiki-source-277976f7cb0a0aa61d455571
     resource: repo://core/agent/tools/delegation_tools.py
+  - id: openwiki-source-6e479670aac673f34064e1c5
+    resource: repo://core/agent/tools/shell_tools.py
   - id: openwiki-source-a1954481bf636161937b8062
     resource: repo://core/agent/workspace.py
   - id: openwiki-source-53e6f36a073f4241bf57b1e0
     resource: repo://core/app/routes/dev.py
   - id: openwiki-source-28674980a52d70f9fe3a7e3a
     resource: repo://tests/agent/test_checkpoint.py
-generated: { by: "claude-code", at: "2026-10-29T17:46:46.267Z" }
+generated: { by: "codex", at: "2026-11-09T20:38:09.193Z" }
 verified:
   - by: openwiki/0.7.2
-    at: 2026-10-29T18:35:21.080Z
+    at: 2026-11-09T20:38:09.193Z
 ---
 
 # Checkpoints and undo
@@ -69,7 +73,7 @@ matches the restored files.
 
 ## When snapshots are taken
 
-### After every successful agent write
+### After every successful file-tool write
 
 Write tools are decorated with `@with_checkpoint()` *inside* `@agent_tool(...)`. The wrapper
 awaits the tool and only then snapshots, using the tool's function name as label unless a string
@@ -84,6 +88,13 @@ or callable label is given. Consequences:
 
 The manager is built from `get_runtime().context` on each call, so the same decorated tool
 snapshots whichever session is running it.
+
+`shell` is classified as a write tool for permissions, but has no checkpoint decorator.
+Shell commands never automatically snapshot the workspace, and undo does not stop running
+commands or rewind host side effects. Task logs live in `<session>/shell_tasks/`, outside
+the workspace. A background command may keep changing files after a restore, even when no
+agent turn is busy. Stop it explicitly before restoring if it touches those files; see
+[host shell](../tools/host-shell.md).
 
 ### Before delegating to a subagent
 
