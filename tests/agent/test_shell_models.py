@@ -143,6 +143,20 @@ def test_output_rejects_invalid_offset(offset: object) -> None:
         {"action": "stop", "task_id": "sh_123", "offset": 0},
     ],
 )
-def test_other_actions_reject_explicit_offset(payload: dict[str, object]) -> None:
+def test_other_actions_accept_default_offset(payload: dict[str, object]) -> None:
+    args = ShellArgs.model_validate(payload)
+
+    assert args.offset == 0
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"action": "run", "command": "echo hello", "offset": 4},
+        {"action": "status", "task_id": "sh_123", "offset": 4},
+        {"action": "stop", "task_id": "sh_123", "offset": 4},
+    ],
+)
+def test_other_actions_reject_nonzero_offset(payload: dict[str, object]) -> None:
     with pytest.raises(ValidationError):
         ShellArgs.model_validate(payload)

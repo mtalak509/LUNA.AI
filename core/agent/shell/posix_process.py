@@ -2,11 +2,29 @@ import asyncio
 import os
 import shutil
 import signal
+from pathlib import Path
 
 from core.agent.shell.models import PreparedRun, ShellError
 
 STOP_GRACE_SECONDS = 2.0
 POLL_INTERVAL = 0.02
+
+
+def _proc_start_time(pid: int) -> int | None:
+    """Linux starttime for pid, or None when /proc no longer names that process."""
+    try:
+        raw = Path(f"/proc/{pid}/stat").read_bytes()
+    except OSError:
+        return None
+    end = raw.rfind(b")")
+    if end < 0:
+        return None
+    fields = raw[end + 2 :].split()
+    try:
+        # Field 22 of the whole stat line; field 3 is the first token after comm.
+        return int(fields[19])
+    except (IndexError, ValueError):
+        return None
 
 
 class PosixShellProcess:
@@ -20,6 +38,7 @@ class PosixShellProcess:
         self.stdout = process.stdout
         self._stop_lock = asyncio.Lock()
         self._terminated = False
+        self._start_time = _proc_start_time(process.pid)
 
     @property
     def pid(self) -> int:
@@ -32,17 +51,43 @@ class PosixShellProcess:
             await asyncio.sleep(POLL_INTERVAL)
         return self._process.returncode
 
+    def _pid_still_ours(self) -> bool:
+        """False when the leader pid was reused by an unrelated process."""
+        if self._start_time is None:
+            return True
+        current = _proc_start_time(self.pid)
+        # The leader has been reaped. Descendants may still use this process group id.
+        if current is None:
+            return True
+        return current == self._start_time
+
     def _group_exists(self) -> bool:
+        if not self._pid_still_ours():
+            return False
         try:
             os.killpg(self.pid, 0)
         except ProcessLookupError:
             return False
+        except PermissionError:
+            # A member we cannot signal (for example after setuid) must not pin the task.
+            return False
         return True
 
     def _signal_group(self, sig: signal.Signals) -> None:
+        if not self._pid_still_ours():
+            return
         try:
             os.killpg(self.pid, sig)
-        except ProcessLookupError:
+        except (ProcessLookupError, PermissionError):
+            pass
+
+    def _signal_leader(self, sig: signal.Signals) -> None:
+        current = _proc_start_time(self.pid)
+        if self._start_time is None or current != self._start_time:
+            return
+        try:
+            os.kill(self.pid, sig)
+        except (ProcessLookupError, PermissionError):
             pass
 
     async def terminate(self) -> None:
@@ -58,6 +103,8 @@ class PosixShellProcess:
                     self._signal_group(signal.SIGKILL)
                     break
                 await asyncio.sleep(POLL_INTERVAL)
+            if self._process.returncode is None:
+                self._signal_leader(signal.SIGKILL)
 
             await self.wait()
             self._terminated = True

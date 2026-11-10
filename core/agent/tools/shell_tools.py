@@ -92,6 +92,9 @@ async def shell(**raw: Any) -> str:
     action=status returns task metadata.
     action=output reads a page from the optional byte offset, default 0.
     Continue reading using next_offset while has_more is true.
+    eof means the read reached the currently captured end. It can be true
+    while status is running and is not process completion. Poll again when
+    status is running even if has_more is false.
     action=stop stops the task and its owned processes.
 
     status, output and stop require task_id returned by run.

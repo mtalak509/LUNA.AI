@@ -82,7 +82,8 @@ First `search` → pick the relevant `id` → `get_reference`. Do not pull full 
   imposed unless timeout is supplied. A positive timeout stops the owned process tree.
 - Keep the returned task_id. Use `action="status"`, `action="output"` or `action="stop"`
   with task_id. Output pages are bounded; continue using the returned byte next_offset while
-  has_more is true. An empty running page is not evidence of completion; check status.
+  has_more is true. eof means the read reached the currently captured end and can be
+  true while status is running; poll again even if has_more is false. Check status.
   A completed task may have a nonzero exit_code; check it. failed means launch failure.
   A session allows eight concurrent tasks; exceeding the 50 MiB log cap stops a task.
 - Task IDs are shared within the session. Background tasks survive an agent's answer, subagent

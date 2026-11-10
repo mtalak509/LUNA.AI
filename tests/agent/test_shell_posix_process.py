@@ -8,9 +8,9 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 import pytest
-from core.agent.shell.posix_process import PosixShellProcess, spawn_posix_shell
 
 from core.agent.shell.models import PreparedRun, ShellError
+from core.agent.shell.posix_process import PosixShellProcess, spawn_posix_shell
 
 pytestmark = pytest.mark.skipif(os.name != "posix", reason="POSIX process backend")
 
@@ -101,6 +101,41 @@ async def test_force_stop_kills_term_resistant_child_and_is_idempotent(tmp_path:
         await asyncio.wait_for(process.terminate(), timeout=5)
         assert await asyncio.wait_for(process.stdout.read(), timeout=2) == b""
         await asyncio.wait_for(process.terminate(), timeout=1)
+
+
+async def test_permission_error_does_not_stick_cleanup(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    async with running("printf done", tmp_path) as process:
+        await asyncio.wait_for(process.wait(), timeout=3)
+
+        def deny(pid: int, sig: int) -> None:
+            raise PermissionError(pid, sig)
+
+        monkeypatch.setattr(os, "killpg", deny)
+        await asyncio.wait_for(process.terminate(), timeout=3)
+
+    assert process._terminated is True
+
+
+async def test_reused_leader_pid_is_not_signaled(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    async with running("printf done", tmp_path) as process:
+        await asyncio.wait_for(process.wait(), timeout=3)
+        process._start_time = 1
+
+        def reused(pid: int) -> int:
+            return 2
+
+        monkeypatch.setattr("core.agent.shell.posix_process._proc_start_time", reused)
+
+        def deny(pid: int, sig: int) -> None:
+            raise AssertionError(f"signaled reused pid {pid} with {sig}")
+
+        monkeypatch.setattr(os, "killpg", deny)
+        monkeypatch.setattr(os, "kill", deny)
+        await asyncio.wait_for(process.terminate(), timeout=3)
 
 
 async def test_missing_bash_reports_tool_error(

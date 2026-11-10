@@ -38,7 +38,9 @@ class ShellArgs(BaseModel):
             if self.command is None or not self.command.strip():
                 raise ValueError("run requires a non-empty command")
 
-            forbidden = supplied & {"task_id", "offset"}
+            forbidden = supplied & {"task_id"}
+            if "offset" in supplied and self.offset != 0:
+                forbidden.add("offset")
             if forbidden:
                 names = ", ".join(sorted(forbidden))
                 raise ValueError(f"The following fields are not allowed for run: {names}")
@@ -53,7 +55,7 @@ class ShellArgs(BaseModel):
                 raise ValueError(f"{self.action} requires a non-empty task_id")
 
             forbidden = supplied & {"command", "cwd", "background", "timeout"}
-            if self.action != "output" and "offset" in supplied:
+            if self.action != "output" and "offset" in supplied and self.offset != 0:
                 forbidden.add("offset")
 
             if forbidden:
