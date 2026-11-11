@@ -15,4 +15,4 @@
 | 011 | Only verified facts go into decisions.md | seed | own |
 | 012 | Read PDF, DOCX and XLSX | seed | own |
 | 013 | Choose how much tool activity the CLI shows | shaped | own |
-| 014 | Sandboxed shell via bubblewrap | seed | own |
+| 014 | Sandboxed shell via bubblewrap | shaped | own |
